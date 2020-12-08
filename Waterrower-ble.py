@@ -95,7 +95,8 @@ class DeviceInformation(Service):
 
     def __init__(self, bus, index):
         Service.__init__(self, bus, index, self.DEVICE_INFORMATION_UUID, True)
-        self.add_characteristic(SoftwareRevisionString(bus, 0, self))
+        self.add_characteristic(ManufacturerNameString(bus, 0, self))
+        self.add_characteristic(SoftwareRevisionString(bus, 1, self))
 
 
 class SoftwareRevisionString(Characteristic):
@@ -108,8 +109,7 @@ class SoftwareRevisionString(Characteristic):
             ['read'],
             service)
         self.notifying = False
-        self.value = [dbus.Byte(0), dbus.Byte(0), dbus.Byte(0),
-                      dbus.Byte(0)]  # ble com module waterrower software revision
+        self.value = [dbus.Byte(0), dbus.Byte(0), dbus.Byte(0), dbus.Byte(0)]  # ble com module waterrower software revision
 
         self.value[0] = 0x34
         self.value[1] = 0x2E
@@ -119,6 +119,37 @@ class SoftwareRevisionString(Characteristic):
     def ReadValue(self, options):
         print('SoftwareRevisionString: ' + repr(self.value))
         return self.value
+
+
+class ManufacturerNameString(Characteristic):
+    MANUFACTURER_NAME_STRING_UUID = '2a29'
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.MANUFACTURER_NAME_STRING_UUID,
+            ['read'],
+            service)
+        self.notifying = False
+        self.ManuName = bytes('WaterRower', 'utf-8')
+        self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
+
+        #self.value[0] = 0x34
+        #self.value[1] = 0x2E
+        #self.value[2] = 0x32
+        #self.value[3] = 0x30
+
+    def ReadValue(self, options):
+        print('SoftwareRevisionString: ' + repr(self.value))
+        return self.value
+
+
+
+
+
+
+
+
 
 
 class FTMservice(Service):
@@ -179,12 +210,12 @@ class FTMPAdvertisement(Advertisement):
     def __init__(self, bus, index):
         Advertisement.__init__(self, bus, index, "peripheral")
         self.add_manufacturer_data(
-            0xFFFF, [0x70, 0x74],
+            0xFFFF, [0x77, 0x72],
         )
         self.add_service_uuid(DeviceInformation.DEVICE_INFORMATION_UUID)
         self.add_service_uuid(FTMservice.FITNESS_MACHINE_UUID)
 
-        self.add_local_name("Vivaldi")
+        self.add_local_name("S4 COMMS 69")
         self.include_tx_power = True
 
 
