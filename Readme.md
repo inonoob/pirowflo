@@ -81,4 +81,10 @@ ANT+ Virtual Power Meter: [Link](https://github.com/dhague/vpower)
 
 Kettler Ant+ Support: [Link](https://github.com/joekearney/kettler-to-ant)
 
+GoldenCheetah [link](https://github.com/GoldenCheetah/GoldenCheetah/blob/master/src/ANT/ANTMessage.cpp)
+
 ## License
+
+## to investigate:
+
+https://forum.logicmachine.net/showthread.php?tid=1199

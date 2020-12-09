@@ -146,9 +146,41 @@ class FTMservice(Service):
 
     def __init__(self, bus, index):
         Service.__init__(self, bus, index, self.FITNESS_MACHINE_UUID, True)
-        self.add_characteristic(RowerData(bus, 0, self))
-        self.add_characteristic(FitnessMachineControlPoint(bus, 1, self))
+        self.add_characteristic(FitnessMachineFeature(bus,0,self))
+        self.add_characteristic(RowerData(bus, 1, self))
+        self.add_characteristic(FitnessMachineControlPoint(bus, 2, self))
 
+
+class FitnessMachineFeature(Characteristic):
+
+    FITNESS_MACHINE_FEATURE_UUID = '2acc'
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.FITNESS_MACHINE_FEATURE_UUID,
+            ['read'],
+            service)
+        self.notifying = False
+        self.value = [dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0)]  # ble com module waterrower software revision
+
+        self.value[0] = 0x26
+        self.value[1] = 0x56
+        self.value[2] = 0x00
+        self.value[3] = 0x00
+        self.value[4] = 0x00
+        self.value[5] = 0x00
+        self.value[6] = 0x00
+        self.value[7] = 0x00
+
+        #00100110           01010110
+
+#0xff,0xff,0xff,0xff,0xff,0xff,0xff,0xff
+
+
+    def ReadValue(self, options):
+        print('Fitness Machine Feature: ' + repr(self.value))
+        return self.value
 
 class RowerData(Characteristic):
     ROWING_UUID = '2ad1'
