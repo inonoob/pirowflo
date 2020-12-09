@@ -2,6 +2,8 @@
 
 import logging
 
+import signal
+
 import dbus
 import dbus.exceptions
 import dbus.mainloop.glib
@@ -134,23 +136,10 @@ class ManufacturerNameString(Characteristic):
         self.ManuName = bytes('WaterRower', 'utf-8')
         self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
 
-        #self.value[0] = 0x34
-        #self.value[1] = 0x2E
-        #self.value[2] = 0x32
-        #self.value[3] = 0x30
 
     def ReadValue(self, options):
         print('SoftwareRevisionString: ' + repr(self.value))
         return self.value
-
-
-
-
-
-
-
-
-
 
 class FTMservice(Service):
     FITNESS_MACHINE_UUID = '1826'
@@ -172,6 +161,65 @@ class RowerData(Characteristic):
             service)
         self.notifying = False
 
+    def Waterrower_cb(self):
+        value = [dbus.Byte(0x2C), dbus.Byte(0x0b), dbus.Byte(0), dbus.Byte(0),dbus.Byte(0),
+                dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
+                dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
+                dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
+                ]
+
+        #value[0] = 0x01
+        #value[1] = 0x02
+        value[2] = 0x30 # stroke count 1 byte /2
+        value[3] = 0x20 # Stroke Count (4 3)
+        value[4] = 0x03 # Stroke Count
+        value[5] = 0x02 # Total Distance (7 5 6)
+        value[6] = 0x00 # Total Distance
+        value[7] = 0x00 # Total Distance
+        value[8] = 0x01  # Instantaneous Pace (9 8)
+        value[9] = 0x02  # Instantaneous Pace
+        value[10] = 0x96 # Instantaneous Power (11 10)
+        value[11] = 0x00# Instantaneous Power
+        value[12] = 0x08 # Total Energy (13 12)
+        value[13] = 0x02 # Total Energy
+        value[14] = 0x01 # Energy per Hour
+        value[16] = 0x01 # Energy per Minute
+        value[17] = 0xb0 # Heart Rate
+        value[18] = 0x02 # Elasped time (19 18)
+        value[19] = 0x00 # Elasped time
+    #2C - 0B - 00 - 00 - 00 - 00 - FF - FF - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00
+        self.PropertiesChanged(GATT_CHRC_IFACE, { 'Value': value }, [])
+        return self.notifying
+
+    def _update_Waterrower_cb_value(self):
+        print('Update Waterrower Data')
+
+        if not self.notifying:
+            return
+
+        GLib.timeout_add(200, self.Waterrower_cb)
+
+    def StartNotify(self):
+        if self.notifying:
+            print('Already notifying, nothing to do')
+            return
+
+        self.notifying = True
+        self._update_Waterrower_cb_value()
+
+    def StopNotify(self):
+        if not self.notifying:
+            print('Not notifying, nothing to do')
+            return
+
+        self.notifying = False
+        self._update_Waterrower_cb_value()
+
+
+###### todo: function needed to get all the date from waterrower
+# 20 byte is max data send
+# example : 0x 2C-0B-00-00-00-00-FF-FF-00-00-00-00-00-00-00-00-00-00-00-00
+# first 2 bytes: are for rowing machine details: 0B
 
 class FitnessMachineControlPoint(Characteristic):
     FITNESS_MACHINE_CONTROL_POINT_UUID = '2ad9'
@@ -227,6 +275,11 @@ def register_ad_error_cb(error):
     logger.critical("Failed to register advertisement: " + str(error))
     mainloop.quit()
 
+def sigint_handler(sig, frame):
+    if sig == signal.SIGINT:
+        mainloop.quit()
+    else:
+        raise ValueError("Undefined handler for '{}' ".format(sig))
 
 AGENT_PATH = "/com/inonoob/agent"
 
@@ -294,4 +347,5 @@ def main():
 
 
 if __name__ == "__main__":
+    signal.signal(signal.SIGINT, sigint_handler)
     main()
