@@ -200,25 +200,47 @@ class RowerData(Characteristic):
                 dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
                 ]
 
-        #value[0] = 0x01
-        #value[1] = 0x02
-        value[2] = 0x30 # stroke count 1 byte /2
-        value[3] = 0x20 # Stroke Count (4 3)
-        value[4] = 0x03 # Stroke Count
-        value[5] = 0x02 # Total Distance (7 5 6)
+        # #value[0] = 0x01
+        # #value[1] = 0x02
+        # value[2] = 0x30 # stroke count 1 byte /2
+        # value[3] = 0x20 # Stroke Count (4 3)
+        # value[4] = 0x03 # Stroke Count
+        # value[5] = 0x02 # Total Distance (7 5 6)
+        # value[6] = 0x00 # Total Distance
+        # value[7] = 0x00 # Total Distance
+        # value[8] = 0x01  # Instantaneous Pace (9 8)
+        # value[9] = 0x02  # Instantaneous Pace
+        # value[10] = 0x96 # Instantaneous Power (11 10)
+        # value[11] = 0x00# Instantaneous Power
+        # value[12] = 0x08 # Total Energy (13 12)
+        # value[13] = 0x02 # Total Energy
+        # value[14] = 0x01 # Energy per Hour
+        # value[16] = 0x01 # Energy per Minute
+        # value[17] = 0xb0 # Heart Rate
+        # value[18] = 0x02 # Elasped time (19 18)
+        # value[19] = 0x00 # Elasped time
+
+        value[2] = 0x00 # stroke count 1 byte /2
+        value[3] = 0x00 # Stroke Count (4 3)
+        value[4] = 0x00 # Stroke Count
+        value[5] = 0x00 # Total Distance (7 5 6)
         value[6] = 0x00 # Total Distance
         value[7] = 0x00 # Total Distance
-        value[8] = 0x01  # Instantaneous Pace (9 8)
-        value[9] = 0x02  # Instantaneous Pace
-        value[10] = 0x96 # Instantaneous Power (11 10)
+        value[8] = 0x00  # Instantaneous Pace (9 8)
+        value[9] = 0x00  # Instantaneous Pace
+        value[10] = 0x00 # Instantaneous Power (11 10)
         value[11] = 0x00# Instantaneous Power
-        value[12] = 0x08 # Total Energy (13 12)
-        value[13] = 0x02 # Total Energy
-        value[14] = 0x01 # Energy per Hour
-        value[16] = 0x01 # Energy per Minute
-        value[17] = 0xb0 # Heart Rate
-        value[18] = 0x02 # Elasped time (19 18)
+        value[12] = 0x00 # Total Energy (13 12)
+        value[13] = 0x00 # Total Energy
+        value[14] = 0x00 # Energy per Hour
+        value[16] = 0x00 # Energy per Minute
+        value[17] = 0x00 # Heart Rate
+        value[18] = 0x00 # Elasped time (19 18)
         value[19] = 0x00 # Elasped time
+
+
+
+
     #2C - 0B - 00 - 00 - 00 - 00 - FF - FF - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00
         self.PropertiesChanged(GATT_CHRC_IFACE, { 'Value': value }, [])
         return self.notifying
@@ -229,7 +251,7 @@ class RowerData(Characteristic):
         if not self.notifying:
             return
 
-        GLib.timeout_add(200, self.Waterrower_cb)
+        GLib.timeout_add(1000, self.Waterrower_cb)
 
     def StartNotify(self):
         if self.notifying:

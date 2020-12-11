@@ -65,6 +65,8 @@ BLE Server exposing Treadmill Data Characteristics and Control Points. This is w
 
 BLE Gatt description: [link](http://software-dl.ti.com/lprf/sdg-latest/html/ble-stack-3.x/gatt.html)
 
+BLE Gatt server example: [link](https://scribles.net/running-ble-gatt-server-example-on-raspbian-stretch/)
+
 Bluetooth format types: [Link](https://www.bluetooth.com/specifications/assigned-numbers/format-types/)
 
 Bluetooth UUID overview (PDF): [Link](https://specificationrefs.bluetooth.com/assigned-values/16-bit%20UUID%20Numbers%20Document.pdf)
