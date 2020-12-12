@@ -39,8 +39,15 @@ pi is perfect for this project.
 
 ### Software
 
+When you install a fresh Raspbian on a raspberry pi and want to use the script you first must add the user pi to the
+group bluetooth. Or your will have an error acces denied. 
+
 Tip: if you see on the nFR app when try to read or write and it say 0x03 no write to write then
 you have error in you python code !!!
+
+DO NOT UPDATE after bluez 5.50 because then you will have 2 Device Information 0x180A and Coxswain will check the first
+won't see the Software revision string and won't perform the reset! If you do you will see 2 Device Information with 
+the first havoing PnP up thing "device information pnp device" !!!
 
 ## Resources: 
 
@@ -55,6 +62,12 @@ Python dbus types: [Link](https://dbus.freedesktop.org/doc/dbus-python/tutorial.
 ### BLE
 
 BLE waterrower cycling profile: [link to waterrower BLE cycling](https://github.com/MostTornBrain/Waterrower)
+
+BLE erg cycling with rs232 + ble [link](https://github.com/weinzmi/ergoFACE)
+
+use rs232.py as loop with global available variable + thrading ble and rs232 + ant+ 
+
+BLE example [link](https://scribles.net/creating-ibeacon-using-bluez-example-code-on-raspberry-pi/#Step01)
 
 BLE expresso machine example from punchthrough: 
 [Link to repo](https://github.com/PunchThrough/espresso-ble), [Link to blog](https://punchthrough.com/creating-a-ble-peripheral-with-bluez/)
@@ -74,6 +87,8 @@ Bluetooth UUID overview (PDF): [Link](https://specificationrefs.bluetooth.com/as
 Bluetooth GATT specifications: [Link](https://www.bluetooth.com/specifications/gatt/)
 
 Android app nRF Connect for Mobile: [Link](https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp&hl=en_US&gl=US)
+
+BLE gatt server micropython [link](https://github.com/micropython/micropython/blob/master/examples/bluetooth/ble_advertising.py)
 
 ### ANT+ 
 
