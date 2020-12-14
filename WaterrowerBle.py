@@ -8,6 +8,7 @@ import dbus
 import dbus.exceptions
 import dbus.mainloop.glib
 import dbus.service
+from queue import Queue
 
 from ble import (
     Advertisement,
@@ -60,6 +61,7 @@ filelogHandler.setFormatter(formatter)
 logger.addHandler(filelogHandler)
 logger.addHandler(logHandler)
 
+out_q = []
 
 mainloop = None
 
@@ -91,6 +93,10 @@ def register_app_error_cb(error):
     logger.critical("Failed to register application: " + str(error))
     mainloop.quit()
 
+def request_reset_ble():
+    out_q.put("reset_ble")
+    return out_q
+
 
 class DeviceInformation(Service):
     DEVICE_INFORMATION_UUID = '180A'
@@ -111,12 +117,13 @@ class SoftwareRevisionString(Characteristic):
             ['read'],
             service)
         self.notifying = False
-        self.value = [dbus.Byte(0), dbus.Byte(0), dbus.Byte(0), dbus.Byte(0)]  # ble com module waterrower software revision
+        #self.value = [dbus.Byte(0), dbus.Byte(0), dbus.Byte(0), dbus.Byte(0)]  # ble com module waterrower software revision
+        self.value = [dbus.Byte(0), dbus.Byte(0), dbus.Byte(0)]  # ble com module waterrower software revision
 
         self.value[0] = 0x34
         self.value[1] = 0x2E
-        self.value[2] = 0x32
-        self.value[3] = 0x30
+        self.value[2] = 0x33
+        #self.value[3] = 0x30
 
     def ReadValue(self, options):
         print('SoftwareRevisionString: ' + repr(self.value))
@@ -146,7 +153,7 @@ class FTMservice(Service):
 
     def __init__(self, bus, index):
         Service.__init__(self, bus, index, self.FITNESS_MACHINE_UUID, True)
-        self.add_characteristic(FitnessMachineFeature(bus,0,self))
+       # self.add_characteristic(FitnessMachineFeature(bus,0,self))
         self.add_characteristic(RowerData(bus, 1, self))
         self.add_characteristic(FitnessMachineControlPoint(bus, 2, self))
 
@@ -192,51 +199,86 @@ class RowerData(Characteristic):
             ['notify'],
             service)
         self.notifying = False
+        self.iter = 0
 
     def Waterrower_cb(self):
-        value = [dbus.Byte(0x2C), dbus.Byte(0x0b), dbus.Byte(0), dbus.Byte(0),dbus.Byte(0),
-                dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
-                dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
-                dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
-                ]
+        # value = [dbus.Byte(0x7F), dbus.Byte(0x3F), dbus.Byte(0), dbus.Byte(0),dbus.Byte(0),
+        #         dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
+        #         dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
+        #         dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
+        #         ]
+
+        value = [#dbus.Byte(0x7F), dbus.Byte(0x3F), # flag for all values
+                 dbus.Byte(0x2C), dbus.Byte(0x0B),
+                 dbus.Byte(0x48), dbus.Byte(0x01), dbus.Byte(0x00), #0 0 8 16 stroke rate + stroke count
+                 #dbus.Byte(0x02), ## 1 1 8 av stroke rate
+                 dbus.Byte(0x03), dbus.Byte(0x00), dbus.Byte(0x00), # 2 1 16 + 8 distance
+                 dbus.Byte(0x04), dbus.Byte(0x00),# 3 1 16 instantaneous pace
+                 #dbus.Byte(0xFF), dbus.Byte(0xFF), # 4 1 16 average pace
+                 dbus.Byte(0x0C), dbus.Byte(0x00), # 5 1 16 instantaneous power
+                 #dbus.Byte(0xFF), dbus.Byte(0xFF), # 6 1 16 average power
+                 #dbus.Byte(0xFF), dbus.Byte(0xFF), # 7 1 16 resitance level
+                 dbus.Byte(0x09), dbus.Byte(0x00),dbus.Byte(0x0F), dbus.Byte(0x00),dbus.Byte(0x01), # 8 1 16 + 16 +16 Total energy, energy per hour, energy per minute
+                 dbus.Byte(0x0F), # 9 1  8 heart rate
+                 #dbus.Byte(0xFF), # 10 1 8 metabolic equivalent 0.1
+                 dbus.Byte(0x0F),dbus.Byte(0x00), # 11 1 16 elapsed time
+                 #dbus.Byte(0xFF),dbus.Byte(0xFF), # 12 1 16 reamaining time
+                 ]
+                 #   1111111111110
+        #0111111111111
+
+
+        # 0 0 8 16 stroke rate + stroke count
+        # 1 1 8 av stroke rate
+        # 2 1 16 + 8 distance
+        # 3 1 16 instantaneous pace
+        # 4 1 16 average pace
+        # 5 1 16 instantaneous power
+        # 6 1 16 average power
+        # 7 1 16 resitance level
+        # 8 1 16 + 16 +16 Total energy, energy per hour, energy per minute
+        # 9 1  8 heart rate
+        # 10 1 8 metabolic equivalent 0.1
+        # 11 1 16 elapsed time
+        # 12 1 16 reamaining time
 
         # #value[0] = 0x01
         # #value[1] = 0x02
         # value[2] = 0x30 # stroke count 1 byte /2
-        # value[3] = 0x20 # Stroke Count (4 3)
-        # value[4] = 0x03 # Stroke Count
-        # value[5] = 0x02 # Total Distance (7 5 6)
-        # value[6] = 0x00 # Total Distance
-        # value[7] = 0x00 # Total Distance
+        # value[3] = 0x01 # Stroke Count (4 3)
+        # value[4] = 0x01 # Stroke Count
+        # value[5] = 0x01 # Total Distance (7 5 6)
+        # value[6] = 0x01 # Total Distance
+        # value[7] = 0x01 # Total Distance
         # value[8] = 0x01  # Instantaneous Pace (9 8)
         # value[9] = 0x02  # Instantaneous Pace
-        # value[10] = 0x96 # Instantaneous Power (11 10)
-        # value[11] = 0x00# Instantaneous Power
+        # value[10] = 0x96 # Instantaneous Power (11 10) (0x96)
+        # value[11] = 0x01# Instantaneous Power
         # value[12] = 0x08 # Total Energy (13 12)
         # value[13] = 0x02 # Total Energy
         # value[14] = 0x01 # Energy per Hour
         # value[16] = 0x01 # Energy per Minute
-        # value[17] = 0xb0 # Heart Rate
+        # value[17] = 0x02 # Heart Rate
         # value[18] = 0x02 # Elasped time (19 18)
-        # value[19] = 0x00 # Elasped time
+        # value[19] = 0x02 # Elasped time
 
-        value[2] = 0x00 # stroke count 1 byte /2
-        value[3] = 0x00 # Stroke Count (4 3)
-        value[4] = 0x00 # Stroke Count
-        value[5] = 0x00 # Total Distance (7 5 6)
-        value[6] = 0x00 # Total Distance
-        value[7] = 0x00 # Total Distance
-        value[8] = 0x00  # Instantaneous Pace (9 8)
-        value[9] = 0x00  # Instantaneous Pace
-        value[10] = 0x00 # Instantaneous Power (11 10)
-        value[11] = 0x00# Instantaneous Power
-        value[12] = 0x00 # Total Energy (13 12)
-        value[13] = 0x00 # Total Energy
-        value[14] = 0x00 # Energy per Hour
-        value[16] = 0x00 # Energy per Minute
-        value[17] = 0x00 # Heart Rate
-        value[18] = 0x00 # Elasped time (19 18)
-        value[19] = 0x00 # Elasped time
+        # value[2] = 0x00 # stroke count 1 byte /2
+        # value[3] = 0x00 # Stroke Count (4 3)
+        # value[4] = 0x00  # Stroke Count
+        # value[5] = 0x0A # Total Distance (7 5 6)
+        # value[6] = 0x00  # Total Distance
+        # value[7] = 0x00  # Total Distance
+        # value[8] = 0x00  # Instantaneous Pace (9 8)
+        # value[9] = 0x00  # Instantaneous Pace
+        # value[10] = 0x00 # Instantaneous Power (11 10)
+        # value[11] = 0x00# Instantaneous Power
+        # value[12] = 0x00 # Total Energy (13 12)
+        # value[13] = 0x00 # Total Energy
+        # value[14] = 0x00 # Energy per Hour
+        # value[16] = 0x00 # Energy per Minute
+        # value[17] = 0x00 # Heart Rate
+        # value[18] = 0x00 # Elasped time (19 18)
+        # value[19] = 0x00 # Elasped time
 
 
 
@@ -284,6 +326,7 @@ class FitnessMachineControlPoint(Characteristic):
             self.FITNESS_MACHINE_CONTROL_POINT_UUID,
             ['indicate', 'write'],
             service)
+        self.out_q = None
 
     def fmcp_cb(self, byte):
         print('fmcp_cb activate')
@@ -292,7 +335,8 @@ class FitnessMachineControlPoint(Characteristic):
             value = [dbus.Byte(128), dbus.Byte(0), dbus.Byte(1)]
         elif byte == 1:
             value = [dbus.Byte(128), dbus.Byte(1), dbus.Byte(1)]
-        print(value)
+            request_reset_ble()
+        #print(value)
         self.PropertiesChanged(GATT_CHRC_IFACE, {'Value': value}, [])
 
     def WriteValue(self, value, options):
@@ -307,6 +351,40 @@ class FitnessMachineControlPoint(Characteristic):
             print('Reset')
             self.fmcp_cb(byte)
 
+class HeartRate(Service):
+    HEART_RATE = '180D'
+
+    def __init__(self, bus, index):
+        Service.__init__(self, bus, index, self.HEART_RATE, True)
+        self.add_characteristic(HeartRateMeasurement(bus, 0, self))
+
+class HeartRateMeasurement(Characteristic):
+    HEART_RATE_MEASUREMENT = '2a37'
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.HEART_RATE_MEASUREMENT,
+            ['notify'],
+            service)
+        self.notifying = False
+
+
+
+    def StartNotify(self):
+        if self.notifying:
+            print('Already notifying, nothing to do')
+            return
+
+        self.notifying = True
+
+    def StopNotify(self):
+        if not self.notifying:
+            print('Not notifying, nothing to do')
+            return
+
+        self.notifying = False
+
 
 class FTMPAdvertisement(Advertisement):
     def __init__(self, bus, index):
@@ -316,6 +394,7 @@ class FTMPAdvertisement(Advertisement):
         )
         self.add_service_uuid(DeviceInformation.DEVICE_INFORMATION_UUID)
         self.add_service_uuid(FTMservice.FITNESS_MACHINE_UUID)
+        self.add_service_uuid(HeartRate.HEART_RATE)
 
         self.add_local_name("S4 COMMS 69")
         self.include_tx_power = True
@@ -338,7 +417,7 @@ def sigint_handler(sig, frame):
 AGENT_PATH = "/com/inonoob/agent"
 
 
-def main():
+def main(out_q):
     global mainloop
 
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
@@ -371,6 +450,7 @@ def main():
     app = Application(bus)
     app.add_service(DeviceInformation(bus, 1))
     app.add_service(FTMservice(bus, 2))
+    app.add_service(HeartRate(bus,3))
 
     mainloop = MainLoop()
 

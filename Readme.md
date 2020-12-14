@@ -51,6 +51,10 @@ the first havoing PnP up thing "device information pnp device" !!!
 
 ## Resources: 
 
+### Waterrower Serial 
+
+interface to Waterrower serial [link](https://github.com/bfritscher/waterrower/blob/master/waterrower/interface.py)
+
 ### DBUS
 
 Dbus Tutorial: [Link](https://dbus.freedesktop.org/doc/dbus-tutorial.html)
@@ -62,6 +66,7 @@ Python dbus types: [Link](https://dbus.freedesktop.org/doc/dbus-python/tutorial.
 ### BLE
 
 BLE waterrower cycling profile: [link to waterrower BLE cycling](https://github.com/MostTornBrain/Waterrower)
+
 
 BLE erg cycling with rs232 + ble [link](https://github.com/weinzmi/ergoFACE)
 
