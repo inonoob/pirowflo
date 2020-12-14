@@ -312,4 +312,4 @@ def main(in_q):
     #t2.start()
 
 if __name__ == '__main__':
-    main()
+    main(None)
