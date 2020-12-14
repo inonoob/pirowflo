@@ -93,9 +93,9 @@ def register_app_error_cb(error):
     logger.critical("Failed to register application: " + str(error))
     mainloop.quit()
 
-def request_reset_ble():
-    out_q.put("reset_ble")
-    return out_q
+# def request_reset_ble():
+#     out_q.put("reset_ble")
+#     return out_q
 
 
 class DeviceInformation(Service):
@@ -335,7 +335,7 @@ class FitnessMachineControlPoint(Characteristic):
             value = [dbus.Byte(128), dbus.Byte(0), dbus.Byte(1)]
         elif byte == 1:
             value = [dbus.Byte(128), dbus.Byte(1), dbus.Byte(1)]
-            request_reset_ble()
+            #request_reset_ble()
         #print(value)
         self.PropertiesChanged(GATT_CHRC_IFACE, {'Value': value}, [])
 
@@ -417,7 +417,7 @@ def sigint_handler(sig, frame):
 AGENT_PATH = "/com/inonoob/agent"
 
 
-def main(out_q):
+def main(): #out_q
     global mainloop
 
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
