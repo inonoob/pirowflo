@@ -283,29 +283,19 @@ class Rower(object):
         self._callbacks.remove(cb)
 
 def main(in_q):
-    #S4 = Rower()
-    #S4.open()
-    #S4.reset_request()
-    # def MainthreadWaterrower(in_q):
-    #     print("THREAD - Waterrower started")
-    #     while True:
-    #         resetRequest_ble = in_q.get()
-    #         print(resetRequest_ble)
-    #         if resetRequest_ble:
-    #             S4.reset_request()
-    #         #print(S4.is_connected())
-    #         #print(S4._callbacks)
-    #         time.sleep(1)
-    while True:
-        resetRequest_ble = in_q.get()
-        print(resetRequest_ble)
-        if resetRequest_ble:
-            #S4.reset_request()
-            print("fake reset")
-        #print(S4.is_connected())
-        #print(S4._callbacks)
-        Queue.task_done
-        time.sleep(1)
+    S4 = Rower()
+    S4.open()
+    S4.reset_request()
+    def MainthreadWaterrower(in_q):
+        print("THREAD - Waterrower started")
+        while True:
+            resetRequest_ble = in_q.get()
+            print(resetRequest_ble)
+            if resetRequest_ble:
+                S4.reset_request()
+            #print(S4.is_connected())
+            #print(S4._callbacks)
+            time.sleep(1)
 
 
     # def Ble_reset_test(out_q):
