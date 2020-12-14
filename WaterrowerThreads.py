@@ -8,7 +8,7 @@ def main():
 
     def BleService(out_q):
         print("THREAD - Start BLE Advertise and BLE GATT Server")
-        bleService = WaterrowerBle.main()
+        bleService = WaterrowerBle.main(out_q)
         bleService()
 
 

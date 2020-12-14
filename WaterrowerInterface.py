@@ -286,30 +286,17 @@ def main(in_q):
     S4 = Rower()
     S4.open()
     S4.reset_request()
-    def MainthreadWaterrower(in_q):
-        print("THREAD - Waterrower started")
-        while True:
-            resetRequest_ble = in_q.get()
-            print(resetRequest_ble)
-            if resetRequest_ble:
-                S4.reset_request()
-            #print(S4.is_connected())
-            #print(S4._callbacks)
-            time.sleep(1)
+    #def MainthreadWaterrower(in_q):
+    print("THREAD - Waterrower started")
+    while True:
+        resetRequest_ble = in_q.get()
+        print(resetRequest_ble)
+        if resetRequest_ble:
+            S4.reset_request()
+        print(S4.is_connected())
+        Queue.task_done()
+        time.sleep(1)
 
-
-    # def Ble_reset_test(out_q):
-    #     while True:
-    #         time.sleep(5)
-    #         print("going to reset")
-    #         out_q.put("reset_ble")
-
-
-    #q = Queue()
-    #t1 = threading.Thread(target=MainthreadWaterrower,args =(q, ))
-    #t2 = threading.Thread(target=Ble_reset_test,args=(q,))
-    #t1.start()
-    #t2.start()
 
 if __name__ == '__main__':
     main(None)
