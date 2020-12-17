@@ -49,6 +49,11 @@ DO NOT UPDATE after bluez 5.50 because then you will have 2 Device Information 0
 won't see the Software revision string and won't perform the reset! If you do you will see 2 Device Information with 
 the first havoing PnP up thing "device information pnp device" !!!
 
+In order to get this working: [link](https://git.kernel.org/pub/scm/bluetooth/bluez.git/commit/?id=d5e07945c4aa36a83addc3c269f55c720c28afdb)
+
+remove the code part from the source and compile the source. By doing this you repair the issue. As it is not documented how to remove it 
+via the main.conf file in etc. 
+
 ## Resources: 
 
 ### Waterrower Serial 
@@ -104,6 +109,8 @@ ANT+ Virtual Power Meter: [Link](https://github.com/dhague/vpower)
 Kettler Ant+ Support: [Link](https://github.com/joekearney/kettler-to-ant)
 
 GoldenCheetah [link](https://github.com/GoldenCheetah/GoldenCheetah/blob/master/src/ANT/ANTMessage.cpp)
+
+hacking ant [link](https://hackingantblog.wordpress.com/)
 
 ## License
 

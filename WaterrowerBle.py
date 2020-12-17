@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
 
 import logging
-
 import signal
-
 import dbus
 import dbus.exceptions
 import dbus.mainloop.glib
 import dbus.service
-from queue import Queue
 
 from ble import (
     Advertisement,
@@ -19,12 +16,6 @@ from ble import (
     Descriptor,
     Agent,
 )
-
-import struct
-import array
-from enum import Enum
-
-import sys
 
 MainLoop = None
 try:
@@ -92,9 +83,11 @@ def register_app_error_cb(error):
     logger.critical("Failed to register application: " + str(error))
     mainloop.quit()
 
+# Function is needed to trigger the reset of the waterrower. It puts the "reset_ble" into the queue (FIFO) in order
+# for the WaterrowerInterface thread to get the signal to reset the waterrower.
+
 def request_reset_ble():
     out_q_reset.put("reset_ble")
-    #return out_q_reset
 
 
 class DeviceInformation(Service):

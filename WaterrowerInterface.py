@@ -28,6 +28,7 @@ MEMORY_MAP = {'055': {'type': 'total_distance_m', 'size': 'double', 'base': 16},
              }
 
 
+
 # ACH values = Ascii coded hexadecimal
 # REQUEST sent from PC to device
 # RESPONSE sent from device to PC
@@ -154,6 +155,7 @@ class Rower(object):
         self._callbacks = set()                 # defines an empty set
         self._stop_event = threading.Event()    # defines the stop event in order to stop the threads requesting and capturing
         self._demo = False                      # set demo is set to true then use the fakeS4 but for the moment it is disaalbe
+        self._lock = threading.Lock()
         # if options and options.demo:
         #     from demo import FakeS4
         #     self._serial = FakeS4()
@@ -161,12 +163,16 @@ class Rower(object):
         # else:
         self._serial = serial.Serial()
         self._serial.baudrate = 19200
+        self.BleWRValues = {}
 
         # If I wanna stop those thread from outside I just call xxxxx_stop_event.set() to stop it
+        self.event = 0
         self._request_thread = build_daemon(target=self.start_requesting) # start the thread requesting during class init
         self._capture_thread = build_daemon(target=self.start_capturing)    # Start the thread capurting during class init
+        self._ble_capture_thread = build_daemon(target=self.event_BLE)
         self._request_thread.start()
         self._capture_thread.start()
+        self._ble_capture_thread.start()
 
 # This function is used to check if the connection to the waterrower is alive and if the threads request and caputre are running
     def is_connected(self):
@@ -196,6 +202,7 @@ class Rower(object):
             self._stop_event.clear()                # flush the _stop_event from true to false
             self._request_thread = build_daemon(target=self.start_requesting) # define the requesting daemon
             self._capture_thread = build_daemon(target=self.start_capturing)  # define the capturing damemon
+            self._ble_capture_thread = build_daemon(target=self.event_BLE)
             self._request_thread.start()    # start the request_thread
             self._capture_thread.start()    # start the capture_thread
         print("write USB_REQUEST")
@@ -231,6 +238,11 @@ class Rower(object):
                     event = event_from(line)       # check what kind of message has been recvied from the waterrower eg. RESET or IDD0A8015 .... and return the dict with the informations
                     if event:                      # if event is not None e.g ping which result in a return none then
                         self.notify_callbacks(event) # call the function TODO: check what the functions does
+                        #self.event_BLE(event)
+                        self._lock.acquire()
+                        self.event = event
+                        self._lock.release()
+                        #print(self.event)
                 except Exception as e:
                     print("could not read %s" % e)
                     try:
@@ -271,9 +283,52 @@ class Rower(object):
 ########### I don't know yet what he is doing here ! #######################
 
     def notify_callbacks(self, event):
+        #print(event)
         for cb in self._callbacks:
             cb(event)
             print(cb(event))
+
+    def event_BLE(self):
+        while not self._stop_event.is_set():
+            self._lock.acquire()
+            event = self.event
+            self._lock.release()
+            #print(event)
+            if event:
+                print(self.BleWRValues)
+                if event['type'] == 'stroke_rate':
+                    self.BleWRValues.update({'stroke_rate': event['value']})
+                if event['type'] == 'total_strokes':
+                    self.BleWRValues.update({'total_strokes': event['value']})
+                if event['type'] == 'total_strokes':
+                    self.BleWRValues.update({'total_distance_m': event['value']})
+                if event['type'] == 'avg_distance_cmps':
+                    if event['value'] == 0:
+                        pass
+                    else:
+                        InstantaneousPace = (500 * 100)/ event['value']
+                        self.BleWRValues.update({'instantaneous pace': InstantaneousPace})
+                # 500 m => 50000 cm, XX cm/s = s (500m  * 100cm/1m) / XX cm/s  =  XX.XXX s
+                if event['type'] == 'watts':
+                    self.BleWRValues.update({'watts': event['value']})
+                if event['type'] == 'total_kcal':
+                    self.BleWRValues.update({'total_kcal': event['value']})
+                # if event['type'] == 'total_kcal_h':                                # must calclatre it first
+                #     self.BleWRValues.update({'total_kcal': event['value']})
+                # if event['type'] == 'total_kcal_min':                              # must calclatre it first
+                #     self.BleWRValues.update({'total_kcal': event['value']})
+                if event['type'] == 'display_sec':
+                    WRsecondes = event['value']
+                if event['type'] == 'display_min':
+                    WRminutes = event['value']
+                if event['type'] == 'display_hr':
+                    WRhours = event['value']
+                else:
+                    pass
+            else:
+                #print("running as thread")
+                pass
+            time.sleep(0.2)
 
 # Add and remove stuff from
     def register_callback(self, cb):
@@ -295,8 +350,10 @@ def main(in_q):
             S4.reset_request()
         print(S4.is_connected())
         Queue.task_done()
-        time.sleep(1)
+        time.sleep(0.1)
 
+#  in the while loop create a timestamp and compare it with the previouse one. Create a Delta of 500ms = 0.5 sec
+#
 
 if __name__ == '__main__':
     main(None)
