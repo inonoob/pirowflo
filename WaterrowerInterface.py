@@ -164,7 +164,19 @@ class Rower(object):
         # else:
         self._serial = serial.Serial()
         self._serial.baudrate = 19200
-        self.BleWRValues = {}
+        self.BleWRValues = {
+                            'stroke_rate': 0,
+                            'total_strokes': 0,
+                            'total_distance_m': 0,
+                            'instantaneous pace': 0,
+                            'watts': 0,
+                            'total_kcal': 0,
+                            'total_kcal_hour': 0,
+                            'total_kcal_min': 0,
+                            'heart_rate': 0,
+                            'elapsedtime': 0.0,
+                            }
+
         self.LastPing = 0
         self.event_ble = {}
         self.secondsWR = 0
@@ -269,7 +281,7 @@ class Rower(object):
                     if 'not_in_loop' not in MEMORY_MAP[address]: # if instant of the dict with type the value of this dict is 'not_in_loo' then skip this address and go to the next
                         self.request_address(address)               # trigger function request_address which will format the memory address and call the function write to send it over serial to the waterrower
                         self._stop_event.wait(0.025)                # wait 25ms for the responce according to the Water Rower S4 S5 USB Protocol Issue 1
-                        #time.sleep(0.1)
+
             else:
                 self._stop_event.wait(0.1)                          # is stop event is still false but serial is not true keep looping and the thread running
 
@@ -307,11 +319,11 @@ class Rower(object):
                     #print(self.event_ble['raw'] ,self.event_ble['at'])  # problem set value to zero if no movement
                     pass
                 if self.event_ble['type'] == 'stroke_rate':
-                    self.BleWRValues.update({'stroke_rate': self.event_ble['value']})
+                    self.BleWRValues.update({'stroke_rate': (self.event_ble['value']*2)})
                 if self.event_ble['type'] == 'total_strokes':
                     self.BleWRValues.update({'total_strokes': self.event_ble['value']})
-                if self.event_ble['type'] == 'total_strokes':
-                    self.BleWRValues.update({'total_distance_m': self.event_ble['value']})
+                if self.event_ble['type'] == 'total_distance_m':
+                    self.BleWRValues.update({'total_distance_m': (self.event_ble['value'])})
                 if self.event_ble['type'] == 'avg_distance_cmps':
                     if self.event_ble['value'] == 0:
                         pass
@@ -322,7 +334,7 @@ class Rower(object):
                 if self.event_ble['type'] == 'watts':
                     self.BleWRValues.update({'watts': self.event_ble['value']})
                 if self.event_ble['type'] == 'total_kcal':
-                    self.BleWRValues.update({'total_kcal': self.event_ble['value']}) # in cal
+                    self.BleWRValues.update({'total_kcal': (self.event_ble['value'])/1000}) # in cal
                 if self.event_ble['type'] == 'total_kcal_h':                                # must calclatre it first
                     self.BleWRValues.update({'total_kcal': 1})
                 if self.event_ble['type'] == 'total_kcal_min':                              # must calclatre it first
@@ -372,7 +384,10 @@ def main(in_q,ble_out_q):
             S4.reset_request()
         else:
             pass
-        ble_out_q.put(S4.BleWRValues)
+        #ble_out_q.put(S4.BleWRValues)
+        ble_out_q.append(S4.BleWRValues)
+        print(ble_out_q)
+        #print(ble_out_q.qsize())
         #print(S4.is_connected())
         #Queue.task_done()
         time.sleep(0.1)

@@ -6,6 +6,7 @@ import dbus
 import dbus.exceptions
 import dbus.mainloop.glib
 import dbus.service
+import struct
 
 from ble import (
     Advertisement,
@@ -88,6 +89,36 @@ def register_app_error_cb(error):
 
 def request_reset_ble():
     out_q_reset.put("reset_ble")
+
+def Convert_Waterrower_raw_to_byte():
+    #WaterrowerValuesRaw = ble_in_q_value.get()
+    WaterrowerValuesRaw = ble_in_q_value.pop()
+    WRBytearray = []
+    print("Ble Values: {0}".format(WaterrowerValuesRaw))
+    for keys in WaterrowerValuesRaw:
+        WaterrowerValuesRaw[keys] = int(WaterrowerValuesRaw[keys])
+        #print(WaterrowerValuesRaw[keys])
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['stroke_rate'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_strokes'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_strokes'] & 0xff00) >> 8))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_distance_m'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_distance_m'] & 0xff00) >> 8))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_distance_m'] & 0xff0000) >> 16))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['instantaneous pace'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['instantaneous pace'] & 0xff00) >> 8))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['watts'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['watts'] & 0xff00) >> 8))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_kcal'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_kcal'] & 0xff00) >> 8))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_kcal_hour'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_kcal_hour'] & 0xff00) >> 8))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_kcal_min'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['heart_rate'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['elapsedtime'] & 0xff)))
+    WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['elapsedtime'] & 0xff00) >> 8))
+    #print(WRBytearray)
+    print(WRBytearray)
+    return WRBytearray
 
 
 class DeviceInformation(Service):
@@ -216,15 +247,19 @@ class RowerData(Characteristic):
                  dbus.Byte(0x0F),dbus.Byte(0x00), # 11 1 16 elapsed time
                  #dbus.Byte(0xFF),dbus.Byte(0xFF), # 12 1 16 reamaining time
                  ]
-                 #   1111111111110
-        #0111111111111
-        test = ble_in_q_value.empty()
-        #test = ble_in_q_value.get()
+        #bytes(input_string, 'utf-8')
 
-        print(test)
-        print(ble_in_q_value.get())
-        #print(test['stroke_rate'])
+        Waterrower_byte_values = Convert_Waterrower_raw_to_byte()
 
+        value = [dbus.Byte(0x2C), dbus.Byte(0x0B),
+                 dbus.Byte(Waterrower_byte_values[0]), dbus.Byte(Waterrower_byte_values[1]), dbus.Byte(Waterrower_byte_values[2]),
+                 dbus.Byte(Waterrower_byte_values[3]), dbus.Byte(Waterrower_byte_values[4]), dbus.Byte(Waterrower_byte_values[5]),
+                 dbus.Byte(Waterrower_byte_values[6]), dbus.Byte(Waterrower_byte_values[7]),
+                 dbus.Byte(Waterrower_byte_values[8]), dbus.Byte(Waterrower_byte_values[9]),
+                 dbus.Byte(Waterrower_byte_values[10]), dbus.Byte(Waterrower_byte_values[11]),dbus.Byte(Waterrower_byte_values[12]),dbus.Byte(Waterrower_byte_values[13]),dbus.Byte(Waterrower_byte_values[14]),
+                 dbus.Byte(Waterrower_byte_values[15]),
+                 dbus.Byte(Waterrower_byte_values[16]), dbus.Byte(Waterrower_byte_values[17]),
+                 ]
 
         # 0 0 8 16 stroke rate + stroke count
         # 1 1 8 av stroke rate
@@ -291,7 +326,7 @@ class RowerData(Characteristic):
         if not self.notifying:
             return
 
-        GLib.timeout_add(1000, self.Waterrower_cb)
+        GLib.timeout_add(150, self.Waterrower_cb)
 
     def StartNotify(self):
         if self.notifying:

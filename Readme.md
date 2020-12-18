@@ -54,6 +54,9 @@ In order to get this working: [link](https://git.kernel.org/pub/scm/bluetooth/bl
 remove the code part from the source and compile the source. By doing this you repair the issue. As it is not documented how to remove it 
 via the main.conf file in etc. 
 
+for the exchange between the threads 
+
+
 ## Resources: 
 
 ### Waterrower Serial 

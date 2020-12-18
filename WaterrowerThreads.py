@@ -3,6 +3,8 @@ import WaterrowerBle
 import WaterrowerInterface
 import threading
 from queue import Queue
+#from queue import LifoQueue
+from collections import deque
 
 def main():
 
@@ -23,7 +25,8 @@ def main():
     #     interface()
 
     q = Queue()
-    ble_q = Queue()
+    #ble_q = LifoQueue(maxsize=20)
+    ble_q = deque(maxlen=1)
     t1 = threading.Thread(target=BleService,args =(q,ble_q ))
     t2 = threading.Thread(target=Waterrower,args =(q,ble_q ))
     # t3 = threading.Thread(target=task3) # will be for ant+
