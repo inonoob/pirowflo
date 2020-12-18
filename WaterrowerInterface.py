@@ -4,6 +4,7 @@ import logging
 import time
 import serial
 import serial.tools.list_ports
+import datetime
 from queue import Queue
 
 MEMORY_MAP = {'055': {'type': 'total_distance_m', 'size': 'double', 'base': 16},
@@ -132,14 +133,14 @@ def event_from(line):
             return build_event(type='model', raw=cmd)           #  Call the methode to create a dict with the model and the row command used for it "SE"
         elif cmd[:2] == READ_MEMORY_RESPONSE:                   # if after memory request the responce comes from the waterrower
             return read_reply(cmd)                              # proced to the function read_reply which strips away everything and keeps the value and create the event dict for that request
-        elif cmd == PING_RESPONSE:                              # if Ping responce is recived which is all the time the rower is in standstill
-            return None                                         # do nothing
+        elif cmd[:4] == PING_RESPONSE:                              # if Ping responce is recived which is all the time the rower is in standstill
+            return build_event(type='ping', raw=cmd)                                         # do nothing
         elif cmd[:1] == PULSE_COUNT_RESPONSE:                   # Pluse count count the amount of 25 teeth passed 25teeth passed = P1
             return None                                         # do nothing
         elif cmd == ERROR_RESPONSE:                             # If Waterrower responce with an error
             return build_event(type='error', raw=cmd)           # crate an event with the dict entry error and the raw command
         else:                                                   # for an unforeasable repsonce responde with non
-            print("something is wrong")
+            #print("something is wrong")
             #print(cmd)
             #ignore
             #WR_RESPONSE
@@ -164,7 +165,13 @@ class Rower(object):
         self._serial = serial.Serial()
         self._serial.baudrate = 19200
         self.BleWRValues = {}
-
+        self.LastPing = 0
+        self.event_ble = {}
+        self.secondsWR = 0
+        self.minutesWR = 0
+        self.hoursWR = 0
+        self.elapsetime = 0
+        self.elapsetimeprev = 0
         # If I wanna stop those thread from outside I just call xxxxx_stop_event.set() to stop it
         self.event = 0
         self._request_thread = build_daemon(target=self.start_requesting) # start the thread requesting during class init
@@ -173,6 +180,7 @@ class Rower(object):
         self._request_thread.start()
         self._capture_thread.start()
         self._ble_capture_thread.start()
+
 
 # This function is used to check if the connection to the waterrower is alive and if the threads request and caputre are running
     def is_connected(self):
@@ -205,6 +213,7 @@ class Rower(object):
             self._ble_capture_thread = build_daemon(target=self.event_BLE)
             self._request_thread.start()    # start the request_thread
             self._capture_thread.start()    # start the capture_thread
+            self._ble_capture_thread.start()
         print("write USB_REQUEST")
         self.write(USB_REQUEST)             # call the write function which will write to the serial port "USB\r\n" which the waterrower will aknowledge with "_WR_"
 
@@ -227,7 +236,6 @@ class Rower(object):
             print(e)
             print("Serial error try to reconnect")
             self.open()                              # trigger open function in order to reconnect to the waterrower
-
 
 # function to capture the waterrower responces in a while loop. This loop can be terminate by setting the _stop_event.set() command .
     def start_capturing(self):
@@ -261,6 +269,7 @@ class Rower(object):
                     if 'not_in_loop' not in MEMORY_MAP[address]: # if instant of the dict with type the value of this dict is 'not_in_loo' then skip this address and go to the next
                         self.request_address(address)               # trigger function request_address which will format the memory address and call the function write to send it over serial to the waterrower
                         self._stop_event.wait(0.025)                # wait 25ms for the responce according to the Water Rower S4 S5 USB Protocol Issue 1
+                        #time.sleep(0.1)
             else:
                 self._stop_event.wait(0.1)                          # is stop event is still false but serial is not true keep looping and the thread running
 
@@ -291,44 +300,55 @@ class Rower(object):
     def event_BLE(self):
         while not self._stop_event.is_set():
             self._lock.acquire()
-            event = self.event
+            self.event_ble = self.event
             self._lock.release()
-            #print(event)
-            if event:
-                print(self.BleWRValues)
-                if event['type'] == 'stroke_rate':
-                    self.BleWRValues.update({'stroke_rate': event['value']})
-                if event['type'] == 'total_strokes':
-                    self.BleWRValues.update({'total_strokes': event['value']})
-                if event['type'] == 'total_strokes':
-                    self.BleWRValues.update({'total_distance_m': event['value']})
-                if event['type'] == 'avg_distance_cmps':
-                    if event['value'] == 0:
+            if self.event_ble:
+                if self.event_ble['type'] == 'ping':
+                    #print(self.event_ble['raw'] ,self.event_ble['at'])  # problem set value to zero if no movement
+                    pass
+                if self.event_ble['type'] == 'stroke_rate':
+                    self.BleWRValues.update({'stroke_rate': self.event_ble['value']})
+                if self.event_ble['type'] == 'total_strokes':
+                    self.BleWRValues.update({'total_strokes': self.event_ble['value']})
+                if self.event_ble['type'] == 'total_strokes':
+                    self.BleWRValues.update({'total_distance_m': self.event_ble['value']})
+                if self.event_ble['type'] == 'avg_distance_cmps':
+                    if self.event_ble['value'] == 0:
                         pass
                     else:
-                        InstantaneousPace = (500 * 100)/ event['value']
+                        InstantaneousPace = (500 * 100)/ self.event_ble['value']
                         self.BleWRValues.update({'instantaneous pace': InstantaneousPace})
                 # 500 m => 50000 cm, XX cm/s = s (500m  * 100cm/1m) / XX cm/s  =  XX.XXX s
-                if event['type'] == 'watts':
-                    self.BleWRValues.update({'watts': event['value']})
-                if event['type'] == 'total_kcal':
-                    self.BleWRValues.update({'total_kcal': event['value']})
-                # if event['type'] == 'total_kcal_h':                                # must calclatre it first
-                #     self.BleWRValues.update({'total_kcal': event['value']})
-                # if event['type'] == 'total_kcal_min':                              # must calclatre it first
-                #     self.BleWRValues.update({'total_kcal': event['value']})
-                if event['type'] == 'display_sec':
-                    WRsecondes = event['value']
-                if event['type'] == 'display_min':
-                    WRminutes = event['value']
-                if event['type'] == 'display_hr':
-                    WRhours = event['value']
+                if self.event_ble['type'] == 'watts':
+                    self.BleWRValues.update({'watts': self.event_ble['value']})
+                if self.event_ble['type'] == 'total_kcal':
+                    self.BleWRValues.update({'total_kcal': self.event_ble['value']}) # in cal
+                if self.event_ble['type'] == 'total_kcal_h':                                # must calclatre it first
+                    self.BleWRValues.update({'total_kcal': 1})
+                if self.event_ble['type'] == 'total_kcal_min':                              # must calclatre it first
+                    self.BleWRValues.update({'total_kcal': 1})
+                if self.event_ble['type'] == 'heart_rate':
+                    self.BleWRValues.update({'heart_rate': 0}) # in cal
+                if self.event_ble['type'] == 'display_sec':
+                    self.secondsWR = self.event_ble['value']
+                if self.event_ble['type'] == 'display_min':
+                    self.minutesWR = self.event_ble['value']
+                if self.event_ble['type'] == 'display_hr':
+                    self.hoursWR = self.event_ble['value']
                 else:
                     pass
             else:
                 #print("running as thread")
                 pass
-            time.sleep(0.2)
+            self.elapsetime = datetime.timedelta(seconds=self.secondsWR,minutes=self.minutesWR,hours=self.hoursWR)
+            self.elapsetime = self.elapsetime.total_seconds()
+            if self.elapsetimeprev <= self.elapsetime:
+                self.BleWRValues.update({'elapsedtime':self.elapsetime})
+                #print(self.elapsetime)
+                self.elapsetimeprev = self.elapsetime
+            else:
+                pass
+            #print(self.BleWRValues)
 
 # Add and remove stuff from
     def register_callback(self, cb):
@@ -337,19 +357,24 @@ class Rower(object):
     def remove_callback(self, cb):
         self._callbacks.remove(cb)
 
-def main(in_q):
+def main(in_q,ble_out_q):
     S4 = Rower()
     S4.open()
     S4.reset_request()
     #def MainthreadWaterrower(in_q):
     print("THREAD - Waterrower started")
     while True:
-        resetRequest_ble = in_q.get()
-        print(resetRequest_ble)
-        if resetRequest_ble:
+        #print('test')
+        #print('Ble dict {0}'.format(S4.BleWRValues))
+        if in_q.empty() == False:
+            resetRequest_ble = in_q.get()
+            print(resetRequest_ble)
             S4.reset_request()
-        print(S4.is_connected())
-        Queue.task_done()
+        else:
+            pass
+        ble_out_q.put(S4.BleWRValues)
+        #print(S4.is_connected())
+        #Queue.task_done()
         time.sleep(0.1)
 
 #  in the while loop create a timestamp and compare it with the previouse one. Create a Delta of 500ms = 0.5 sec

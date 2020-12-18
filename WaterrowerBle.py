@@ -218,6 +218,12 @@ class RowerData(Characteristic):
                  ]
                  #   1111111111110
         #0111111111111
+        test = ble_in_q_value.empty()
+        #test = ble_in_q_value.get()
+
+        print(test)
+        print(ble_in_q_value.get())
+        #print(test['stroke_rate'])
 
 
         # 0 0 8 16 stroke rate + stroke count
@@ -409,10 +415,12 @@ def sigint_handler(sig, frame):
 AGENT_PATH = "/com/inonoob/agent"
 
 
-def main(out_q): #out_q
+def main(out_q,ble_in_q): #out_q
     global mainloop
     global out_q_reset
+    global ble_in_q_value
     out_q_reset = out_q
+    ble_in_q_value = ble_in_q
 
     dbus.mainloop.glib.DBusGMainLoop(set_as_default=True)
 
