@@ -54,7 +54,8 @@ In order to get this working: [link](https://git.kernel.org/pub/scm/bluetooth/bl
 remove the code part from the source and compile the source. By doing this you repair the issue. As it is not documented how to remove it 
 via the main.conf file in etc. 
 
-for the exchange between the threads 
+for the exchange between the threads, I choose to use the deque in order to pass the value dict from the waterrower listern to the ble module 
+for the reset I used the queue module. I might switch to have a uniq system [link](https://stackoverflow.com/questions/29949697/multithreading-overwrite-old-value-in-queue)
 
 
 ## Resources: 

@@ -386,7 +386,6 @@ def main(in_q,ble_out_q):
             pass
         #ble_out_q.put(S4.BleWRValues)
         ble_out_q.append(S4.BleWRValues)
-        print(ble_out_q)
         #print(ble_out_q.qsize())
         #print(S4.is_connected())
         #Queue.task_done()

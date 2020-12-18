@@ -3,7 +3,6 @@ import WaterrowerBle
 import WaterrowerInterface
 import threading
 from queue import Queue
-#from queue import LifoQueue
 from collections import deque
 
 def main():
@@ -23,9 +22,8 @@ def main():
     #     print("THREAD - Start RS232 Interface")
     #     interface = rs232.main()
     #     interface()
-
+    #TODO: Switch from queue to deque
     q = Queue()
-    #ble_q = LifoQueue(maxsize=20)
     ble_q = deque(maxlen=1)
     t1 = threading.Thread(target=BleService,args =(q,ble_q ))
     t2 = threading.Thread(target=Waterrower,args =(q,ble_q ))
