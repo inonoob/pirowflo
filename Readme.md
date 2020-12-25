@@ -8,7 +8,7 @@ why not connect the Waterrower via USB to a raspberry pi and let the raspberry p
 
 ### BLE  
 So I started looking for projects on github and found the MostTornBrain repo "Waterrower" [link](https://github.com/MostTornBrain/Waterrower)
-But he had implemented as indoor-bike in order to use it with Zwift. He used the BLE gatt server and Advertisor from 
+But he had implemented as indoor-bike in order to use it with Zwift. He used the BLE gatt server and Advertiser from 
 the bluez ble example. But I needed the BLE profile for rowing. 
 So I digged into the not very well documented BLE documentation which is high level and on some points theroatical and 
 not very partical. (Check for Developer section for more details)
@@ -90,6 +90,35 @@ This script when start does the following:
 also populate the deque variable with the latest value from the waterrower. This will then be used
 by the WaterrowerBle script to send it over bluetooth Low Energy. 
 
+If Reset send 
+- Set reset to True  
+- Set all values to 0 
+If reset True 
+
+If Reset send paddle still turning 
+- Set reset to true 
+
+Might wanna set the instantaneous pace to 65535 (0xff 0xff) if the Waterrower is at standstill. This is due to the fact
+that the Com module sends 0xff 0xff as it stands still. In coxswain the speed is calc as follows: 
+
+    if (fields.flag(3)) {
+		setSpeed(500 * 100 / fields.get(Fields.UINT16)); // instantaneous pace
+						
+If instantaneous pace is 0 this results in the equation being divided by 0 which brakes the code. This results in the
+code part to check reset has been performed not to be executed and then not working properly. 
+Solution : 
+
+either set during standstill the instantaneous pace to 65535 (0xff 0xff) or Coxswain fixes the code in order to be 
+more robust against dividing by 0: 
+
+    if (fields.flag(3)) {
+        if (fields.get(Fields.UINT16 == 0 || (fields.get(Fields.UINT16 == 65536){ // check if instantaneous pace is zero or 65536 to avoid to divid by 0
+            setSpeed(0);
+        }else{
+            setSpeed(500 * 100 / fields.get(Fields.UINT16)); // instantaneous pace
+        }
+    }
+
 #### WaterrowerBle
 
 ##### Setting up BLE part 
@@ -145,9 +174,9 @@ From the available information the following service are available (FTMP pdf):
 | User Data Service| Optional | ----
 | Device Information Service | Optional | 180A
 
-So as I only need Fitness Machine Service and Device Information Service, I quick check the avaiable 
-characterisitc for each of those service. Check the FTMS pdf and also get the Bluetooth UUID overview (PDF): [Link](https://specificationrefs.bluetooth.com/assigned-values/16-bit%20UUID%20Numbers%20Document.pdf)
-to know which UUID is used for which Service and Characterstic. 
+So as I only need Fitness Machine Service and Device Information Service, I quick check the available 
+characteristic for each of those service. Check the FTMS pdf and also get the Bluetooth UUID overview (PDF): [Link](https://specificationrefs.bluetooth.com/assigned-values/16-bit%20UUID%20Numbers%20Document.pdf)
+to know which UUID is used for which Service and Characteristic. 
 
 Start to create the custom classes for those service based on the main service class. e.g 
 
@@ -161,11 +190,11 @@ Start to create the custom classes for those service based on the main service c
         ...
 
 At that point I had 2 service create which are "Device Information" and "Fitness Machine Service". But those
-services are still empty and don't have any charateristics defined, yet. For each of service a full load of
-charaterisitcs exists. In order to know which one is needed and also available, it is necceccary to check
-the FTMS again. As here every Charaterisitcs of each service is defined. 
+services are still empty and don't have any characteristics defined, yet. For each of service a full load of
+characteristics exists. In order to know which one is needed and also available, it is necessary to check
+the FTMS again. As here every Characteristics of each service is defined. 
 
-For this project only 4 Charaterisitcs are needed. 
+For this project only 4 Characteristics are needed. 
 
  - FTMservice
     - Fitness Machine Feature (2acc): Use to define the machine abilities which is read by the client
@@ -208,7 +237,24 @@ Once all the Service and Charateristics have been defined. It is time to add tho
         self.add_local_name("XXXXXX") #  The name which the Advertiser should display the GATT server
         self.include_tx_power = True # if the transmission power should be sent (dB)
 
-##### Feeding the Charaterisitcs whith information
+
+
+Fitness Machine Control Point
+
+The response is made by replying with the following byte code (table 4.24)
+
+0x80 reponse code field 
+the seco
+
+FMCP = Fitness Machine control point
+
+|Service | Fitness Machine | uuid | 
+| :--- | :---| :---|
+| 0x80 Responce Code OP code FMCP| 0x00 (request control)| 0x01 (Success)
+| 0x80 Responce Code OP code FMCP| 0x01 (request reset) | 0x01 (Succes)
+
+
+##### Feeding the Characteristics with information
 
 ##### main function
 
@@ -227,6 +273,8 @@ The main script:
 ### Waterrower Serial 
 
 interface to Waterrower serial [link](https://github.com/bfritscher/waterrower/blob/master/waterrower/interface.py)
+
+Water Rower S4 S5 USB Protocol Iss 1 04.pdf is the document specifying the USB specification.   
 
 
 ### DBUS
@@ -269,6 +317,8 @@ Android app nRF Connect for Mobile: [Link](https://play.google.com/store/apps/de
 BLE gatt server micropython [link](https://github.com/micropython/micropython/blob/master/examples/bluetooth/ble_advertising.py)
 
 ### ANT+ 
+
+Most up to date ant+ lib [link](https://github.com/mch/python-ant)
 
 Track heart rate Ant+ and Raspberry pi: [Link](https://johannesbader.ch/blog/track-your-heartrate-on-raspberry-pi-with-ant/)
 
