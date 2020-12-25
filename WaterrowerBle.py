@@ -18,11 +18,15 @@ from ble import (
     Agent,
 )
 
+
+
 MainLoop = None
+
 try:
     from gi.repository import GLib
 
     MainLoop = GLib.MainLoop
+
 except ImportError:
     import gobject as GObject
 
@@ -94,10 +98,11 @@ def Convert_Waterrower_raw_to_byte():
     #WaterrowerValuesRaw = ble_in_q_value.get()
     WaterrowerValuesRaw = ble_in_q_value.pop()
     WRBytearray = []
-    print("Ble Values: {0}".format(WaterrowerValuesRaw))
+    #print("Ble Values: {0}".format(WaterrowerValuesRaw))
     for keys in WaterrowerValuesRaw:
         WaterrowerValuesRaw[keys] = int(WaterrowerValuesRaw[keys])
-        #print(WaterrowerValuesRaw[keys])
+
+    print(WaterrowerValuesRaw)
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['stroke_rate'] & 0xff)))
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_strokes'] & 0xff)))
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_strokes'] & 0xff00) >> 8))
@@ -117,7 +122,6 @@ def Convert_Waterrower_raw_to_byte():
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['elapsedtime'] & 0xff)))
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['elapsedtime'] & 0xff00) >> 8))
     #print(WRBytearray)
-    print(WRBytearray)
     return WRBytearray
 
 
@@ -176,7 +180,7 @@ class FTMservice(Service):
 
     def __init__(self, bus, index):
         Service.__init__(self, bus, index, self.FITNESS_MACHINE_UUID, True)
-       # self.add_characteristic(FitnessMachineFeature(bus,0,self))
+        self.add_characteristic(FitnessMachineFeature(bus,0,self))
         self.add_characteristic(RowerData(bus, 1, self))
         self.add_characteristic(FitnessMachineControlPoint(bus, 2, self))
 
@@ -231,24 +235,23 @@ class RowerData(Characteristic):
         #         dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
         #         ]
 
-        value = [#dbus.Byte(0x7F), dbus.Byte(0x3F), # flag for all values
-                 dbus.Byte(0x2C), dbus.Byte(0x0B),
-                 dbus.Byte(0x48), dbus.Byte(0x01), dbus.Byte(0x00), #0 0 8 16 stroke rate + stroke count
-                 #dbus.Byte(0x02), ## 1 1 8 av stroke rate
-                 dbus.Byte(0x03), dbus.Byte(0x00), dbus.Byte(0x00), # 2 1 16 + 8 distance
-                 dbus.Byte(0x04), dbus.Byte(0x00),# 3 1 16 instantaneous pace
-                 #dbus.Byte(0xFF), dbus.Byte(0xFF), # 4 1 16 average pace
-                 dbus.Byte(0x0C), dbus.Byte(0x00), # 5 1 16 instantaneous power
-                 #dbus.Byte(0xFF), dbus.Byte(0xFF), # 6 1 16 average power
-                 #dbus.Byte(0xFF), dbus.Byte(0xFF), # 7 1 16 resitance level
-                 dbus.Byte(0x09), dbus.Byte(0x00),dbus.Byte(0x0F), dbus.Byte(0x00),dbus.Byte(0x01), # 8 1 16 + 16 +16 Total energy, energy per hour, energy per minute
-                 dbus.Byte(0x0F), # 9 1  8 heart rate
-                 #dbus.Byte(0xFF), # 10 1 8 metabolic equivalent 0.1
-                 dbus.Byte(0x0F),dbus.Byte(0x00), # 11 1 16 elapsed time
-                 #dbus.Byte(0xFF),dbus.Byte(0xFF), # 12 1 16 reamaining time
-                 ]
-        #bytes(input_string, 'utf-8')
-
+        # value = [#dbus.Byte(0x7F), dbus.Byte(0x3F), # flag for all values
+        #          dbus.Byte(0x2C), dbus.Byte(0x0B),
+        #          dbus.Byte(0x48), dbus.Byte(0x01), dbus.Byte(0x00), #0 0 8 16 stroke rate + stroke count
+        #          #dbus.Byte(0x02), ## 1 1 8 av stroke rate
+        #          dbus.Byte(0x03), dbus.Byte(0x00), dbus.Byte(0x00), # 2 1 16 + 8 distance
+        #          dbus.Byte(0x04), dbus.Byte(0x00),# 3 1 16 instantaneous pace
+        #          #dbus.Byte(0xFF), dbus.Byte(0xFF), # 4 1 16 average pace
+        #          dbus.Byte(0x0C), dbus.Byte(0x00), # 5 1 16 instantaneous power
+        #          #dbus.Byte(0xFF), dbus.Byte(0xFF), # 6 1 16 average power
+        #          #dbus.Byte(0xFF), dbus.Byte(0xFF), # 7 1 16 resitance level
+        #          dbus.Byte(0x09), dbus.Byte(0x00),dbus.Byte(0x0F), dbus.Byte(0x00),dbus.Byte(0x01), # 8 1 16 + 16 +16 Total energy, energy per hour, energy per minute
+        #          dbus.Byte(0x0F), # 9 1  8 heart rate
+        #          #dbus.Byte(0xFF), # 10 1 8 metabolic equivalent 0.1
+        #          dbus.Byte(0x0F),dbus.Byte(0x00), # 11 1 16 elapsed time
+        #          #dbus.Byte(0xFF),dbus.Byte(0xFF), # 12 1 16 reamaining time
+        #          ]
+        # #bytes(input_string, 'utf-8')
         Waterrower_byte_values = Convert_Waterrower_raw_to_byte()
 
         value = [dbus.Byte(0x2C), dbus.Byte(0x0B),
@@ -326,7 +329,7 @@ class RowerData(Characteristic):
         if not self.notifying:
             return
 
-        GLib.timeout_add(150, self.Waterrower_cb)
+        GLib.timeout_add(1000, self.Waterrower_cb)
 
     def StartNotify(self):
         if self.notifying:
@@ -429,7 +432,7 @@ class FTMPAdvertisement(Advertisement):
         self.add_service_uuid(FTMservice.FITNESS_MACHINE_UUID)
         self.add_service_uuid(HeartRate.HEART_RATE)
 
-        self.add_local_name("S4 COMMS 69")
+        self.add_local_name("S4 COMMS PI")
         self.include_tx_power = True
 
 
@@ -516,7 +519,7 @@ def main(out_q,ble_in_q): #out_q
     # ad_manager.UnregisterAdvertisement(advertisement)
     # dbus.service.Object.remove_from_connection(advertisement)
 
+#
+# if __name__ == "__main__":
+#     signal.signal(signal.SIGINT, sigint_handler)
 
-if __name__ == "__main__":
-    signal.signal(signal.SIGINT, sigint_handler)
-    main()

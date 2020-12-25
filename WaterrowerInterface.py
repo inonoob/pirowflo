@@ -5,7 +5,9 @@ import time
 import serial
 import serial.tools.list_ports
 import datetime
-from queue import Queue
+
+#  todo: Add more logging stuff in the code
+
 
 MEMORY_MAP = {'055': {'type': 'total_distance_m', 'size': 'double', 'base': 16},
               '140': {'type': 'total_strokes', 'size': 'double', 'base': 16},
@@ -24,11 +26,8 @@ MEMORY_MAP = {'055': {'type': 'total_distance_m', 'size': 'double', 'base': 16},
               # explore
               '142': {'type': 'avg_time_stroke_whole', 'size': 'single', 'base': 16},
               '143': {'type': 'avg_time_stroke_pull', 'size': 'single', 'base': 16},
-              #other
-              '0A9': {'type': 'tank_volume', 'size': 'single', 'base': 16, 'not_in_loop': True},
-             }
-
-
+              # other
+              '0A9': {'type': 'tank_volume', 'size': 'single', 'base': 16, 'not_in_loop': True}, }
 
 # ACH values = Ascii coded hexadecimal
 # REQUEST sent from PC to device
@@ -51,29 +50,17 @@ PULSE_COUNT_RESPONSE = "P"         # Pulse Count XX in the last 25mS, ACH value
 
 SIZE_MAP = {'single': 'IRS',
             'double': 'IRD',
-            'triple': 'IRT',}
+            'triple': 'IRT'}
 
 SIZE_PARSE_MAP = {'single': lambda cmd: cmd[6:8],
                   'double': lambda cmd: cmd[6:10],
                   'triple': lambda cmd: cmd[6:12]}
 
 
-
-def ask_for_port():
-    print("Choose a port to use:")
-    ports = serial.tools.list_ports.comports()
-    for (i, (path, name, _)) in enumerate(ports):
-        print("%s. %s - %s" % (i, path, name))
-        if "WR" in name:
-            print("auto-chosen: %s" % path)
-            return path
-    result = input()
-    return ports[int(result)][0]
-
 def find_port():
     ports = serial.tools.list_ports.comports()
     for (i, (path, name, _)) in enumerate(ports):
-        print(path,name)
+        print(path, name)
         if "WR" in name:
             print("port found: %s" % path)
             return path
@@ -82,10 +69,11 @@ def find_port():
     time.sleep(5)
     return find_port()
 
+
 # Build daemon is used to create the threading object
 def build_daemon(target):
     t = threading.Thread(target=target)
-    t.daemon = True # set this thread as background thread. It will stop as soon as the main thread stop or main function
+    t.daemon = True  # set this thread as background thread. It will stop as soon as the main thread stop or main function
     return t
 
 
@@ -106,15 +94,15 @@ def read_reply(cmd):
     memory = MEMORY_MAP.get(address)
     if memory:
         size = memory['size']
-        value_fn = SIZE_PARSE_MAP.get(size, lambda cmd: None) # define strip function depeding on the requested value from the waterrower
-        value = value_fn(cmd) # Apply function to strip and extract only needed value e.g "IDD0A8015\r\n" this will extract 015
-        if value is None: # if the value couldn't find if it was an IDS or IDD or IDT the waterrower responce then print error size unknown
+        value_fn = SIZE_PARSE_MAP.get(size, lambda cmd: None)   # define strip function depeding on the requested value from the waterrower
+        value = value_fn(cmd)       # Apply function to strip and extract only needed value e.g "IDD0A8015\r\n" this will extract 015
+        if value is None:        # if the value couldn't find if it was an IDS or IDD or IDT the waterrower responce then print error size unknown
             logging.error('unknown size: %s', size)
         else:
-            return build_event(memory['type'], int(value, base=memory['base']), cmd) # create a dict with the input
+            return build_event(memory['type'], int(value, base=memory['base']), cmd)   # create a dict with the input
             # what type it is e.g "Watt" convert byte to int with the correct base and the command itself
     else:
-        logging.error('cannot read reply for %s', cmd) # if the response from the waterrower has an invalid memory addres then respond error with the
+        logging.error('cannot read reply for %s', cmd)   # if the response from the waterrower has an invalid memory addres then respond error with the
         # recieved command from the Waterrower
 
 # Depending on the response from the waterrower after a command has been send, check watt has been respond and choose a case
@@ -136,15 +124,10 @@ def event_from(line):
         elif cmd[:4] == PING_RESPONSE:                              # if Ping responce is recived which is all the time the rower is in standstill
             return build_event(type='ping', raw=cmd)                                         # do nothing
         elif cmd[:1] == PULSE_COUNT_RESPONSE:                   # Pluse count count the amount of 25 teeth passed 25teeth passed = P1
-            return None                                         # do nothing
+            return build_event(type='pulse', raw=cmd)                                         # do nothing
         elif cmd == ERROR_RESPONSE:                             # If Waterrower responce with an error
             return build_event(type='error', raw=cmd)           # crate an event with the dict entry error and the raw command
         else:                                                   # for an unforeasable repsonce responde with non
-            #print("something is wrong")
-            #print(cmd)
-            #ignore
-            #WR_RESPONSE
-            #AND INTERACTIVE_MODE
             return None
     except Exception as e:
         logging.error('could not build event for: %s %s', line, e)
@@ -152,18 +135,19 @@ def event_from(line):
 ####### WaterRower class ########
 
 class Rower(object):
+
     def __init__(self, options=None):
         self._callbacks = set()                 # defines an empty set
         self._stop_event = threading.Event()    # defines the stop event in order to stop the threads requesting and capturing
         self._demo = False                      # set demo is set to true then use the fakeS4 but for the moment it is disaalbe
         self._lock = threading.Lock()
-        # if options and options.demo:
-        #     from demo import FakeS4
-        #     self._serial = FakeS4()
-        #     self._demo = True
-        # else:
         self._serial = serial.Serial()
         self._serial.baudrate = 19200
+        self.eventPulse = {}
+        self.eventPulseCheck = 0
+        self.PulseEvent = 0
+        self.DeltaPulse = 0
+        self.PaddleTurning = False
         self.BleWRValues = {
                             'stroke_rate': 0,
                             'total_strokes': 0,
@@ -174,7 +158,7 @@ class Rower(object):
                             'total_kcal_hour': 0,
                             'total_kcal_min': 0,
                             'heart_rate': 0,
-                            'elapsedtime': 0.0,
+                            'elapsedtime': 0,
                             }
 
         self.LastPing = 0
@@ -184,20 +168,22 @@ class Rower(object):
         self.hoursWR = 0
         self.elapsetime = 0
         self.elapsetimeprev = 0
+        self._rowerreset = False
         # If I wanna stop those thread from outside I just call xxxxx_stop_event.set() to stop it
-        self.event = 0
+        self.event = {}
         self._request_thread = build_daemon(target=self.start_requesting) # start the thread requesting during class init
         self._capture_thread = build_daemon(target=self.start_capturing)    # Start the thread capurting during class init
         self._ble_capture_thread = build_daemon(target=self.event_BLE)
+        self._pulse_thread = build_daemon(target=self.pulse)
         self._request_thread.start()
         self._capture_thread.start()
         self._ble_capture_thread.start()
-
+        self._pulse_thread.start()
 
 # This function is used to check if the connection to the waterrower is alive and if the threads request and caputre are running
     def is_connected(self):
         return self._serial.isOpen() and is_live_thread(self._request_thread) and \
-            is_live_thread(self._capture_thread)
+            is_live_thread(self._capture_thread) and is_live_thread(self._ble_capture_thread)
 
 # This private function tries to find the serial port. Which for waterrower is "/dev/ttyACM0" and if found opens the serial connection
     def _find_serial(self):
@@ -223,15 +209,16 @@ class Rower(object):
             self._request_thread = build_daemon(target=self.start_requesting) # define the requesting daemon
             self._capture_thread = build_daemon(target=self.start_capturing)  # define the capturing damemon
             self._ble_capture_thread = build_daemon(target=self.event_BLE)
+            self._pulse_thread = build_daemon(target=self.pulse)
             self._request_thread.start()    # start the request_thread
             self._capture_thread.start()    # start the capture_thread
             self._ble_capture_thread.start()
+            self._pulse_thread.start()
         print("write USB_REQUEST")
         self.write(USB_REQUEST)             # call the write function which will write to the serial port "USB\r\n" which the waterrower will aknowledge with "_WR_"
 
 # This function is called to tell the waterrower that the conntection will be terminate close the serial port.
     def close(self):
-        self.notify_callbacks(build_event("exit")) # add to the __callback set the exit event
         if self._stop_event:                        # checks if _stop_event is true
             self._stop_event.set()                  # if yes then set it to stop the threads
         if self._serial and self._serial.isOpen():  # check if the serial connection and the serial connection is open
@@ -251,25 +238,21 @@ class Rower(object):
 
 # function to capture the waterrower responces in a while loop. This loop can be terminate by setting the _stop_event.set() command .
     def start_capturing(self):
-        while not self._stop_event.is_set(): # checks if the stop event has been set. if yes, stop the while loop
+        while not self._stop_event.is_set():   # checks if the stop event has been set. if yes, stop the while loop
             if self._serial.isOpen():        # if event stop is not set check if serial connection is open
                 try:
-                    line = self._serial.readline() # read incoming lines from serial stream
+                    line = self._serial.readline()   # read incoming lines from serial stream
                     event = event_from(line)       # check what kind of message has been recvied from the waterrower eg. RESET or IDD0A8015 .... and return the dict with the informations
                     if event:                      # if event is not None e.g ping which result in a return none then
-                        self.notify_callbacks(event) # call the function TODO: check what the functions does
-                        #self.event_BLE(event)
                         self._lock.acquire()
                         self.event = event
                         self._lock.release()
-                        #print(self.event)
                 except Exception as e:
                     print("could not read %s" % e)
                     try:
-                        self._serial.reset_input_buffer() # if couldn't get a responce try to clean the incomming buffer of the serial
+                        self._serial.reset_input_buffer()   # if couldn't get a responce try to clean the incomming buffer of the serial
                     except Exception as e2:
                         print("could not reset_input_buffer %s" % e2)
-
             else:
                 self._stop_event.wait(0.1)  # if stop event is not set but the serial connection is not yet activate retry in 0.1 sec again.
 
@@ -278,7 +261,7 @@ class Rower(object):
         while not self._stop_event.is_set():    # checks if the stop event has been set. if yes, stop the while loop
             if self._serial.isOpen():           # if event stop is not set check if serial connection is open
                 for address in MEMORY_MAP:      # Iterates over the memory map
-                    if 'not_in_loop' not in MEMORY_MAP[address]: # if instant of the dict with type the value of this dict is 'not_in_loo' then skip this address and go to the next
+                    if 'not_in_loop' not in MEMORY_MAP[address]:   # if instant of the dict with type the value of this dict is 'not_in_loo' then skip this address and go to the next
                         self.request_address(address)               # trigger function request_address which will format the memory address and call the function write to send it over serial to the waterrower
                         self._stop_event.wait(0.025)                # wait 25ms for the responce according to the Water Rower S4 S5 USB Protocol Issue 1
 
@@ -287,8 +270,24 @@ class Rower(object):
 
 # This function write to the serial port "RESET/n/r" to reset the waterrower. It then
     def reset_request(self):
+        self._rowerreset = True
         self.write(RESET_REQUEST)                   # This calls the function write in order to write to the serial port
-        self.notify_callbacks(build_event('reset'))
+        self.elapsetimeprev = 0
+        self.BleWRValues = {
+                            'stroke_rate': 0,
+                            'total_strokes': 0,
+                            'total_distance_m': 0,
+                            'instantaneous pace': 0,
+                            'watts': 0,
+                            'total_kcal': 0,
+                            'total_kcal_hour': 0,
+                            'total_kcal_min': 0,
+                            'heart_rate': 0,
+                            'elapsedtime': 0.0,
+                            }
+        self.secondsWR = 0
+        self.minutesWR = 0
+        self.hoursWR = 0
 
 #This function request Model and Tank level from the waterrower
     def request_info(self):
@@ -301,98 +300,142 @@ class Rower(object):
         cmd = SIZE_MAP[size]                # Checks the Size dict for IRS, IRD or IRT
         self.write(cmd + address)           # This calls the function write in order to write to the serial port
 
-########### I don't know yet what he is doing here ! #######################
-
-    def notify_callbacks(self, event):
-        #print(event)
-        for cb in self._callbacks:
-            cb(event)
-            print(cb(event))
-
-    def event_BLE(self):
+    def pulse(self):
         while not self._stop_event.is_set():
-            self._lock.acquire()
-            self.event_ble = self.event
-            self._lock.release()
-            if self.event_ble:
-                if self.event_ble['type'] == 'ping':
-                    #print(self.event_ble['raw'] ,self.event_ble['at'])  # problem set value to zero if no movement
-                    pass
-                if self.event_ble['type'] == 'stroke_rate':
-                    self.BleWRValues.update({'stroke_rate': (self.event_ble['value']*2)})
-                if self.event_ble['type'] == 'total_strokes':
-                    self.BleWRValues.update({'total_strokes': self.event_ble['value']})
-                if self.event_ble['type'] == 'total_distance_m':
-                    self.BleWRValues.update({'total_distance_m': (self.event_ble['value'])})
-                if self.event_ble['type'] == 'avg_distance_cmps':
-                    if self.event_ble['value'] == 0:
-                        pass
+            if self._serial.isOpen():
+                self._lock.acquire()  # if reset false and nopulse true ==> set to 0 instance pace, watts, Stroke rate
+                self.eventPulse = self.event
+                self._lock.release()
+                if self.eventPulse:
+                    self.eventPulseCheck = int(round(time.time() * 1000))
+                    if self.eventPulse['type'] == 'pulse':
+                        #self.PulseEvent = int(round(time.time() * 1000))
+                        self.PulseEvent = self.event_ble['at']
+                        #print(self.PulseEvent)
+                        self._rowerreset = False
+                    self.DeltaPulse =  self.eventPulseCheck - self.PulseEvent # muss vieleicht gedreht werden
+                    #print(self.DeltaPulse)
+                    if self.DeltaPulse <= 300:
+                        self.PaddleTurning = True
                     else:
-                        InstantaneousPace = (500 * 100)/ self.event_ble['value']
-                        self.BleWRValues.update({'instantaneous pace': InstantaneousPace})
-                # 500 m => 50000 cm, XX cm/s = s (500m  * 100cm/1m) / XX cm/s  =  XX.XXX s
-                if self.event_ble['type'] == 'watts':
-                    self.BleWRValues.update({'watts': self.event_ble['value']})
-                if self.event_ble['type'] == 'total_kcal':
-                    self.BleWRValues.update({'total_kcal': (self.event_ble['value'])/1000}) # in cal
-                if self.event_ble['type'] == 'total_kcal_h':                                # must calclatre it first
-                    self.BleWRValues.update({'total_kcal': 1})
-                if self.event_ble['type'] == 'total_kcal_min':                              # must calclatre it first
-                    self.BleWRValues.update({'total_kcal': 1})
-                if self.event_ble['type'] == 'heart_rate':
-                    self.BleWRValues.update({'heart_rate': 0}) # in cal
-                if self.event_ble['type'] == 'display_sec':
-                    self.secondsWR = self.event_ble['value']
-                if self.event_ble['type'] == 'display_min':
-                    self.minutesWR = self.event_ble['value']
-                if self.event_ble['type'] == 'display_hr':
-                    self.hoursWR = self.event_ble['value']
+                        self.PaddleTurning = False
+                        self.PulseEvent = 0
+                    #print(self.PaddleTurning)
+                    #self.DeltaPulse = 10000
                 else:
                     pass
+
+# if reset True and PaddleTurning False then send 0 values for all
+# if PaddleTurning True ==> Set Reset to False, Start sending values and set reset to false as workout has started
+# if PaddleTurning False and Reset False ==> set instant pace, watts and stroke rate to 0
+
+    def event_BLE(self):
+        while not self._stop_event.is_set(): # idea if reset true and nopulse true ==> send 0 value for all
+            if self._serial.isOpen():        # if reset true but nopulse false ==> start sending values and set reset to false
+                self._lock.acquire()  # if reset false and nopulse true ==> set to 0 instance pace, watts, Stroke rate
+                self.event_ble = self.event
+                self._lock.release()
+                if self._rowerreset:
+                    pass
+                    #print("rower is in reset condititon")
+                    #print(self.BleWRValues)
+                elif not self._rowerreset and not self.PaddleTurning:
+                    #print("No reset but no Paddle movement")
+                    if self.event_ble:
+                        if self.event_ble['type'] == 'ping':
+                            #print(self.event_ble['raw'] ,self.event_ble['at'])  # problem set value to zero if no movement
+                            pass
+                        if self.event_ble['type'] == 'stroke_rate':
+                            self.BleWRValues.update({'stroke_rate': 0})
+                        if self.event_ble['type'] == 'total_strokes':
+                            self.BleWRValues.update({'total_strokes': self.event_ble['value']})
+                        if self.event_ble['type'] == 'total_distance_m':
+                            self.BleWRValues.update({'total_distance_m': (self.event_ble['value'])})
+                        if self.event_ble['type'] == 'avg_distance_cmps':
+                            self.BleWRValues.update({'instantaneous pace': 0})
+                        # 500 m => 50000 cm, XX cm/s = s (500m  * 100cm/1m) / XX cm/s  =  XX.XXX s
+                        if self.event_ble['type'] == 'watts':
+                            self.BleWRValues.update({'watts': 0})
+                        # TODO: Calc the Watt average of 5 stroke in order to have the watts
+                        if self.event_ble['type'] == 'total_kcal':
+                            self.BleWRValues.update({'total_kcal': (self.event_ble['value'])})     # in cal
+                        if self.event_ble['type'] == 'total_kcal_h':                                # must calclatre it first
+                            self.BleWRValues.update({'total_kcal': 0})
+                        if self.event_ble['type'] == 'total_kcal_min':                              # must calclatre it first
+                            self.BleWRValues.update({'total_kcal': 0})
+                        if self.event_ble['type'] == 'heart_rate':
+                            self.BleWRValues.update({'heart_rate': 0})      # in cal
+                        if self.event_ble['type'] == 'display_sec':
+                            self.secondsWR = self.event_ble['value']
+                        if self.event_ble['type'] == 'display_min':
+                            self.minutesWR = self.event_ble['value']
+                        if self.event_ble['type'] == 'display_hr':
+                            self.hoursWR = self.event_ble['value']
+                        else:
+                            pass
+                elif not self._rowerreset and self.PaddleTurning:
+                    #print("Normal workout")
+                    if self.event_ble:
+                        if self.event_ble['type'] == 'ping':
+                            #print(self.event_ble['raw'] ,self.event_ble['at'])  # problem set value to zero if no movement
+                            pass
+                        if self.event_ble['type'] == 'stroke_rate':
+                            self.BleWRValues.update({'stroke_rate': (self.event_ble['value']*2)})
+                        if self.event_ble['type'] == 'total_strokes':
+                            self.BleWRValues.update({'total_strokes': self.event_ble['value']})
+                        if self.event_ble['type'] == 'total_distance_m':
+                            self.BleWRValues.update({'total_distance_m': (self.event_ble['value'])})
+                        if self.event_ble['type'] == 'avg_distance_cmps':
+                            if self.event_ble['value'] == 0:
+                                pass
+                            else:
+                                InstantaneousPace = (500 * 100) / self.event_ble['value']
+                                self.BleWRValues.update({'instantaneous pace': InstantaneousPace})
+                        # 500 m => 50000 cm, XX cm/s = s (500m  * 100cm/1m) / XX cm/s  =  XX.XXX s
+                        if self.event_ble['type'] == 'watts':
+                            self.BleWRValues.update({'watts': self.event_ble['value']})
+                            #self.BleWRValues.update({'watts': })
+                        # TODO: Calc the Watt average of 5 stroke in order to have the watts
+                        if self.event_ble['type'] == 'total_kcal':
+                            self.BleWRValues.update({'total_kcal': (self.event_ble['value'])})     # in cal
+                        if self.event_ble['type'] == 'total_kcal_h':                                # must calclatre it first
+                            self.BleWRValues.update({'total_kcal': 0})
+                        if self.event_ble['type'] == 'total_kcal_min':                              # must calclatre it first
+                            self.BleWRValues.update({'total_kcal': 0})
+                        if self.event_ble['type'] == 'heart_rate':
+                            self.BleWRValues.update({'heart_rate': 0})      # in cal
+                        if self.event_ble['type'] == 'display_sec':
+                            self.secondsWR = self.event_ble['value']
+                        if self.event_ble['type'] == 'display_min':
+                            self.minutesWR = self.event_ble['value']
+                        if self.event_ble['type'] == 'display_hr':
+                            self.hoursWR = self.event_ble['value']
+                        else:
+                            pass
+                else:
+                    pass
+
+                # TODO: ensure no backwarts time is created from sec, min and hours
+                self.elapsetime = datetime.timedelta(seconds=self.secondsWR, minutes=self.minutesWR, hours=self.hoursWR)
+                #print('sec:{0};min:{1};hr:{2}'.format(self.secondsWR,self.minutesWR,self.hoursWR))
+                self.elapsetime = int(self.elapsetime.total_seconds())
+                self.BleWRValues.update({'elapsedtime': self.elapsetime})
             else:
-                #print("running as thread")
-                pass
-            self.elapsetime = datetime.timedelta(seconds=self.secondsWR,minutes=self.minutesWR,hours=self.hoursWR)
-            self.elapsetime = self.elapsetime.total_seconds()
-            if self.elapsetimeprev <= self.elapsetime:
-                self.BleWRValues.update({'elapsedtime':self.elapsetime})
-                #print(self.elapsetime)
-                self.elapsetimeprev = self.elapsetime
-            else:
-                pass
-            #print(self.BleWRValues)
+                self._stop_event.wait(0.1)
 
-# Add and remove stuff from
-    def register_callback(self, cb):
-        self._callbacks.add(cb)
 
-    def remove_callback(self, cb):
-        self._callbacks.remove(cb)
-
-def main(in_q,ble_out_q):
+def main(in_q, ble_out_q):
     S4 = Rower()
     S4.open()
     S4.reset_request()
-    #def MainthreadWaterrower(in_q):
     print("THREAD - Waterrower started")
     while True:
-        #print('test')
-        #print('Ble dict {0}'.format(S4.BleWRValues))
-        if in_q.empty() == False:
-            resetRequest_ble = in_q.get()
-            print(resetRequest_ble)
+        if not in_q.empty():
+            ResetRequest_ble = in_q.get()
+            print(ResetRequest_ble)
             S4.reset_request()
         else:
             pass
-        #ble_out_q.put(S4.BleWRValues)
         ble_out_q.append(S4.BleWRValues)
-        #print(ble_out_q.qsize())
-        #print(S4.is_connected())
-        #Queue.task_done()
+        #print(S4.BleWRValues)
         time.sleep(0.1)
-
-#  in the while loop create a timestamp and compare it with the previouse one. Create a Delta of 500ms = 0.5 sec
-#
-
-if __name__ == '__main__':
-    main(None)
