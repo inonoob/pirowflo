@@ -1,6 +1,20 @@
 # BLE and Ant+ for Waterrower
 
 ## Features and limitations
+
+- Send Waterower Data over Bluetooth 
+
+## Not yet finished
+
+- Power is not working properly 
+- Elapsedtime doesn't reset corretly 
+
+## Parts of the code based on following Repos: 
+
+[Link to repo](https://github.com/bfritscher/waterrower) for the Waterrower Interface 
+([Link to repo](https://github.com/PunchThrough/espresso-ble) for the BLE GATT server and Advertiser example which
+is self based on the Bluez Gatt server example
+
 ## Motivation
 
 I wanted to have the ability to use the Android App Coswain and also my Garmin smartwatch. Therefore, I though
@@ -288,7 +302,7 @@ We do this by creating a udev rule in /etc/udev/rules.d/99-ftdi.rules
 
 
 
-in order to make the stick work under linux without root rights create a file in /etc/udev/rules.d/99-garmin.rules and add the following
+in order to make the Ant+ stick work under linux without root rights create a file in /etc/udev/rules.d/99-garmin.rules and add the following
 this will ensure that the pyusb has acces to the ant+ stick as non-root. Also check if the $USER is part of the "dialout" group
 Check in "/dev/" if the stick ist ttyUSB0 or ttyAMA0 which is on the raspberry pi zero
 
@@ -368,6 +382,31 @@ udev rules for ant+ stick so it can be viewed as ttyUSB0 [link](https://unix.sta
 udev rules for more serial stuff [link](https://medium.com/@inegm/persistent-names-for-usb-serial-devices-in-linux-dev-ttyusbx-dev-custom-name-fd49b5db9af1)
 
 ## License
+
+     
+
+MIT License
+
+Copyright (c) 2020 Inonoob
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
 
 ## to investigate:
 
