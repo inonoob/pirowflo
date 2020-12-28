@@ -13,7 +13,7 @@ the bluez ble example. But I needed the BLE profile for rowing.
 So I digged into the not very well documented BLE documentation which is high level and on some points theroatical and 
 not very partical. (Check for Developer section for more details)
 
-### Ant+ 
+### Ant+
 
 ## Requirements
 
@@ -75,6 +75,11 @@ In order to pass the "reset command" and also the "waterrower S4 values", the li
  
 #### WaterrowerInterface
 
+TODO: might wanna thing about using the callback function as is would be helpfull to only react on callback and not
+create concurent thread which could conflict by race condition problems 
+
+Implemented. SO now A logger.py file is available 
+
 This script when start does the following: 
 
 - Start the main thread 
@@ -97,6 +102,8 @@ If reset True
 
 If Reset send paddle still turning 
 - Set reset to true 
+
+##### bug coxswain 
 
 Might wanna set the instantaneous pace to 65535 (0xff 0xff) if the Waterrower is at standstill. This is due to the fact
 that the Com module sends 0xff 0xff as it stands still. In coxswain the speed is calc as follows: 
@@ -267,8 +274,32 @@ The main script:
 - start the app with the services 
 - GLib mainloop is started
 
+### ANT+ 
+
+Before adding anythin we have to add the ant+ dongle as ttyUSB0 module. In order to do that we must call the FTDI driver.
+First check lsusb for vendorid and productid
+
+    pi@raspberrypi:/dev $ lsusb
+    Bus 001 Device 002: ID 0fcf:1008 Dynastream Innovations, Inc. ANTUSB2 Stick
+
+We do this by creating a udev rule in /etc/udev/rules.d/99-ftdi.rules 
+
+    ACTION=="add", ATTRS{idVendor}=="0fcf", ATTRS{idProduct}=="1008", RUN+="/sbin/modprobe ftdi_sio" RUN+="/bin/sh -c 'echo 0fcf 1008 > /sys/bus/usb-serial/drivers/ftdi_sio/new_id'"
+
+
+
+in order to make the stick work under linux without root rights create a file in /etc/udev/rules.d/99-garmin.rules and add the following
+this will ensure that the pyusb has acces to the ant+ stick as non-root. Also check if the $USER is part of the "dialout" group
+Check in "/dev/" if the stick ist ttyUSB0 or ttyAMA0 which is on the raspberry pi zero
+
+    SUBSYSTEM=="usb", ATTR{idVendor}=="0fcf", ATTR{idProduct}=="1008", MODE="666"
+
 
 ## Resources: 
+
+### Converter e.g dec to hex 
+
+Convert dec to hex and so on[link](https://www.binaryhexconverter.com/decimal-to-hex-converter)
 
 ### Waterrower Serial 
 
@@ -318,6 +349,8 @@ BLE gatt server micropython [link](https://github.com/micropython/micropython/bl
 
 ### ANT+ 
 
+common pages D00001198 
+
 Most up to date ant+ lib [link](https://github.com/mch/python-ant)
 
 Track heart rate Ant+ and Raspberry pi: [Link](https://johannesbader.ch/blog/track-your-heartrate-on-raspberry-pi-with-ant/)
@@ -329,6 +362,10 @@ Kettler Ant+ Support: [Link](https://github.com/joekearney/kettler-to-ant)
 GoldenCheetah [link](https://github.com/GoldenCheetah/GoldenCheetah/blob/master/src/ANT/ANTMessage.cpp)
 
 hacking ant [link](https://hackingantblog.wordpress.com/)
+
+udev rules for ant+ stick [link](https://unix.stackexchange.com/questions/81754/how-to-match-a-ttyusbx-device-to-a-usb-serial-device))
+udev rules for ant+ stick so it can be viewed as ttyUSB0 [link](https://unix.stackexchange.com/questions/67936/attaching-usb-serial-device-with-custom-pid-to-ttyusb0-on-embedded)
+udev rules for more serial stuff [link](https://medium.com/@inegm/persistent-names-for-usb-serial-devices-in-linux-dev-ttyusbx-dev-custom-name-fd49b5db9af1)
 
 ## License
 

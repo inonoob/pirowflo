@@ -1,5 +1,5 @@
 import WaterrowerBle
-import WaterrowerInterface
+import WRtoBLEANT
 import threading
 from queue import Queue
 from collections import deque
@@ -13,7 +13,7 @@ def main():
 
     def Waterrower(in_q, ble_out_q):
         print("THREAD - Start BLE GATT Server")
-        Waterrowerserial = WaterrowerInterface.main(in_q, ble_out_q)
+        Waterrowerserial = WRtoBLEANT.main(in_q, ble_out_q)
         Waterrowerserial()
 
     # def task3():
