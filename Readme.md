@@ -1,5 +1,7 @@
 # BLE and Ant+ for Waterrower
 
+README is still work in progress 
+
 ## Features and limitations
 
 - Send Waterower Data over Bluetooth 
