@@ -156,6 +156,9 @@ def main(in_q, ble_out_q):
         #ant_out_q.append(WRtoBLEANT.ANTvalues)
         time.sleep(0.1)
 
+# TODO: check to zerout the elapsed time after a reset. This value stays and is not reset to 0 ? Somewhere there is a bug
+# TODO:
+
 # def maintest():
 #     S4 = WaterrowerInterface.Rower()
 #     S4.open()
