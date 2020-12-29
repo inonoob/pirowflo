@@ -100,9 +100,7 @@ class DataLogger(object):
             #print(self.Watts)
             if self.Watts !=0:
                 if self._StrokeStart == True:
-                    # if self.Watts > 0 :
                     self._InstaPowerStroke.append(self.Watts)
-                    print('Powercurve of Stroke: {0}'.format(self._InstaPowerStroke))
                 elif self._StrokeStart == False:
                     if len(self._InstaPowerStroke) != 0:
                         self.maxpowerStroke = numpy.max(self._InstaPowerStroke)
@@ -111,10 +109,6 @@ class DataLogger(object):
                         self._maxpowerfivestrokes.append(self.maxpowerStroke)
                         self.AvgInstaPower = int(numpy.average(self._maxpowerfivestrokes))
                         self.WRValues.update({'watts': self.AvgInstaPower})
-                        print('maxpower of the stroke: {0}'.format(self.maxpowerStroke))
-                        print('maxpower 5 strokes: {0}'.format(self._maxpowerfivestrokes))
-                        print('average of the 5 strokes {0}'.format(self.AvgInstaPower))
-                        print(self.WRValues['watts'])
                         self._InstaPowerStroke = []
                     else:
                         pass
@@ -223,6 +217,7 @@ def main(in_q, ble_out_q):
         else:
             pass
         ble_out_q.append(WRtoBLEANT.BLEvalues)
+        #logger.info(WRtoBLEANT.BLEvalues)
         #ant_out_q.append(WRtoBLEANT.ANTvalues)
         time.sleep(0.1)
 
