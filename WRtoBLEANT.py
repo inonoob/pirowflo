@@ -1,8 +1,21 @@
 import threading
 import time
 import datetime
+import logging
+import numpy
 
 import WaterrowerInterface
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+logHandler = logging.StreamHandler()
+filelogHandler = logging.FileHandler("logs.log")
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logHandler.setFormatter(formatter)
+filelogHandler.setFormatter(formatter)
+logger.addHandler(filelogHandler)
+logger.addHandler(logHandler)
 
 '''
 We register 3 callback function to the WaterrowerInterface with the event as input. Those function get exectuted 
@@ -21,15 +34,22 @@ IGNORE_LIST = ['graph', 'tank_volume', 'display_sec_dec']
 class DataLogger(object):
     def __init__(self, rower_interface):
         self._rower_interface = rower_interface
-        self._rower_interface.register_callback(self.on_rower_event)
-        self._rower_interface.register_callback(self.pulse)
         self._rower_interface.register_callback(self.reset_requested)
+        self._rower_interface.register_callback(self.pulse)
+        self._rower_interface.register_callback(self.on_rower_event)
         self._event = {}
         self._events = []
+        self._InstaPowerStroke = []
+        self.maxpowerStroke = 0
         self._activity = None
         self._stop_event = threading.Event()
+        self._StrokeStart = False
+        self.Watts = 0
+        self._maxpowerfivestrokes = []
+        self.AvgInstaPower = 0
         self.Lastcheckforpulse = 0
         self.PulseEventTime = 0
+        self.InstantaneousPace = 0
         self.DeltaPulse = 0
         self.PaddleTurning = False
         self.rowerreset = True
@@ -37,7 +57,7 @@ class DataLogger(object):
                 'stroke_rate': 0,
                 'total_strokes': 0,
                 'total_distance_m': 0,
-                'instantaneous pace': 65534,
+                'instantaneous pace': 0,
                 'watts': 0,
                 'total_kcal': 0,
                 'total_kcal_hour': 0,
@@ -57,6 +77,12 @@ class DataLogger(object):
     def on_rower_event(self, event):
         if event['type'] in IGNORE_LIST:
             return
+        if event['type'] == 'stroke_start':
+            self._StrokeStart = True
+            print("stoke Start")
+        if event['type'] == 'stroke_end':
+            self._StrokeStart = False
+            print("Stroke end")
         if event['type'] == 'stroke_rate':
             self.WRValues.update({'stroke_rate': (event['value']*2)})
         if event['type'] == 'total_strokes':
@@ -65,12 +91,34 @@ class DataLogger(object):
             self.WRValues.update({'total_distance_m': (event['value'])})
         if event['type'] == 'avg_distance_cmps':
             if event['value'] == 0:
-                pass
+                self.WRValues.update({'instantaneous pace': 0})
             else:
-                InstantaneousPace = (500 * 100) / event['value']
-                self.WRValues.update({'instantaneous pace': InstantaneousPace})
+                self.InstantaneousPace = (500 * 100) / event['value']
+                self.WRValues.update({'instantaneous pace': self.InstantaneousPace})
         if event['type'] == 'watts':
-            self.WRValues.update({'watts': (event['value'])})
+            self.Watts = event['value']
+            #print(self.Watts)
+            if self.Watts !=0:
+                if self._StrokeStart == True:
+                    # if self.Watts > 0 :
+                    self._InstaPowerStroke.append(self.Watts)
+                    print('Powercurve of Stroke: {0}'.format(self._InstaPowerStroke))
+                elif self._StrokeStart == False:
+                    if len(self._InstaPowerStroke) != 0:
+                        self.maxpowerStroke = numpy.max(self._InstaPowerStroke)
+                        if len(self._maxpowerfivestrokes) > 4:
+                            del self._maxpowerfivestrokes[0]
+                        self._maxpowerfivestrokes.append(self.maxpowerStroke)
+                        self.AvgInstaPower = int(numpy.average(self._maxpowerfivestrokes))
+                        self.WRValues.update({'watts': self.AvgInstaPower})
+                        print('maxpower of the stroke: {0}'.format(self.maxpowerStroke))
+                        print('maxpower 5 strokes: {0}'.format(self._maxpowerfivestrokes))
+                        print('average of the 5 strokes {0}'.format(self.AvgInstaPower))
+                        print(self.WRValues['watts'])
+                        self._InstaPowerStroke = []
+                    else:
+                        pass
+
         # TODO: Calc the Watt average of 5 stroke in order to have the watts
         if event['type'] == 'total_kcal':
             self.WRValues.update({'total_kcal': (event['value']/1000)})  # in cal now in kcal
@@ -99,6 +147,7 @@ class DataLogger(object):
             self.PaddleTurning = True
         else:
             self.PaddleTurning = False
+            self._StrokeStart = False
             self.PulseEventTime = 0
             self.WRvalueStandstill()
 
@@ -106,6 +155,23 @@ class DataLogger(object):
     def reset_requested(self,event):
         if event['type'] == 'reset':
             self.rowerreset = True
+            self.WRValues_rst = {
+                'stroke_rate': 0,
+                'total_strokes': 0,
+                'total_distance_m': 0,
+                'instantaneous pace': 0,
+                'watts': 0,
+                'total_kcal': 0,
+                'total_kcal_hour': 0,
+                'total_kcal_min': 0,
+                'heart_rate': 0,
+                'elapsedtime': 0.0,
+            }
+            self.secondsWR = 0
+            self.minutesWR = 0
+            self.hoursWR = 0
+
+
 
 
     def TimeElapsedcreator(self):
@@ -122,6 +188,9 @@ class DataLogger(object):
         self.WRvalue_standstill.update({'stroke_rate': 0})
         self.WRvalue_standstill.update({'instantaneous pace': 0})
         self.WRvalue_standstill.update({'watts': 0})
+
+
+
 
 
     def SendToBLE(self):
@@ -145,6 +214,7 @@ def main(in_q, ble_out_q):
     S4.open()
     S4.reset_request()
     WRtoBLEANT = DataLogger(S4)
+    logger.info("Waterrower Ready and sending data to BLE and ANT Thread")
     while True:
         if not in_q.empty():
             ResetRequest_ble = in_q.get()
@@ -156,8 +226,6 @@ def main(in_q, ble_out_q):
         #ant_out_q.append(WRtoBLEANT.ANTvalues)
         time.sleep(0.1)
 
-# TODO: check to zerout the elapsed time after a reset. This value stays and is not reset to 0 ? Somewhere there is a bug
-# TODO:
 
 # def maintest():
 #     S4 = WaterrowerInterface.Rower()

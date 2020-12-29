@@ -1,18 +1,30 @@
-import WaterrowerBle
-import WRtoBLEANT
+import logging
 import threading
 from queue import Queue
 from collections import deque
 
+import WaterrowerBle
+import WRtoBLEANT
+
+
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+logHandler = logging.StreamHandler()
+filelogHandler = logging.FileHandler("logs.log")
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logHandler.setFormatter(formatter)
+filelogHandler.setFormatter(formatter)
+logger.addHandler(filelogHandler)
+logger.addHandler(logHandler)
 
 def main():
     def BleService(out_q, ble_in_q):
-        print("THREAD - Start BLE Advertise and BLE GATT Server")
+        logger.info("Start BLE Advertise and BLE GATT Server")
         bleService = WaterrowerBle.main(out_q, ble_in_q)
         bleService()
 
     def Waterrower(in_q, ble_out_q):
-        print("THREAD - Start BLE GATT Server")
+        logger.info("Waterrower to BLE and ANT")
         Waterrowerserial = WRtoBLEANT.main(in_q, ble_out_q)
         Waterrowerserial()
 

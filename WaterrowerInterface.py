@@ -5,6 +5,16 @@ import time
 import serial
 import serial.tools.list_ports
 
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.DEBUG)
+logHandler = logging.StreamHandler()
+filelogHandler = logging.FileHandler("logs.log")
+formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+logHandler.setFormatter(formatter)
+filelogHandler.setFormatter(formatter)
+logger.addHandler(filelogHandler)
+logger.addHandler(logHandler)
+
 MEMORY_MAP = {'055': {'type': 'total_distance_m', 'size': 'double', 'base': 16},
               '140': {'type': 'total_strokes', 'size': 'double', 'base': 16},
               '088': {'type': 'watts', 'size': 'double', 'base': 16},
@@ -110,10 +120,11 @@ def find_port():
     ports = serial.tools.list_ports.comports()
     for (i, (path, name, _)) in enumerate(ports):
         if "WR" in name:
-            print("port found: %s" % path)
+            logger.info("port found: %s" % path)
             return path
 
-    print("port not found retrying in 5s")
+    #print("port not found retrying in 5s")
+    logger.warning("port not found retrying in 5s")
     time.sleep(5)
     return find_port()
 
@@ -143,11 +154,11 @@ def read_reply(cmd):
         value_fn = SIZE_PARSE_MAP.get(size, lambda cmd: None)
         value = value_fn(cmd)
         if value is None:
-            logging.error('unknown size: %s', size)
+            logger.error('unknown size: %s', size)
         else:
             return build_event(memory['type'], int(value, base=memory['base']), cmd)
     else:
-        logging.error('cannot read reply for %s', cmd)
+        logger.error('cannot read reply for %s', cmd)
 
 
 def event_from(line):
@@ -170,10 +181,12 @@ def event_from(line):
             return build_event(type='pulse', raw=cmd)  # do nothing
         elif cmd == ERROR_RESPONSE:  # If Waterrower responce with an error
             return build_event(type='error', raw=cmd)  # crate an event with the dict entry error and the raw command
+        elif cmd[:2] == STROKE_START_RESPONSE:  # Pluse count count the amount of 25 teeth passed 25teeth passed = P1
+            print(cmd)
         else:
             return None
     except Exception as e:
-        logging.error('could not build event for: %s %s', line, e)
+        logger.error('could not build event for: %s %s', line, e)
 
 
 class Rower(object):
@@ -203,7 +216,8 @@ class Rower(object):
             self._serial.port = find_port()
         try:
             self._serial.open()
-            print("serial open")
+            #print("serial open")
+            logger.info("serial open")
         except serial.SerialException as e:
             print("serial open error waiting")
             time.sleep(5)
@@ -215,12 +229,16 @@ class Rower(object):
             self._serial.close()
         self._find_serial()
         if self._stop_event.is_set():
-            print("reset threads")
+            #print("reset threads")
+            logger.info("reset threads")
             self._stop_event.clear()
             self._request_thread = build_daemon(target=self.start_requesting)
             self._capture_thread = build_daemon(target=self.start_capturing)
             self._request_thread.start()
+            logger.info("Thread daemon _request started")
             self._capture_thread.start()
+            logger.info("Thread daemon _capture started")
+
         self.write(USB_REQUEST)
 
     def close(self):
@@ -238,7 +256,8 @@ class Rower(object):
             self._serial.flush()
         except Exception as e:
             print(e)
-            print("Serial error try to reconnect")
+            #print("Serial error try to reconnect")
+            logger.error("Serial error try to reconnect")
             self.open()
 
     def start_capturing(self):
@@ -250,11 +269,13 @@ class Rower(object):
                     if event:
                         self.notify_callbacks(event)
                 except Exception as e:
-                    print("could not read %s" % e)
+                    #print("could not read %s" % e)
+                    logger.error("could not read %s" % e)
                     try:
                         self._serial.reset_input_buffer()
                     except Exception as e2:
-                        print("could not reset_input_buffer %s" % e2)
+                        #print("could not reset_input_buffer %s" % e2)
+                        logger.error("could not reset_input_buffer %s" % e2)
 
             else:
                 self._stop_event.wait(0.1)
@@ -273,6 +294,7 @@ class Rower(object):
     def reset_request(self):
         self.write(RESET_REQUEST)
         self.notify_callbacks(build_event('reset'))
+        logger.info("Reset requested")
 
     def request_info(self):
         self.write(MODEL_INFORMATION_REQUEST)

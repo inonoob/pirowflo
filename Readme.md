@@ -334,6 +334,8 @@ Python dbus types: [Link](https://dbus.freedesktop.org/doc/dbus-python/tutorial.
 
 ### BLE
 
+BLE uart server [link](https://scribles.net/creating-ble-gatt-server-uart-service-on-raspberry-pi/)
+
 BLE waterrower cycling profile: [link to waterrower BLE cycling](https://github.com/MostTornBrain/Waterrower)
 
 BLE erg cycling with rs232 + ble [link](https://github.com/weinzmi/ergoFACE)
@@ -382,6 +384,10 @@ hacking ant [link](https://hackingantblog.wordpress.com/)
 udev rules for ant+ stick [link](https://unix.stackexchange.com/questions/81754/how-to-match-a-ttyusbx-device-to-a-usb-serial-device))
 udev rules for ant+ stick so it can be viewed as ttyUSB0 [link](https://unix.stackexchange.com/questions/67936/attaching-usb-serial-device-with-custom-pid-to-ttyusb0-on-embedded)
 udev rules for more serial stuff [link](https://medium.com/@inegm/persistent-names-for-usb-serial-devices-in-linux-dev-ttyusbx-dev-custom-name-fd49b5db9af1)
+
+### bash 
+
+[link](https://ryanstutorials.net/bash-scripting-tutorial/bash-if-statements.php)
 
 ## License
 
