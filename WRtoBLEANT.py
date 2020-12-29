@@ -97,23 +97,7 @@ class DataLogger(object):
                 self.WRValues.update({'instantaneous pace': self.InstantaneousPace})
         if event['type'] == 'watts':
             self.Watts = event['value']
-            #print(self.Watts)
-            if self.Watts !=0:
-                if self._StrokeStart == True:
-                    self._InstaPowerStroke.append(self.Watts)
-                elif self._StrokeStart == False:
-                    if len(self._InstaPowerStroke) != 0:
-                        self.maxpowerStroke = numpy.max(self._InstaPowerStroke)
-                        if len(self._maxpowerfivestrokes) > 4:
-                            del self._maxpowerfivestrokes[0]
-                        self._maxpowerfivestrokes.append(self.maxpowerStroke)
-                        self.AvgInstaPower = int(numpy.average(self._maxpowerfivestrokes))
-                        self.WRValues.update({'watts': self.AvgInstaPower})
-                        self._InstaPowerStroke = []
-                    else:
-                        pass
-
-        # TODO: Calc the Watt average of 5 stroke in order to have the watts
+            self.avgInstaPowercalc(self.Watts)
         if event['type'] == 'total_kcal':
             self.WRValues.update({'total_kcal': (event['value']/1000)})  # in cal now in kcal
         if event['type'] == 'total_kcal_h':  # must calclatre it first
@@ -164,9 +148,7 @@ class DataLogger(object):
             self.secondsWR = 0
             self.minutesWR = 0
             self.hoursWR = 0
-
-
-
+            logger.info("value reseted")
 
     def TimeElapsedcreator(self):
         self.elapsetime = datetime.timedelta(seconds=self.secondsWR, minutes=self.minutesWR, hours=self.hoursWR)
@@ -178,12 +160,26 @@ class DataLogger(object):
 
 
     def WRvalueStandstill(self):
-        self.WRvalue_standstill = self.WRValues_rst
+        self.WRvalue_standstill = self.WRValues
         self.WRvalue_standstill.update({'stroke_rate': 0})
         self.WRvalue_standstill.update({'instantaneous pace': 0})
         self.WRvalue_standstill.update({'watts': 0})
 
-
+    def avgInstaPowercalc(self,watts):
+        if watts != 0:
+            if self._StrokeStart == True:
+                self._InstaPowerStroke.append(watts)
+            elif self._StrokeStart == False:
+                if len(self._InstaPowerStroke) != 0:
+                    self.maxpowerStroke = numpy.max(self._InstaPowerStroke)
+                    if len(self._maxpowerfivestrokes) > 4:
+                        del self._maxpowerfivestrokes[0]
+                    self._maxpowerfivestrokes.append(self.maxpowerStroke)
+                    self.AvgInstaPower = int(numpy.average(self._maxpowerfivestrokes))
+                    self.WRValues.update({'watts': self.AvgInstaPower})
+                    self._InstaPowerStroke = []
+                else:
+                    pass
 
 
 
@@ -216,6 +212,7 @@ def main(in_q, ble_out_q):
             S4.reset_request()
         else:
             pass
+        WRtoBLEANT.SendToBLE()
         ble_out_q.append(WRtoBLEANT.BLEvalues)
         #logger.info(WRtoBLEANT.BLEvalues)
         #ant_out_q.append(WRtoBLEANT.ANTvalues)

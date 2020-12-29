@@ -121,7 +121,6 @@ def Convert_Waterrower_raw_to_byte():
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['heart_rate'] & 0xff)))
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['elapsedtime'] & 0xff)))
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['elapsedtime'] & 0xff00) >> 8))
-    #print(WRBytearray)
     return WRBytearray
 
 
