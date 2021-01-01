@@ -58,6 +58,7 @@ class DataLogger(object):
                 'total_strokes': 0,
                 'total_distance_m': 0,
                 'instantaneous pace': 0,
+                'speed': 0,
                 'watts': 0,
                 'total_kcal': 0,
                 'total_kcal_hour': 0,
@@ -92,9 +93,11 @@ class DataLogger(object):
         if event['type'] == 'avg_distance_cmps':
             if event['value'] == 0:
                 self.WRValues.update({'instantaneous pace': 0})
+                self.WRValues.update({'speed':0})
             else:
                 self.InstantaneousPace = (500 * 100) / event['value']
                 self.WRValues.update({'instantaneous pace': self.InstantaneousPace})
+                self.WRValues.update({'speed':event['value']})
         if event['type'] == 'watts':
             self.Watts = event['value']
             self.avgInstaPowercalc(self.Watts)
@@ -138,6 +141,7 @@ class DataLogger(object):
                 'total_strokes': 0,
                 'total_distance_m': 0,
                 'instantaneous pace': 0,
+                'speed': 0,
                 'watts': 0,
                 'total_kcal': 0,
                 'total_kcal_hour': 0,
@@ -163,6 +167,7 @@ class DataLogger(object):
         self.WRvalue_standstill = self.WRValues
         self.WRvalue_standstill.update({'stroke_rate': 0})
         self.WRvalue_standstill.update({'instantaneous pace': 0})
+        self.WRvalue_standstill.update({'speed': 0})
         self.WRvalue_standstill.update({'watts': 0})
 
     def avgInstaPowercalc(self,watts):

@@ -36,10 +36,18 @@ def main():
     q = Queue()
     ble_q = deque(maxlen=1)
     t1 = threading.Thread(target=BleService, args=(q, ble_q))
+    t1.daemon = True
     t2 = threading.Thread(target=Waterrower, args=(q, ble_q))
+    t2.daemon = True
     t1.start()
     t2.start()
 
+    while True:
+        pass
+
 
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except KeyboardInterrupt:
+        print("code has been shutdown")

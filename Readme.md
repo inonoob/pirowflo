@@ -6,10 +6,9 @@ README is still work in progress
 
 - Send Waterower Data over Bluetooth 
 
-## Not yet finished
+## needed feature:
 
-- Power is not working properly 
-- Elapsedtime doesn't reset corretly 
+- check TODO 
 
 ## Parts of the code based on following Repos: 
 
