@@ -421,6 +421,7 @@ class clsAntDongle():
     def Calibrate(self):
 
         self.ResetDongle()
+        print("calibration")
 
         messages = [
             self.msg4D_RequestMessage(0, self.msgID_Capabilities),  # request max channels
@@ -611,8 +612,11 @@ class clsAntDongle():
     # A N T   M e s s a g e   46   S e t N e t w o r k K e y
     # ------------------------------------------------------------------------------
     def msg46_SetNetworkKey(self, NetworkNumber=0x00, NetworkKey=0x45c372bdfb21a5b9):
+        #0xb9a521fbbd72c345
+        #0x45c372bdfb21a5b9
         format = sc.no_alignment + sc.unsigned_char + sc.unsigned_long_long
         info = struct.pack(format, NetworkNumber, NetworkKey)
+        print("set Networkkey:{0}".format(info))
         msg = self.ComposeMessage(0x46, info)
         return msg
 
