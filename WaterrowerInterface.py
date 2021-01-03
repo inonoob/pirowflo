@@ -1,3 +1,9 @@
+# ---------------------------------------------------------------------------
+# Original code from the bfritscher Repo waterrower
+# https://github.com/bfritscher/waterrower
+# ---------------------------------------------------------------------------
+#
+
 # -*- coding: utf-8 -*-
 import threading
 import logging

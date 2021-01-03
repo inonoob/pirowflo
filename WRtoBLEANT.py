@@ -1,3 +1,9 @@
+# ---------------------------------------------------------------------------
+# Original code from the bfritscher Repo waterrower
+# https://github.com/bfritscher/waterrower
+# ---------------------------------------------------------------------------
+
+
 import threading
 import time
 import datetime
@@ -58,6 +64,7 @@ class DataLogger(object):
                 'total_strokes': 0,
                 'total_distance_m': 0,
                 'instantaneous pace': 0,
+                'speed': 0,
                 'watts': 0,
                 'total_kcal': 0,
                 'total_kcal_hour': 0,
@@ -92,9 +99,11 @@ class DataLogger(object):
         if event['type'] == 'avg_distance_cmps':
             if event['value'] == 0:
                 self.WRValues.update({'instantaneous pace': 0})
+                self.WRValues.update({'speed':0})
             else:
                 self.InstantaneousPace = (500 * 100) / event['value']
                 self.WRValues.update({'instantaneous pace': self.InstantaneousPace})
+                self.WRValues.update({'speed':event['value']})
         if event['type'] == 'watts':
             self.Watts = event['value']
             self.avgInstaPowercalc(self.Watts)
@@ -138,6 +147,7 @@ class DataLogger(object):
                 'total_strokes': 0,
                 'total_distance_m': 0,
                 'instantaneous pace': 0,
+                'speed': 0,
                 'watts': 0,
                 'total_kcal': 0,
                 'total_kcal_hour': 0,
@@ -163,6 +173,7 @@ class DataLogger(object):
         self.WRvalue_standstill = self.WRValues
         self.WRvalue_standstill.update({'stroke_rate': 0})
         self.WRvalue_standstill.update({'instantaneous pace': 0})
+        self.WRvalue_standstill.update({'speed': 0})
         self.WRvalue_standstill.update({'watts': 0})
 
     def avgInstaPowercalc(self,watts):
@@ -191,15 +202,15 @@ class DataLogger(object):
         elif not self.rowerreset and self.PaddleTurning:
             self.BLEvalues = self.WRValues
             
-    # def SendToANT(self):
-    #     if self.rowerreset:
-    #         self.ANTvalues = self.WRValues_rst
-    #     elif not self.rowerreset and not self.PaddleTurning:
-    #         self.ANTvalues = self.WRvalue_standstill
-    #     elif not self.rowerreset and self.PaddleTurning:
-    #         self.ANTvalues = self.WRValues
+    def SendToANT(self):
+        if self.rowerreset:
+            self.ANTvalues = self.WRValues_rst
+        elif not self.rowerreset and not self.PaddleTurning:
+            self.ANTvalues = self.WRvalue_standstill
+        elif not self.rowerreset and self.PaddleTurning:
+            self.ANTvalues = self.WRValues
 
-def main(in_q, ble_out_q):
+def main(in_q, ble_out_q,ant_out_q):
     S4 = WaterrowerInterface.Rower()
     S4.open()
     S4.reset_request()
@@ -213,7 +224,11 @@ def main(in_q, ble_out_q):
         else:
             pass
         WRtoBLEANT.SendToBLE()
+        WRtoBLEANT.SendToANT()
         ble_out_q.append(WRtoBLEANT.BLEvalues)
+        ant_out_q.append(WRtoBLEANT.ANTvalues) # here it is a class deque
+        #print(type(ant_out_q))
+        #print(ant_out_q)
         #logger.info(WRtoBLEANT.BLEvalues)
         #ant_out_q.append(WRtoBLEANT.ANTvalues)
         time.sleep(0.1)
