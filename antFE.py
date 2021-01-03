@@ -1,4 +1,8 @@
-
+# ---------------------------------------------------------------------------
+# Original code from the FortiusANT Repo
+# https://github.com/WouterJD/FortiusANT
+# ---------------------------------------------------------------------------
+#
 
 class antFE(object):
     def __init__(self, ant_dongle):
@@ -48,14 +52,16 @@ class antFE(object):
             #     self.AccumlatedStrokecount = self.StrokeCount - (self.Rollovercount * 254)
 
             self.AccumlatedStrokecount = self.Rollovercalc(self.StrokeCount,254)
+            #self.AccumlatedStrokecount = self.StrokeCount
+
 
             self.info = self._ant_dongle.msgPage22_RowingData(self._ant_dongle.channel_FE, self.AccumlatedStrokecount, self.Cadence, self.InstPower)
             self.fedata = self._ant_dongle.ComposeMessage(self._ant_dongle.msgID_BroadcastData, self.info)
 
         else:
 
-            self.AccumlatedElapsedTime = self.Rollovercalc(self.ElapsedTime,64)
-            self.AccumlatedDistanceTravelled = self.Rollovercalc(self.ElapsedTime,256)
+            self.AccumlatedElapsedTime = self.Rollovercalc(self.ElapsedTime,256)
+            self.AccumlatedDistanceTravelled = self.Rollovercalc(self.DistanceTravelled,256)
 
             self.info = self._ant_dongle.msgPage16_GeneralFEdata(self._ant_dongle.channel_FE, self.AccumlatedElapsedTime, self.AccumlatedDistanceTravelled, self.Speed, self.Heart)
             self.fedata = self._ant_dongle.ComposeMessage(self._ant_dongle.msgID_BroadcastData, self.info)

@@ -31,6 +31,7 @@ Last idea would be to track and export the workout to a FIT file which is then u
 
 - Send Waterrower Data from the Pi over Ant+ 
 - Webserver to control script in order to start/stop/restart Bluetooth,Ant or Waterrower
+- Export to FIT files (Garmin )
 
 
 ## Parts of the code based on following Repos:
@@ -40,22 +41,17 @@ Last idea would be to track and export the workout to a FIT file which is then u
 is self based on the Bluez Gatt server example
 - [Link to repo](https://github.com/WouterJD/FortiusANT) base code for the Ant+ part used for this project
 
-Thoses Repos have the base code which then has been rewritten to meet the requirements of this project. 
+Thoses Repos with some of their code are used as  base code 
+which then have been rewritten to meet the requirements of this project. 
 
 ## Motivation
 
 I wanted to have the ability to use the Android App Coxswain and also my Garmin smartwatch. Therefore, I though
 why not connect the Waterrower via USB to a Raspberry pi and let the Raspberry pi being a BLE and Ant+ transmitter. 
-And wouldn't be even better if it could be control for the Webbrowser. 
+And wouldn't be even better if it could be control for the Webbrowser. And Last but not least, have at the 
+end of the training a FIT file for Garmin connect or Strava.
 
-### BLE  
-So I started looking for projects on github and found the MostTornBrain repo "Waterrower" [link](https://github.com/MostTornBrain/Waterrower)
-But he had implemented as indoor-bike in order to use it with Zwift. He used the BLE gatt server and Advertiser from 
-the bluez ble example. But I needed the BLE profile for rowing. 
-So I digged into the not very well documented BLE documentation which is high level and on some points theroatical and 
-not very partical. (Check for Developer section for more details)
 
-### Ant+
 
 ## Requirements
 
@@ -218,6 +214,16 @@ more robust against dividing by 0:
 #### WaterrowerBle
 
 ##### Setting up BLE part 
+
+### BLE  
+So I started looking for projects on github and found the MostTornBrain repo "Waterrower" [link](https://github.com/MostTornBrain/Waterrower)
+But he had implemented as indoor-bike in order to use it with Zwift. He used the BLE gatt server and Advertiser from 
+the bluez ble example. But I needed the BLE profile for rowing. 
+So I digged into the not very well documented BLE documentation which is high level and on some points theroatical and 
+not very partical. (Check for Developer section for more details)
+
+
+
 
 This script has 2 main function: 
 
@@ -395,6 +401,8 @@ Convert dec to hex and so on[link](https://www.binaryhexconverter.com/decimal-to
 interface to Waterrower serial [link](https://github.com/bfritscher/waterrower/blob/master/waterrower/interface.py)
 
 Water Rower S4 S5 USB Protocol Iss 1 04.pdf is the document specifying the USB specification.   
+
+Waterrower interface [link](https://github.com/bfritscher/waterrower)
 
 
 ### DBUS

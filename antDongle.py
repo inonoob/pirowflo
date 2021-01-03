@@ -1,3 +1,10 @@
+# ---------------------------------------------------------------------------
+# Original code from the FortiusANT Repo
+# https://github.com/WouterJD/FortiusANT
+# ---------------------------------------------------------------------------
+#
+
+
 import binascii
 import os
 
@@ -723,7 +730,8 @@ class clsAntDongle():
         DistanceTravelled = int(min(0xff, DistanceTravelled))
         Speed = int(min(0xffff, Speed))
         HeartRate = int(min(0xff, HeartRate))
-        Capabilities = 0x30 | 0x03 | 0x00 | 0x00  # IN_USE | HRM | Distance | Speed
+        #Capabilities = 0x30 | 0x03 | 0x00 | 0x00  # IN_USE | HRM | Distance | Speed
+        Capabilities = 0x37   # IN_USE | HRM | Distance | Speed
 
         fChannel = sc.unsigned_char  # First byte of the ANT+ message content
         fDataPageNumber = sc.unsigned_char  # First byte of the ANT+ datapage (payload)
@@ -815,7 +823,7 @@ class clsAntDongle():
         StrokeCount = int(min(0xff, StrokeCount))
         Cadence = int(min(0xfe, Cadence))
         InstPower = int(min(0xfffe, InstPower))
-        Flags = 0x30  # 00110000 Hmmm.... leave as is but do not understand the value
+        Flags = 0x31  # 00110000 Hmmm.... leave as is but do not understand the value
         #todo: thin about the lap flag for 500m splits
 
         fChannel = sc.unsigned_char  # First byte of the ANT+ message content

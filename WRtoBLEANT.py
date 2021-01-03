@@ -1,3 +1,9 @@
+# ---------------------------------------------------------------------------
+# Original code from the bfritscher Repo waterrower
+# https://github.com/bfritscher/waterrower
+# ---------------------------------------------------------------------------
+
+
 import threading
 import time
 import datetime
