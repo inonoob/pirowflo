@@ -12,12 +12,11 @@ this can be achieved by checking the flag SS = Start stroke from the waterrower 
   
 
 ## needed Feature
-- [ ] add webserver to control the start/stop/restart of the script
-- [x] python requirement.txt 
-- [ ] python installer
+- [x] add Ant+ capabiltiy to send data
+- [ ] Fix conversion from waterrower to Ant+ format
+- [ ] add webserver to control the start/stop/restart of the script (Flask or web.py)
+- [x] python requirement.txt
+- [ ] Install.sh file which does all the installation stuff
 
-## nice to have Feature 
-- [ ] add ANT with an ANT stick in order to send data over ant e.g. Garmin watches. Fenix 6 series has 
-got a new update, which for the native rowing app accepts ant sensor (rower) to broadcast the data to the watch 
-  e.g. concept2 already use that technic.
+  
   
