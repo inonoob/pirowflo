@@ -23,11 +23,11 @@ class antFE(object):
         self.WaterrowerValueRaw = WaterrowerValuesRaw
         self.ElapsedTime = WaterrowerValuesRaw['elapsedtime']
         self.DistanceTravelled = WaterrowerValuesRaw['total_distance_m']
-        self.Speed = (WaterrowerValuesRaw['speed'] / 100)#  cm/s to m/s
+        self.Speed = (WaterrowerValuesRaw['speed'] * 1000 / 100)#  cm/s to m/s
         self.Heart = 0
         self.StrokeCount = WaterrowerValuesRaw['total_strokes']
         #self.StrokeCount = min(255, self.StrokeCount)
-        self.Cadence = WaterrowerValuesRaw['stroke_rate']
+        self.Cadence = WaterrowerValuesRaw['stroke_rate']/2
         self.Cadence = min(253, self.Cadence)  # Limit to 253
         self.InstPower = WaterrowerValuesRaw['watts']
         self.InstPower = max(0, self.InstPower)  # Not negative

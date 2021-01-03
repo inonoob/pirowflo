@@ -2,54 +2,42 @@
 
 import antDongle as ant
 import antFE as fe
-import time
 from time import sleep
+from collections import deque
 
-def main():
+def main(ant_in_q):
     EventCounter = 0
     messages = []       # messages to be sent to
     Antdongle = ant.clsAntDongle()
     Antdongle.Calibrate()
-    sleep(0.5)
+    sleep(0.25)
     Antdongle.Trainer_ChannelConfig()
-    sleep(0.5)
+    sleep(0.25)
     Waterrower = fe.antFE(Antdongle)
-    WRValues_test = {
-                'stroke_rate': 0,
-                'total_strokes': 0,
-                'total_distance_m': 0,
-                'instantaneous pace': 0,
-                'speed': 0,
-                'watts': 0,
-                'total_kcal': 0,
-                'total_kcal_hour': 0,
-                'total_kcal_min': 0,
-                'heart_rate': 0,
-                'elapsedtime': 0,
-            }
-
 
     while True:
-
-        # #WaterrowerValuesRaw = ant_q.pop()
-        WaterrowerValuesRaw = WRValues_test
-        if EventCounter < 255:
-            Waterrower.EventCounter = EventCounter
-            print(Waterrower.EventCounter)
-            Waterrower.BroadcastTrainerDataMessage(WaterrowerValuesRaw)
-            messages.append(Waterrower.fedata)# Add data to teh message array
-            print("message to be send is:{0}".format(Waterrower.fedata))
-            if len(messages) > 0:
-                Antdongle.Write(messages, True, False) # check if length of array is greater than 0 if yes then send data over Ant+
-            EventCounter += 1
-            print(EventCounter)
-            messages = []
+        if len(ant_in_q) != 0:
+            WaterrowerValuesRaw = ant_in_q.pop()
+            #print(WaterrowerValuesRaw)
+            #WaterrowerValuesRaw = WRValues_test
+            if EventCounter < 255:
+                Waterrower.EventCounter = EventCounter
+                #print(Waterrower.EventCounter)
+                Waterrower.BroadcastTrainerDataMessage(WaterrowerValuesRaw)
+                messages.append(Waterrower.fedata)# Add data to teh message array
+                #print("message to be send is:{0}".format(Waterrower.fedata))
+                if len(messages) > 0:
+                    Antdongle.Write(messages, True, False) # check if length of array is greater than 0 if yes then send data over Ant+
+                EventCounter += 1
+                print(EventCounter)
+                messages = []
+            else:
+                 EventCounter = 0
+                 messages = []
         else:
-             EventCounter = 0
-             messages = []
-        print("stroke count:{0}".format(Waterrower.AccumlatedStrokecount))
+            pass
 
-        WRValues_test = FakeRower(WRValues_test)
+        # WRValues_test = FakeRower(WRValues_test)
         sleep(0.25)
 
 

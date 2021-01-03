@@ -112,7 +112,7 @@ def Convert_Waterrower_raw_to_byte():
     for keys in WaterrowerValuesRaw:
         WaterrowerValuesRaw[keys] = int(WaterrowerValuesRaw[keys])
     #todo refactor this part with the correct struct.pack e.g. 2 bytes use "H" instand of bitshifiting ?
-    print(WaterrowerValuesRaw)
+    #print(WaterrowerValuesRaw)
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['stroke_rate'] & 0xff)))
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_strokes'] & 0xff)))
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['total_strokes'] & 0xff00) >> 8))

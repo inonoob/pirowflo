@@ -202,15 +202,15 @@ class DataLogger(object):
         elif not self.rowerreset and self.PaddleTurning:
             self.BLEvalues = self.WRValues
             
-    # def SendToANT(self):
-    #     if self.rowerreset:
-    #         self.ANTvalues = self.WRValues_rst
-    #     elif not self.rowerreset and not self.PaddleTurning:
-    #         self.ANTvalues = self.WRvalue_standstill
-    #     elif not self.rowerreset and self.PaddleTurning:
-    #         self.ANTvalues = self.WRValues
+    def SendToANT(self):
+        if self.rowerreset:
+            self.ANTvalues = self.WRValues_rst
+        elif not self.rowerreset and not self.PaddleTurning:
+            self.ANTvalues = self.WRvalue_standstill
+        elif not self.rowerreset and self.PaddleTurning:
+            self.ANTvalues = self.WRValues
 
-def main(in_q, ble_out_q):
+def main(in_q, ble_out_q,ant_out_q):
     S4 = WaterrowerInterface.Rower()
     S4.open()
     S4.reset_request()
@@ -224,7 +224,11 @@ def main(in_q, ble_out_q):
         else:
             pass
         WRtoBLEANT.SendToBLE()
+        WRtoBLEANT.SendToANT()
         ble_out_q.append(WRtoBLEANT.BLEvalues)
+        ant_out_q.append(WRtoBLEANT.ANTvalues) # here it is a class deque
+        #print(type(ant_out_q))
+        #print(ant_out_q)
         #logger.info(WRtoBLEANT.BLEvalues)
         #ant_out_q.append(WRtoBLEANT.ANTvalues)
         time.sleep(0.1)

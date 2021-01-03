@@ -122,6 +122,29 @@ pi is perfect for this project.
 
 ### Software
 
+When using deque. If the thread agruments are only 1 arguement then the deque is not working and will automaticily see 
+the stored value. In this case the dict for ant. If I had more arguemnet then it is not changed and stays as a deque object
+and there for the pop() methode can be called. That's so odd ?
+The solution is within the arg=[variable]
+
+This error appears if you pass in the args paramter on the variable. If it is a list it will be process a list of args and 
+not as list it self. 
+
+    t3 = threading.Thread(target=ANTService, args=(ant_q))
+
+    Traceback (most recent call last):
+      File "/usr/lib/python3.7/threading.py", line 917, in _bootstrap_inner
+        self.run()
+      File "/usr/lib/python3.7/threading.py", line 865, in run
+        self._target(*self._args, **self._kwargs)
+    TypeError: ANTService() takes 1 positional argument but 2 were given
+
+to fix that you have to put parenthese to make threading understand it is not a list of argument to pars but the list
+is the arguement ! 
+
+    t3 = threading.Thread(target=ANTService, args=(ant_q))
+
+
 When you install a fresh Raspbian on a raspberry pi and want to use the script you first must add the user pi to the
 group bluetooth. Or your will have an error acces denied. 
 
