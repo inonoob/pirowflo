@@ -128,7 +128,7 @@ and there for the pop() methode can be called. That's so odd ?
 The solution is within the arg=[variable]
 
 This error appears if you pass in the args paramter on the variable. If it is a list it will be process a list of args and 
-not as list it self. 
+not as list it self.  
 
     t3 = threading.Thread(target=ANTService, args=(ant_q))
 
