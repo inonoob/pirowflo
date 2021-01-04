@@ -1,6 +1,8 @@
 # BLE and Ant+ for Waterrower
 
-README is still work in progress 
+
+<img src="docs/Hardware/IMG_20210104_155432.jpg" width=20% height=20%>
+
 
 This python script replaces the Waterrower com module. A Raspberry Pi is connected via usb with the Waterrower. The rowing
 data are processed by the python script which is then send via bluetooth Low Energy Fitness equipment profile to the connected App. E.g Android
