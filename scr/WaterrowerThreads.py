@@ -2,7 +2,6 @@ import logging
 import threading
 from queue import Queue
 from collections import deque
-from time import sleep
 
 import WaterrowerBle
 import WRtoBLEANT

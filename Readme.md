@@ -127,6 +127,8 @@ the stored value. In this case the dict for ant. If I had more arguemnet then it
 and there for the pop() methode can be called. That's so odd ?
 The solution is within the arg=[variable]
 
+[link](https://stackoverflow.com/questions/49120190/passing-arguments-to-threading-thread)
+
 This error appears if you pass in the args paramter on the variable. If it is a list it will be process a list of args and 
 not as list it self.  
 
