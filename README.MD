@@ -2,8 +2,7 @@
 
 
 <img src="docs/Hardware/IMG_20210104_155432.jpg" width=36% height=36%> 
-<img src="docs/Hardware/Selection_015.png" width=30% height=30%> 
-<img src="docs/Hardware/IMG_20210104_184635.jpg" width=36% height=36%> 
+<img src="docs/Hardware/Selection_015.png" width=30% height=30%>
 
 
 
