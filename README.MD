@@ -11,7 +11,7 @@ app Coxswain, Kinomap or Cityrow.
 Additionally, it is planned to have the processed data to be sent also via Ant+. This is an idea for Garmin watches especially 
 the Fenix 6 series as the native rowing app can use thoes Data. The Ant+ profile used here is the Fitness Machine. 
 
-- [ ] Status = Work in progress
+- [x] Status = Done
 
 even more, the script will be control via a build in webserver that can control the script to Start/stop 
 and Restart it.
