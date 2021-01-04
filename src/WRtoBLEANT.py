@@ -3,7 +3,6 @@
 # https://github.com/bfritscher/waterrower
 # ---------------------------------------------------------------------------
 
-
 import threading
 import time
 import datetime
@@ -11,7 +10,6 @@ import logging
 import numpy
 
 import WaterrowerInterface
-
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)

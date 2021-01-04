@@ -2,6 +2,8 @@
 
 ## Bug Fixes
 
+- [ ] Elapsed time is bugging. Bluetooth and ANT+ shows 0 or just 00.01 value. Needs to be invensitaged 
+
 ### Todo in WRtoBLEANT.py
 
 - [x] check why elapsed time is not reset to 0 if rower has been reseted. self.rowerreset = True 
