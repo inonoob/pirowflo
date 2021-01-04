@@ -2,11 +2,10 @@ import logging
 import threading
 from queue import Queue
 from collections import deque
-from time import sleep
 
 import WaterrowerBle
 import WRtoBLEANT
-import AntWriter
+import WaterrowerAnt
 
 
 logger = logging.getLogger(__name__)
@@ -32,7 +31,7 @@ def main():
 
     def ANTService(ant_in_q):
         logger.info("Start Ant and start broadcast data")
-        antService = AntWriter.main(ant_in_q)
+        antService = WaterrowerAnt.main(ant_in_q)
         antService()
 
 
