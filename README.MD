@@ -72,6 +72,7 @@ Bill of Material(BOM)
 | **for Ant+ addition** || 
 | Ant+ dongle (avoid Cyclone) ||
 
+<img src="docs/Hardware/IMG_20210104_155756.jpg" width=50% height=50%>
 
 | Item for Raspberry pi Zero W | 
 |------|
@@ -83,6 +84,8 @@ Bill of Material(BOM)
 | **for Ant+ addition**  || 
 | Ant+ dongle (avoid Cyclone) ||
 | Micro USB to USB Hub || 
+
+<img src="docs/Hardware/IMG_20210104_155825.jpg" width=50% height=50%>
 
 I would recommend buying the Raspberry pi in a kit where most of the parts are inclued 
 
