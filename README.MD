@@ -43,6 +43,13 @@ Last idea would be to track and export the workout to a FIT file which is then u
 - Send Waterower Data from the Pi over Bluetooth (Build-in or USB-dongle) 
 - Send Waterrower Data from the Pi over Ant+ via Ant+ dongle 
 
+## Supported Fitness app or watches: 
+
+- [x] Coxswain  (bluetooth)
+- [x] Cityrow   (bluetooth)
+- [ ] Kinomap   (bluetooth)     not yet tested 
+- [ ] Garmin fenix 6 watch (Ant+) not yet tested 
+
 ## Planned Features
 
 - Webserver to control script in order to start/stop/restart Bluetooth,Ant or Waterrower
