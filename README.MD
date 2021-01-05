@@ -110,7 +110,7 @@ I would recommend buying the Raspberry pi in a kit where most of the parts are i
 
 ### Software 
 
-## Installation or Getting Started
+### Installation
 
 Clone the repo from Github: 
 
@@ -128,8 +128,52 @@ execute install.sh in order to setup everything:
 
     sudo ./install.sh 
 
-once installation complete, start the main script: 
+once installation complete go into the src folder
 
-    python3 WaterrowerThreads.py 
+    cd src
+
+### Getting Started
+
+If the script WaterrowerThreads is started with -h or --help it shows the available option for the programm 
+
+ -  -i or --interface is for which interface should be use to grab the data. the S4 monitor or Smartrow(not yet
+    implemented)
+    
+ - -b or --blue start the Bluetooth Gatt server and starts advertising the Waterrower 
+ 
+ - -a or --antfe start the ant+ node, initialise the channel and start broadcasting the waterrower data. 
+
+
+    python3 WaterrowerThreads.py -h
+    
+    usage: WaterrowerThreads.py [-h] [-i {s4,sr}] [-b] [-a]
+
+    Python script to broadcast waterrower data over BLE and ANT
+
+      Waterrower Ant and BLE Raspberry Pi Module
+                                                                 +-+
+                                               XX+-----------------+
+                  +-------+                 XXXX    |----|       | |
+                   +-----+                XXX +----------------+ | |
+                   |     |             XXX    |XXXXXXXXXXXXXXXX| | |
+    +--------------X-----X----------+XXX+------------------------+-+
+    |                                                              |
+    +--------------------------------------------------------------+
+
+    To begin choose an interface from where the data will be taken from either the S4 Monitor connected via USB or
+    the smartrow pully via bluetooth low energy
+    
+    Then select which broadcast methode will be used. Bluetooth low energy or Ant+ or both.
+    
+    e.g. use the S4 connected via USB and broadcast data over bluetooth and Ant+
+    
+    python3 WaterrowerThreads.py -i s4 -b -a
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -i {s4,sr}, --interface {s4,sr}
+                            choose  Waterrower interface S4 monitor: s4 or Smartrow: sr
+      -b, --blue            Broadcast Waterrower data over bluetooth low energy
+      -a, --antfe           Broadcast Waterrower data over Ant+
 
 

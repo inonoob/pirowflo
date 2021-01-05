@@ -1,5 +1,24 @@
 """
 Python script to broadcast waterrower data over BLE and ANT
+
+      Waterrower Ant and BLE Raspberry Pi Module
+                                                                 +-+
+                                               XX+-----------------+
+                  +-------+                 XXXX    |----|       | |
+                   +-----+                XXX +----------------+ | |
+                   |     |             XXX    |XXXXXXXXXXXXXXXX| | |
+    +--------------X-----X----------+XXX+------------------------+-+
+    |                                                              |
+    +--------------------------------------------------------------+
+
+To begin choose an interface from where the data will be taken from either the S4 Monitor connected via USB or
+the smartrow pully via bluetooth low energy
+
+Then select which broadcast methode will be used. Bluetooth low energy or Ant+ or both.
+
+e.g. use the S4 connected via USB and broadcast data over bluetooth and Ant+
+
+python3 WaterrowerThreads.py -i s4 -b -a
 """
 
 import logging
@@ -46,14 +65,18 @@ def main(args=None):
     q = Queue()
     ble_q = deque(maxlen=1)
     ant_q = deque(maxlen=1)
-    t2 = threading.Thread(target=Waterrower, args=(q, ble_q, ant_q))
-    t2.daemon = True
-    t2.start()
-
-    if args.blue == True:
-        t1 = threading.Thread(target=BleService, args=(q, ble_q))
+    if args.interface == "s4":
+        logger.info("inferface S4 monitor will be used for data input")
+        t1 = threading.Thread(target=Waterrower, args=(q, ble_q, ant_q))
         t1.daemon = True
         t1.start()
+    else:
+        logger.info("no interface selected")
+
+    if args.blue == True:
+        t2 = threading.Thread(target=BleService, args=(q, ble_q))
+        t2.daemon = True
+        t2.start()
     else:
         logger.info("Bluetooth service not used")
     if args.antfe == True:
@@ -70,6 +93,7 @@ def main(args=None):
 if __name__ == '__main__':
     try:
         parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter, )
+        parser.add_argument("-i", "--interface", choices=["s4","sr"], default="s4", help="choose  Waterrower interface S4 monitor: s4 or Smartrow: sr")
         parser.add_argument("-b", "--blue", action='store_true', default=False,help="Broadcast Waterrower data over bluetooth low energy")
         parser.add_argument("-a", "--antfe", action='store_true', default=False,help="Broadcast Waterrower data over Ant+")
         args = parser.parse_args()
@@ -78,6 +102,3 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("code has been shutdown")
 
-# https://github.com/anjiuidev/argparser-python/blob/master/sample.py
-# https://github.com/thorsummoner/python-argp
-#https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse
