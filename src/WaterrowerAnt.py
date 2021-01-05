@@ -1,8 +1,9 @@
 
+from time import sleep
 
 import antDongle as ant
 import antFE as fe
-from time import sleep
+
 from collections import deque
 
 def main(ant_in_q):
