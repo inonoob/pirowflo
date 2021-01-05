@@ -1,6 +1,18 @@
 # BLE and Ant+ for Waterrower
 
 
+      Waterrower Ant and BLE Raspberry Pi Module
+                                                                 +-+
+                                               XX+-----------------+
+                  +-------+                 XXXX    |----|       | |
+                   +-----+                XXX +----------------+ | |
+                   |     |             XXX    |XXXXXXXXXXXXXXXX| | |
+    +--------------X-----X----------+XXX+------------------------+-+
+    |                                                              |
+    +--------------------------------------------------------------+
+
+
+
 <img src="docs/Hardware/IMG_20210104_155432.jpg" width=36% height=36%> <img src="docs/Hardware/Selection_015.png" width=30% height=30%>
 
 
@@ -101,13 +113,16 @@ go into the folder:
 
     cd WaterrowerAntBle 
 
-Ensure that python above 3.6 is installed, if not then install it via apt-get 
+make install.sh executable: 
 
-    python3 --version 
-    sudo apt-get install python3 python3-pip -y 
+    sudo chmod +x install.sh
 
-Ensure that Bluez version above 5.49 is installed, if not installed or older version then it is 
-recommanded to compile it from source. Bluez version 5.50 is recommended. [link](https://scribles.net/updating-bluez-on-raspberry-pi-from-5-43-to-5-50/)
-to tutorial in order to compile bluez from source on the Raspberry pi. 
+execute install.sh in order to setup everything: 
 
-    bluetoothd --version
+    sudo ./install.sh 
+
+once installation complete, start the main script: 
+
+    python3 WaterrowerThreads.py 
+
+
