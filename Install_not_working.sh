@@ -2,37 +2,28 @@
 
 ## needed for the PyGObject
 
-echo "Check for required binaries and python modules"
-echo "----------------------------------------------"
+echo "updates the list of latest updates available for the packages"
+echo "-------------------------------------------------------------"
 sudo apt-get update
+
+echo "Check Python version and Bluetooth version    "
+echo "----------------------------------------------"
 
 BTversion= $(bluetoothd --version)
 Pythonversion = $(python3 --version | cut -d " " -f2| cut -d "." -f1-2 )
 
 if $BTversion -lt 5.49
 then
-  sudo apt-get install bluez
+  sudo apt-get install bluez -y
 fi
 
-if $Pythonversion -lt 3.7
+if $Pythonversion -lt 3.6
 then
-  sudo apt-get install python3.7
+  sudo apt-get install python3.7 -y
 fi
-#echo "Install lib to compile bluez"
-#sudo apt-get install libdbus-1-dev libglib2.0-dev libudev-dev libical-dev libreadline-dev -y
-#
-#wget www.kernel.org/pub/linux/bluetooth/bluez-5.55.tar.xz
-#
-#tar xvf bluez-5.55.tar.xz && cd bluez-5.55
-#
-#./configure --prefix=/usr --mandir=/usr/share/man --sysconfdir=/etc --localstatedir=/var --enable-experimental
-#
-#make -j4
-#
-#sudo make install
 
-
-echo "Install python and PyGObject"
+echo "    "
+echo "----------------------------------------------"
 sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0
 
 
