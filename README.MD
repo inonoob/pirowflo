@@ -111,6 +111,9 @@ I would recommend buying the Raspberry pi in a kit where most of the parts are i
 ### Software 
 
 ### Installation
+On a fresh installed Raspbian, git must be installed first 
+
+    sudo apt-get install git
 
 Clone the repo from Github: 
 
