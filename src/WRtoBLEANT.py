@@ -84,10 +84,8 @@ class DataLogger(object):
             return
         if event['type'] == 'stroke_start':
             self._StrokeStart = True
-            print("stoke Start")
         if event['type'] == 'stroke_end':
             self._StrokeStart = False
-            print("Stroke end")
         if event['type'] == 'stroke_rate':
             self.WRValues.update({'stroke_rate': (event['value']*2)})
         if event['type'] == 'total_strokes':
