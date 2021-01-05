@@ -32,7 +32,7 @@ def main(args=None):
         bleService()
 
     def Waterrower(in_q, ble_out_q, ant_out_q):
-        logger.info("Waterrower to BLE and ANT")
+        logger.info("Waterrower Interface started")
         Waterrowerserial = WRtoBLEANT.main(in_q, ble_out_q, ant_out_q)
         Waterrowerserial()
 
@@ -46,17 +46,23 @@ def main(args=None):
     q = Queue()
     ble_q = deque(maxlen=1)
     ant_q = deque(maxlen=1)
-    t1 = threading.Thread(target=BleService, args=(q, ble_q))
-    t1.daemon = True
     t2 = threading.Thread(target=Waterrower, args=(q, ble_q, ant_q))
     t2.daemon = True
-    t3 = threading.Thread(target=ANTService, args=([ant_q])) # [] are needed to tell threading that the list "deque" is one args and not a list of arguement !
-    t3.daemon = True
-    t1.start()
+    t2.start()
+
     if args.blue == True:
-        t2.start()
+        t1 = threading.Thread(target=BleService, args=(q, ble_q))
+        t1.daemon = True
+        t1.start()
+    else:
+        logger.info("Bluetooth service not used")
     if args.antfe == True:
+        t3 = threading.Thread(target=ANTService, args=(
+        [ant_q]))  # [] are needed to tell threading that the list "deque" is one args and not a list of arguement !
+        t3.daemon = True
         t3.start()
+    else:
+        logger.info("Ant service not used")
 
     while True:
         pass
@@ -67,6 +73,7 @@ if __name__ == '__main__':
         parser.add_argument("-b", "--blue", action='store_true', default=False,help="Broadcast Waterrower data over bluetooth low energy")
         parser.add_argument("-a", "--antfe", action='store_true', default=False,help="Broadcast Waterrower data over Ant+")
         args = parser.parse_args()
+        logger.info(args)
         main(args)
     except KeyboardInterrupt:
         print("code has been shutdown")
