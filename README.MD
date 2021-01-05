@@ -127,13 +127,13 @@ make install.sh executable:
 
     sudo chmod +x install.sh
 
-execute install.sh in order to setup everything: 
+execute install.sh in order to setup everything: (This can take 5 - 10 min to set all up)
 
     sudo ./install.sh 
 
-once installation complete go into the src folder
+Once installation and reboot complete, go into the WaterrowerAntBle/src folder folder
 
-    cd src
+    cd /home/pi/WaterrowerAntBle/src
 
 ### Getting Started
 
