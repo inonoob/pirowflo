@@ -136,12 +136,6 @@ once installation complete go into the src folder
 
 If the script WaterrowerThreads is started with -h or --help it shows the available option for the programm 
 
- -  -i or --interface is for which interface should be use to grab the data. the S4 monitor or Smartrow(not yet
-    implemented)
-    
- - -b or --blue start the Bluetooth Gatt server and starts advertising the Waterrower 
- 
- - -a or --antfe start the ant+ node, initialise the channel and start broadcasting the waterrower data. 
 
 
     python3 WaterrowerThreads.py -h
