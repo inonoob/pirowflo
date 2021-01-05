@@ -1,5 +1,10 @@
+"""
+Python script to broadcast waterrower data over BLE and ANT
+"""
+
 import logging
 import threading
+import argparse
 from queue import Queue
 from collections import deque
 
@@ -18,7 +23,9 @@ filelogHandler.setFormatter(formatter)
 logger.addHandler(filelogHandler)
 logger.addHandler(logHandler)
 
-def main():
+
+def main(args=None):
+
     def BleService(out_q, ble_in_q):
         logger.info("Start BLE Advertise and BLE GATT Server")
         bleService = WaterrowerBle.main(out_q, ble_in_q)
@@ -46,15 +53,24 @@ def main():
     t3 = threading.Thread(target=ANTService, args=([ant_q])) # [] are needed to tell threading that the list "deque" is one args and not a list of arguement !
     t3.daemon = True
     t1.start()
-    t2.start()
-    #sleep(1)    # not so happy with this. this is needed in order to wait that the ant_q is filled with data. The BLE code don't need
-    t3.start()
+    if args.blue == True:
+        t2.start()
+    if args.antfe == True:
+        t3.start()
 
     while True:
         pass
 
 if __name__ == '__main__':
     try:
-        main()
+        parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter, )
+        parser.add_argument("-b", "--blue", action='store_true', default=False,help="Broadcast Waterrower data over bluetooth low energy")
+        parser.add_argument("-a", "--antfe", action='store_true', default=False,help="Broadcast Waterrower data over Ant+")
+        args = parser.parse_args()
+        main(args)
     except KeyboardInterrupt:
         print("code has been shutdown")
+
+# https://github.com/anjiuidev/argparser-python/blob/master/sample.py
+# https://github.com/thorsummoner/python-argp
+#https://stackoverflow.com/questions/15008758/parsing-boolean-values-with-argparse

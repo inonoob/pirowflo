@@ -30,7 +30,7 @@ def main(ant_in_q):
                 if len(messages) > 0:
                     Antdongle.Write(messages, True, False) # check if length of array is greater than 0 if yes then send data over Ant+
                 EventCounter += 1
-                print(EventCounter)
+                #print(EventCounter)
                 messages = []
             else:
                  EventCounter = 0

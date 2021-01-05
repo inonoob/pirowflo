@@ -13,6 +13,7 @@ May be thing about to create the elapse time in the code it self and not with th
 
 - [ ] add argparser module in order to make choose e.g choose to have ant+ activate or heart rate monitor over 
 ant+ ( not yet availalbe). This module would make it more flexible. 
+    implemented but not tested yet. 
  
 ### Install.sh 
 
@@ -29,10 +30,13 @@ as a rule. This is needed to load it via the FTDI serial driver.
     ACTION=="add", ATTRS{idVendor}=="0fcf", ATTRS{idProduct}=="1008", RUN+="/sbin/modprobe ftdi_sio" RUN+="/bin/sh -c 'echo 0fcf 1008 > /sys/bus/usb-serial/drivers/ftdi_sio/new_id'"
 
 
+## anfFE.py 
 
-## needed Feature
 - [ ] Fix conversion from waterrower to Ant+ format (elasped time 1 = 0.25s. That needs to multiply the elapsed time 
   by 4 for ant+ in order to make complete seconds. )
+
+## needed Feature
+
 - [ ] add webserver to control the start/stop/restart of the script (Flask or web.py)
 - [ ] Install.sh file which does all the installation stuff
 - [ ] add support for heart rate monitors via Ant+ (pi is a client) use other channel of the 8 available from 
@@ -40,6 +44,6 @@ the ant node.
   
 
 ## DONE
-- [x] add Ant+ capabiltiy to send data
+- [x] add Ant+ capability to send data
 - [x] python requirement.txt
 
