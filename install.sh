@@ -72,7 +72,9 @@ unset IFS
 
 echo " "
 echo "----------------------------------------------"
-echo " installation done !"
+echo " installation done ! rebooting in 3, 2, 1 "
 echo "----------------------------------------------"
+sleep 3
+sudo reboot
 echo " "
 exit 0
