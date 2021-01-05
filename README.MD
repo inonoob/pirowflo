@@ -137,7 +137,6 @@ once installation complete go into the src folder
 If the script WaterrowerThreads is started with -h or --help it shows the available option for the programm 
 
 
-
     python3 WaterrowerThreads.py -h
     
     usage: WaterrowerThreads.py [-h] [-i {s4,sr}] [-b] [-a]
@@ -170,4 +169,10 @@ If the script WaterrowerThreads is started with -h or --help it shows the availa
       -b, --blue            Broadcast Waterrower data over bluetooth low energy
       -a, --antfe           Broadcast Waterrower data over Ant+
 
+
+
+
+For example if the Waterrower should send data over Bluetooth and ANT 
+
+    pyton3 WaterrowerThreads.py -i s4 -b -a 
 
