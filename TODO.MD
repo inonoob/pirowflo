@@ -11,10 +11,11 @@ May be thing about to create the elapse time in the code it self and not with th
 
 ## needed Feature
 
-- [ ] add webserver to control the start/stop/restart of the script (Flask or web.py)
-- [ ] Install.sh file which does all the installation stuff
+- [ ] add webserver to control the start/stop/restart of the script (Tornado)
 - [ ] add support for heart rate monitors via Ant+ (pi is a client) use other channel of the 8 available from 
-the ant node. 
+the ant node.
+  
+- [ ] FIT file export of a workout for Strava and Garmin-connect 
   
 
 ## DONE
@@ -28,4 +29,6 @@ the ant node.
 - [x] add argparser module in order to make choose e.g choose to have ant+ activate or heart rate monitor over 
 ant+ ( not yet availalbe). This module would make it more flexible. 
     implemented but not tested yet.
+    
+- [x] Install.sh file which does all the installation stuff
 
