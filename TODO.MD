@@ -9,32 +9,6 @@ May be thing about to create the elapse time in the code it self and not with th
 
     Time.time()
 
-### WaterrowerThreads.py 
-
-- [ ] add argparser module in order to make choose e.g choose to have ant+ activate or heart rate monitor over 
-ant+ ( not yet availalbe). This module would make it more flexible. 
-    implemented but not tested yet. 
- 
-### Install.sh 
-
-- [ ] add check for the which ANT+ dongle is available vendorid and productid e.g.
-- [ ] double check if pi user is part of the group "dialout" or the user won't have access to the bluetooth or 
-ant+ dongle 
-  
-
-    "0fcf:1008 Dynastream Innovations, Inc. ANTUSB2 Stick"
-this is needed in order to add it to udev 
-as a rule. This is needed to load it via the FTDI serial driver. 
-  
-  
-    ACTION=="add", ATTRS{idVendor}=="0fcf", ATTRS{idProduct}=="1008", RUN+="/sbin/modprobe ftdi_sio" RUN+="/bin/sh -c 'echo 0fcf 1008 > /sys/bus/usb-serial/drivers/ftdi_sio/new_id'"
-
-
-## anfFE.py 
-
-- [ ] Fix conversion from waterrower to Ant+ format (elasped time 1 = 0.25s. That needs to multiply the elapsed time 
-  by 4 for ant+ in order to make complete seconds. )
-
 ## needed Feature
 
 - [ ] add webserver to control the start/stop/restart of the script (Flask or web.py)
@@ -46,4 +20,12 @@ the ant node.
 ## DONE
 - [x] add Ant+ capability to send data
 - [x] python requirement.txt
+- [x] Fix conversion from waterrower to Ant+ format (elasped time 1 = 0.25s. That needs to multiply the elapsed time 
+  by 4 for ant+ in order to make complete seconds. )
+  
+- [x] add check for the which ANT+ dongle is available vendorid and productid e.g.
+- [x] add user pi to the bluetooth group 
+- [x] add argparser module in order to make choose e.g choose to have ant+ activate or heart rate monitor over 
+ant+ ( not yet availalbe). This module would make it more flexible. 
+    implemented but not tested yet.
 
