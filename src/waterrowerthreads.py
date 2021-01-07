@@ -18,7 +18,7 @@ Then select which broadcast methode will be used. Bluetooth low energy or Ant+ o
 
 e.g. use the S4 connected via USB and broadcast data over bluetooth and Ant+
 
-python3 WaterrowerThreads.py -i s4 -b -a
+python3 waterrowerthreads.py -i s4 -b -a
 """
 
 import logging
@@ -27,9 +27,9 @@ import argparse
 from queue import Queue
 from collections import deque
 
-import WaterrowerBle
-import WRtoBLEANT
-import WaterrowerAnt
+import waterrowerble
+import wrtobleant
+import waterrowerant
 
 
 logger = logging.getLogger(__name__)
@@ -47,17 +47,17 @@ def main(args=None):
 
     def BleService(out_q, ble_in_q):
         logger.info("Start BLE Advertise and BLE GATT Server")
-        bleService = WaterrowerBle.main(out_q, ble_in_q)
+        bleService = waterrowerble.main(out_q, ble_in_q)
         bleService()
 
     def Waterrower(in_q, ble_out_q, ant_out_q):
         logger.info("Waterrower Interface started")
-        Waterrowerserial = WRtoBLEANT.main(in_q, ble_out_q, ant_out_q)
+        Waterrowerserial = wrtobleant.main(in_q, ble_out_q, ant_out_q)
         Waterrowerserial()
 
     def ANTService(ant_in_q):
         logger.info("Start Ant and start broadcast data")
-        antService = WaterrowerAnt.main(ant_in_q)
+        antService = waterrowerant.main(ant_in_q)
         antService()
 
 

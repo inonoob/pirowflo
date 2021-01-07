@@ -80,12 +80,22 @@ Bill of Material(BOM)
 
 <img src="docs/Hardware/IMG_20210104_155452.jpg" width=50% height=50%>
 
-| Item for Raspberry pi| 
+| Item for Raspberry pi 1,2,3| 
 |------|
 | Raspberry Pi || 
 | Micro SD card || 
 | Mini USB to USB typ A ||  
 | Bluetooth USB dongle 4.1 (LogiLink BT0015) || 
+| Micro USB to Typ A || 
+| 5V USB power supply 2A ||
+| **for Ant+ addition** || 
+| Ant+ dongle (avoid Cyclone) ||
+
+| Item for Raspberry pi 3,4| 
+|------|
+| Raspberry Pi || 
+| Micro SD card || 
+| Mini USB to USB typ A ||
 | Micro USB to Typ A || 
 | 5V USB power supply 2A ||
 | **for Ant+ addition** || 
@@ -99,14 +109,13 @@ Bill of Material(BOM)
 | Micro SD card || 
 | Mini USB to Micro USB || 
 | 5V USB power supply 2A ||
-| Total||
 | **for Ant+ addition**  || 
 | Ant+ dongle (avoid Cyclone) ||
 | Micro USB to USB Hub || 
 
 <img src="docs/Hardware/IMG_20210104_155825.jpg" width=50% height=50%>
 
-I would recommend buying the Raspberry pi in a kit where most of the parts are inclued 
+I would recommend buying the Raspberry pi in a kit where most of the parts are included 
 
 ### Software 
 
@@ -131,13 +140,13 @@ execute install.sh in order to setup everything: (This can take 5 - 10 min to se
 
     sudo ./install.sh 
 
-Once installation and reboot complete, go into the WaterrowerAntBle/src folder folder
+Once installation and reboot complete, go into the WaterrowerAntBle/src folder
 
     cd /home/pi/WaterrowerAntBle/src
 
 ### Getting Started
 
-If the script WaterrowerThreads is started with -h or --help it shows the available option for the programm 
+If the script waterrowerthreads is started with -h or --help it shows the available option for the program 
 
 
     python3 WaterrowerThreads.py -h
@@ -156,14 +165,14 @@ If the script WaterrowerThreads is started with -h or --help it shows the availa
     |                                                              |
     +--------------------------------------------------------------+
 
-    To begin choose an interface from where the data will be taken from either the S4 Monitor connected via USB or
-    the smartrow pully via bluetooth low energy
+    To begin choose an interface from where the data will be taken from either the 
+    S4 Monitor connected via USB or he smartrow pully via bluetooth low energy
     
     Then select which broadcast methode will be used. Bluetooth low energy or Ant+ or both.
     
     e.g. use the S4 connected via USB and broadcast data over bluetooth and Ant+
     
-    python3 WaterrowerThreads.py -i s4 -b -a
+    python3 waterrowerthreads.py -i s4 -b -a
     
     optional arguments:
       -h, --help            show this help message and exit
@@ -177,5 +186,5 @@ If the script WaterrowerThreads is started with -h or --help it shows the availa
 
 For example if the Waterrower should send data over Bluetooth and ANT 
 
-    pyton3 WaterrowerThreads.py -i s4 -b -a 
+    python3 waterrowerthreads.py -i s4 -b -a 
 

@@ -12,7 +12,7 @@ import struct
 import usb.core
 import time
 
-import structConstants      as sc
+import structconstants      as sc
 
 
 # ---------------------------------------------------------------------------
