@@ -9,7 +9,7 @@ import datetime
 import logging
 import numpy
 
-import WaterrowerInterface
+import waterrowerinterface
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -207,7 +207,7 @@ class DataLogger(object):
             self.ANTvalues = self.WRValues
 
 def main(in_q, ble_out_q,ant_out_q):
-    S4 = WaterrowerInterface.Rower()
+    S4 = waterrowerinterface.Rower()
     S4.open()
     S4.reset_request()
     WRtoBLEANT = DataLogger(S4)
