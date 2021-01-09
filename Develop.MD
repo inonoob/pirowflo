@@ -7,6 +7,10 @@ pi is perfect for this project.
 
 ### Software
 
+for gatt server : 
+
+https://github.com/oscaracena/pygattlib#python-pip
+
 When using deque. If the thread agruments are only 1 arguement then the deque is not working and will automaticily see 
 the stored value. In this case the dict for ant. If I had more arguemnet then it is not changed and stays as a deque object
 and there for the pop() methode can be called. That's so odd ?
@@ -355,6 +359,8 @@ Bluetooth GATT specifications: [Link](https://www.bluetooth.com/specifications/g
 Android app nRF Connect for Mobile: [Link](https://play.google.com/store/apps/details?id=no.nordicsemi.android.mcp&hl=en_US&gl=US)
 
 BLE gatt server micropython [link](https://github.com/micropython/micropython/blob/master/examples/bluetooth/ble_advertising.py)
+
+Gatt clietn python [link](https://github.com/oscaracena/pygattlib#python-pip)
 
 ### ANT+ 
 
