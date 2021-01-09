@@ -17,7 +17,7 @@
 
 Supported Apps (07.01.2021)
 
-| Kinomap | Cityrow | waterrower connect | Windows |
+| Kinomap | Cityrow | waterrower connect | Coxswain|
 |:------:|:------------:|:-----:|:-------:|
 | test pending | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
 
