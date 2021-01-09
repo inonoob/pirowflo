@@ -1,9 +1,9 @@
 nRF Connect, 2021-01-07
-SmartRow (F9:FA:97:16:EF:F2)
-V 20:05:09.099 Connecting to F9:FA:97:16:EF:F2...
+SmartRow
+V 20:05:09.099 Connecting to
 D 20:05:09.099 gatt = device.connectGatt(autoConnect = false, TRANSPORT_LE, preferred PHY = LE 1M)
 D 20:05:09.474 [Callback] Connection state changed with status: 0 and new state: CONNECTED (2)
-I 20:05:09.474 Connected to F9:FA:97:16:EF:F2
+I 20:05:09.474 Connected to
 V 20:05:09.514 Discovering services...
 D 20:05:09.514 gatt.discoverServices()
 D 20:05:09.528 [Broadcast] Action received: android.bluetooth.device.action.ACL_CONNECTED

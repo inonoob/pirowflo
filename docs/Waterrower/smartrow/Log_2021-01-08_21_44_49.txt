@@ -1,0 +1,3058 @@
+nRF Connect, 2021-01-08
+S4 Comm
+V	21:44:29.382	Connecting to
+D	21:44:29.382	gatt = device.connectGatt(autoConnect = false, TRANSPORT_LE, preferred PHY = LE 1M)
+D	21:44:29.394	[Callback] Connection state changed with status: 0 and new state: CONNECTED (2)
+I	21:44:29.394	Connected to
+V	21:44:29.455	Discovering services...
+D	21:44:29.455	gatt.discoverServices()
+D	21:44:29.465	[Callback] Services discovered with status: 0
+I	21:44:29.465	Services discovered
+V	21:44:29.477	Unknown Service (00001800-0000-1000-8000-00805f9b34fb)
+- Device Name [R W] (0x2A00)
+- Appearance [R] (0x2A01)
+- Peripheral Preferred Connection Parameters [R] (0x2A04)
+- Central Address Resolution [R] (0x2AA6)
+Generic Attribute (0x1801)
+- Service Changed [I] (0x2A05)
+Client Characteristic Configuration (0x2902)
+Device Information (0x180A)
+- Manufacturer Name String [R] (0x2A29)
+- Model Number String [R] (0x2A24)
+- Hardware Revision String [R] (0x2A27)
+- Firmware Revision String [R] (0x2A26)
+- Software Revision String [R] (0x2A28)
+Secure DFU Service (0xFE59)
+- Buttonless DFU [I W] (8ec90003-f315-4f60-9fb8-838830daea50)
+Client Characteristic Configuration (0x2902)
+Heart Rate (0x180D)
+- Heart Rate Measurement [N] (0x2A37)
+   Client Characteristic Configuration (0x2902)
+Unknown Service (00001001-c042-66ba-1335-90118f542c77)
+- Unknown Characteristic [I W] (8ec92001-f315-4f60-9fb8-838830daea50)
+   Client Characteristic Configuration (0x2902)
+- Unknown Characteristic [N] (8ec92002-f315-4f60-9fb8-838830daea50)
+   Client Characteristic Configuration (0x2902)
+Fitness Machine (0x1826)
+- Fitness Machine Feature [R] (0x2ACC)
+- Rower Data [N] (0x2AD1)
+   Client Characteristic Configuration (0x2902)
+- Supported Inclination Range [R] (0x2AD5)
+- Supported Resistance Level Range [R] (0x2AD6)
+- Supported Heart Rate Range [R] (0x2AD7)
+- Supported Power Range [R] (0x2AD8)
+- Fitness Machine Control Point [I W] (0x2AD9)
+   Client Characteristic Configuration (0x2902)
+- Fitness Machine Status [N] (0x2ADA)
+   Client Characteristic Configuration (0x2902)
+D	21:44:29.477	gatt.setCharacteristicNotification(00002a05-0000-1000-8000-00805f9b34fb, true)
+D	21:44:29.479	gatt.setCharacteristicNotification(00002a37-0000-1000-8000-00805f9b34fb, true)
+D	21:44:29.479	gatt.setCharacteristicNotification(8ec92001-f315-4f60-9fb8-838830daea50, true)
+D	21:44:29.480	gatt.setCharacteristicNotification(8ec92002-f315-4f60-9fb8-838830daea50, true)
+D	21:44:29.482	gatt.setCharacteristicNotification(00002ad1-0000-1000-8000-00805f9b34fb, true)
+D	21:44:29.482	gatt.setCharacteristicNotification(00002ad9-0000-1000-8000-00805f9b34fb, true)
+D	21:44:29.484	gatt.setCharacteristicNotification(00002ada-0000-1000-8000-00805f9b34fb, true)
+I	21:44:29.741	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-03-02-00-7C-00-A5-00-1A-00-E1-02-00-00-28-74-00
+A	21:44:29.741	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 515 m
+Instantaneous Pace: 124 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 4.0
+Elapsed Time: 116 s" received
+I	21:44:29.745	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:29.745	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:29.748	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-03-02-00-7C-00-A5-00-1A-00-E1-02-00-00-28-74-00
+A	21:44:29.748	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 515 m
+Instantaneous Pace: 124 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 4.0
+Elapsed Time: 116 s" received
+I	21:44:29.748	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:29.748	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:29.830	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-03-02-00-7C-00-A5-00-1A-00-E1-02-00-00-28-74-00
+A	21:44:29.830	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 515 m
+Instantaneous Pace: 124 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 4.0
+Elapsed Time: 116 s" received
+I	21:44:29.831	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:29.831	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:29.832	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-03-02-00-7C-00-A5-00-1A-00-E1-02-00-00-28-74-00
+A	21:44:29.832	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 515 m
+Instantaneous Pace: 124 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 4.0
+Elapsed Time: 116 s" received
+I	21:44:30.025	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:30.025	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:30.026	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-03-02-00-7C-00-A5-00-1A-00-E1-02-00-00-28-74-00
+A	21:44:30.026	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 515 m
+Instantaneous Pace: 124 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 4.0
+Elapsed Time: 116 s" received
+I	21:44:30.027	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:30.027	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:30.028	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-03-02-00-7C-00-A5-00-1A-00-E1-02-00-00-28-74-00
+A	21:44:30.028	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 515 m
+Instantaneous Pace: 124 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 4.0
+Elapsed Time: 116 s" received
+I	21:44:30.222	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:30.222	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:30.223	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-03-02-00-7C-00-A5-00-1A-00-E1-02-00-00-28-74-00
+A	21:44:30.224	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 515 m
+Instantaneous Pace: 124 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 4.0
+Elapsed Time: 116 s" received
+I	21:44:30.224	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:30.224	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:30.224	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-03-02-00-7F-00-A5-00-1A-00-E1-02-00-00-27-74-00
+A	21:44:30.225	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 515 m
+Instantaneous Pace: 127 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.9
+Elapsed Time: 116 s" received
+I	21:44:30.416	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:30.416	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:30.417	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-7F-00-A5-00-1A-00-E1-02-00-00-27-74-00
+A	21:44:30.417	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 127 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.9
+Elapsed Time: 116 s" received
+I	21:44:30.418	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:30.418	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:30.419	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-7F-00-A5-00-1A-00-E1-02-00-00-27-74-00
+A	21:44:30.419	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 127 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.9
+Elapsed Time: 116 s" received
+I	21:44:30.618	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:30.618	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:30.619	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-7F-00-A5-00-1A-00-E1-02-00-00-27-75-00
+A	21:44:30.619	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 127 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.9
+Elapsed Time: 117 s" received
+I	21:44:30.620	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:30.620	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:30.621	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-7F-00-A5-00-1A-00-E1-02-00-00-27-75-00
+A	21:44:30.622	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 127 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.9
+Elapsed Time: 117 s" received
+I	21:44:31.001	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.001	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.002	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-7F-00-A5-00-1A-00-E1-02-00-00-27-75-00
+A	21:44:31.002	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 127 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.9
+Elapsed Time: 117 s" received
+I	21:44:31.003	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.003	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.003	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-7F-00-A5-00-1A-00-E1-02-00-00-27-75-00
+A	21:44:31.003	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 127 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.9
+Elapsed Time: 117 s" received
+I	21:44:31.004	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.004	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.196	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.196	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.197	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-7F-00-A5-00-1A-00-E1-02-00-00-27-75-00
+A	21:44:31.197	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 127 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.9
+Elapsed Time: 117 s" received
+I	21:44:31.197	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.197	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.199	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-7F-00-A5-00-1A-00-E1-02-00-00-27-75-00
+A	21:44:31.199	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 127 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.9
+Elapsed Time: 117 s" received
+I	21:44:31.390	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.390	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.391	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-75-00
+A	21:44:31.391	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 117 s" received
+I	21:44:31.391	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.391	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.392	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-75-00
+A	21:44:31.392	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 117 s" received
+I	21:44:31.589	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.589	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.589	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-76-00
+A	21:44:31.590	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 118 s" received
+I	21:44:31.590	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.590	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.591	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-04-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-76-00
+A	21:44:31.591	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 516 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 118 s" received
+I	21:44:31.977	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.977	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.978	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-05-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-76-00
+A	21:44:31.978	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 517 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 118 s" received
+I	21:44:31.979	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.979	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:31.980	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-05-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-76-00
+A	21:44:31.980	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 517 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 118 s" received
+I	21:44:31.980	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:31.980	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.171	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-05-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-76-00
+A	21:44:32.172	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 517 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 118 s" received
+I	21:44:32.172	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:32.172	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.173	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-76-00
+A	21:44:32.173	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 118 s" received
+I	21:44:32.173	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:32.173	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.173	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-76-00
+A	21:44:32.173	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 118 s" received
+I	21:44:32.366	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:32.366	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.368	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-83-00-A5-00-1A-00-E1-02-00-00-26-76-00
+A	21:44:32.369	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 131 s
+Instantaneous Power: 165 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.8
+Elapsed Time: 118 s" received
+I	21:44:32.369	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:32.369	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.370	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-87-00-00-00-1A-00-E1-02-00-00-24-77-00
+A	21:44:32.370	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 135 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.6000001
+Elapsed Time: 119 s" received
+I	21:44:32.757	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:32.757	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.758	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-87-00-00-00-1A-00-E1-02-00-00-24-77-00
+A	21:44:32.758	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 135 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.6000001
+Elapsed Time: 119 s" received
+I	21:44:32.758	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:32.758	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.759	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-87-00-00-00-1A-00-E1-02-00-00-24-77-00
+A	21:44:32.759	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 135 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.6000001
+Elapsed Time: 119 s" received
+I	21:44:32.759	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:32.759	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.951	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-87-00-00-00-1A-00-E1-02-00-00-24-77-00
+A	21:44:32.951	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 135 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.6000001
+Elapsed Time: 119 s" received
+I	21:44:32.952	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:32.952	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.953	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-87-00-00-00-1A-00-E1-02-00-00-24-77-00
+A	21:44:32.953	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 135 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.6000001
+Elapsed Time: 119 s" received
+I	21:44:32.954	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:32.954	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:32.955	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-87-00-00-00-1A-00-E1-02-00-00-24-77-00
+A	21:44:32.955	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 135 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.6000001
+Elapsed Time: 119 s" received
+I	21:44:33.145	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:33.145	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:33.147	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-87-00-00-00-1A-00-E1-02-00-00-24-77-00
+A	21:44:33.147	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 135 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.6000001
+Elapsed Time: 119 s" received
+I	21:44:33.148	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:33.148	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:33.351	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-87-00-00-00-1A-00-E1-02-00-00-24-77-00
+A	21:44:33.351	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 135 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.6000001
+Elapsed Time: 119 s" received
+I	21:44:33.351	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:33.351	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:33.352	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-77-00
+A	21:44:33.352	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 119 s" received
+I	21:44:33.352	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:33.352	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:33.617	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-77-00
+A	21:44:33.617	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 119 s" received
+I	21:44:33.617	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:33.617	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:33.618	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-06-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-78-00
+A	21:44:33.618	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 518 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 120 s" received
+I	21:44:33.618	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:33.618	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:33.730	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-78-00
+A	21:44:33.730	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 120 s" received
+I	21:44:33.731	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:33.731	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:33.931	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-78-00
+A	21:44:33.931	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 120 s" received
+I	21:44:33.932	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:33.932	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:33.932	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-78-00
+A	21:44:33.932	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 120 s" received
+I	21:44:33.933	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:33.933	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:33.933	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-78-00
+A	21:44:33.933	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 120 s" received
+I	21:44:34.124	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:34.124	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:34.127	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-78-00
+A	21:44:34.127	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 120 s" received
+I	21:44:34.127	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:34.127	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:34.128	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-78-00
+A	21:44:34.128	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 120 s" received
+I	21:44:34.510	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:34.510	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:34.511	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-8C-00-00-00-1A-00-E1-02-00-00-23-78-00
+A	21:44:34.511	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 140 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.5
+Elapsed Time: 120 s" received
+I	21:44:34.511	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:34.511	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:34.512	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-90-00-00-00-1A-00-E1-02-00-00-22-78-00
+A	21:44:34.512	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 144 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.4
+Elapsed Time: 120 s" received
+I	21:44:34.512	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:34.512	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:34.705	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:34.705	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:34.708	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-90-00-00-00-1A-00-E1-02-00-00-22-79-00
+A	21:44:34.708	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 144 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.4
+Elapsed Time: 121 s" received
+I	21:44:34.708	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:34.708	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:34.708	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-90-00-00-00-1A-00-E1-02-00-00-22-79-00
+A	21:44:34.708	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 144 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.4
+Elapsed Time: 121 s" received
+I	21:44:34.900	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:34.900	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:34.901	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-90-00-00-00-1A-00-E1-02-00-00-22-79-00
+A	21:44:34.901	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 144 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.4
+Elapsed Time: 121 s" received
+I	21:44:34.901	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:34.901	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:34.902	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-07-02-00-90-00-00-00-1A-00-E1-02-00-00-22-79-00
+A	21:44:34.902	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 519 m
+Instantaneous Pace: 144 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.4
+Elapsed Time: 121 s" received
+I	21:44:35.095	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:35.095	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:35.097	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-90-00-00-00-1A-00-E1-02-00-00-22-79-00
+A	21:44:35.097	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 144 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.4
+Elapsed Time: 121 s" received
+I	21:44:35.097	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:35.097	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:35.098	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-90-00-00-00-1A-00-E1-02-00-00-22-79-00
+A	21:44:35.098	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 144 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.4
+Elapsed Time: 121 s" received
+I	21:44:35.485	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:35.485	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:35.486	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-90-00-00-00-1A-00-E1-02-00-00-22-79-00
+A	21:44:35.486	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 144 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.4
+Elapsed Time: 121 s" received
+I	21:44:35.487	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:35.487	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:35.488	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-79-00
+A	21:44:35.488	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 121 s" received
+I	21:44:35.489	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:35.489	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:35.681	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-7A-00
+A	21:44:35.681	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 122 s" received
+I	21:44:35.681	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:35.682	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:35.682	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-7A-00
+A	21:44:35.682	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 122 s" received
+I	21:44:35.683	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:35.683	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:35.683	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-7A-00
+A	21:44:35.683	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 122 s" received
+I	21:44:35.877	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:35.877	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:35.878	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-7A-00
+A	21:44:35.878	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 122 s" received
+I	21:44:35.879	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:35.879	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:35.880	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-7A-00
+A	21:44:35.880	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 122 s" received
+I	21:44:36.072	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:36.072	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:36.074	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-7A-00
+A	21:44:36.074	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 122 s" received
+I	21:44:36.074	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:36.074	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:36.075	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-7A-00
+A	21:44:36.075	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 122 s" received
+I	21:44:36.265	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:36.265	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:36.267	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-7A-00
+A	21:44:36.267	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 122 s" received
+I	21:44:36.268	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:36.268	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:36.268	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-97-00-00-00-1A-00-E1-02-00-00-21-7A-00
+A	21:44:36.268	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 151 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.3
+Elapsed Time: 122 s" received
+I	21:44:36.461	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:36.461	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:36.463	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-9C-00-00-00-1A-00-E1-02-00-00-1F-7A-00
+A	21:44:36.464	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 156 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.1000001
+Elapsed Time: 122 s" received
+I	21:44:36.464	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:36.464	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:36.465	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-08-02-00-9C-00-00-00-1A-00-E1-02-00-00-1F-7B-00
+A	21:44:36.465	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 520 m
+Instantaneous Pace: 156 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.1000001
+Elapsed Time: 123 s" received
+I	21:44:36.657	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:36.657	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:36.851	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-9C-00-00-00-1A-00-E1-02-00-00-1F-7B-00
+A	21:44:36.851	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 156 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.1000001
+Elapsed Time: 123 s" received
+I	21:44:36.851	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:36.851	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:36.852	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-9C-00-00-00-1A-00-E1-02-00-00-1F-7B-00
+A	21:44:36.852	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 156 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.1000001
+Elapsed Time: 123 s" received
+I	21:44:36.852	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:36.852	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:36.853	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-9C-00-00-00-1A-00-E1-02-00-00-1F-7B-00
+A	21:44:36.853	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 156 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.1000001
+Elapsed Time: 123 s" received
+I	21:44:37.241	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:37.242	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:37.243	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-9C-00-00-00-1A-00-E1-02-00-00-1F-7B-00
+A	21:44:37.243	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 156 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.1000001
+Elapsed Time: 123 s" received
+I	21:44:37.244	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:37.244	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:37.244	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-9C-00-00-00-1A-00-E1-02-00-00-1F-7B-00
+A	21:44:37.245	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 156 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.1000001
+Elapsed Time: 123 s" received
+I	21:44:37.245	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:37.245	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:37.436	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-9C-00-00-00-1A-00-E1-02-00-00-1F-7B-00
+A	21:44:37.436	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 156 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.1000001
+Elapsed Time: 123 s" received
+I	21:44:37.437	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:37.437	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:37.438	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-9C-00-00-00-1A-00-E1-02-00-00-1F-7C-00
+A	21:44:37.438	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 156 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.1000001
+Elapsed Time: 124 s" received
+I	21:44:37.439	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:37.439	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:37.646	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-A3-00-00-00-1A-00-E1-02-00-00-1E-7C-00
+A	21:44:37.646	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 163 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.0
+Elapsed Time: 124 s" received
+I	21:44:37.647	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:37.647	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:37.647	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-A3-00-00-00-1A-00-E1-02-00-00-1E-7C-00
+A	21:44:37.647	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 163 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.0
+Elapsed Time: 124 s" received
+I	21:44:37.825	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:37.825	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:37.826	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-A3-00-00-00-1A-00-E1-02-00-00-1E-7C-00
+A	21:44:37.826	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 163 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.0
+Elapsed Time: 124 s" received
+I	21:44:37.826	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:37.826	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:37.827	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-A3-00-00-00-1A-00-E1-02-00-00-1E-7C-00
+A	21:44:37.827	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 163 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.0
+Elapsed Time: 124 s" received
+I	21:44:38.220	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.220	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:38.227	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-A3-00-00-00-1A-00-E1-02-00-00-1E-7C-00
+A	21:44:38.227	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 163 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.0
+Elapsed Time: 124 s" received
+I	21:44:38.227	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.227	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:38.228	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-A3-00-00-00-1A-00-E1-02-00-00-1E-7C-00
+A	21:44:38.228	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 163 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.0
+Elapsed Time: 124 s" received
+I	21:44:38.229	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.229	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:38.410	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-A3-00-00-00-1A-00-E1-02-00-00-1E-7C-00
+A	21:44:38.410	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 163 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 3.0
+Elapsed Time: 124 s" received
+I	21:44:38.411	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.411	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:38.413	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-AA-00-00-00-1A-00-E1-02-00-00-1D-7C-00
+A	21:44:38.413	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 170 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.9
+Elapsed Time: 124 s" received
+I	21:44:38.413	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.413	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:38.414	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-AA-00-00-00-1A-00-E1-02-00-00-1D-7D-00
+A	21:44:38.414	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 170 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.9
+Elapsed Time: 125 s" received
+I	21:44:38.605	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.605	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:38.607	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-AA-00-00-00-1A-00-E1-02-00-00-1D-7D-00
+A	21:44:38.607	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 170 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.9
+Elapsed Time: 125 s" received
+I	21:44:38.607	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.607	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:38.607	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-AA-00-00-00-1A-00-E1-02-00-00-1D-7D-00
+A	21:44:38.607	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 170 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.9
+Elapsed Time: 125 s" received
+I	21:44:38.995	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.995	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:38.996	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-AA-00-00-00-1A-00-E1-02-00-00-1D-7D-00
+A	21:44:38.996	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 170 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.9
+Elapsed Time: 125 s" received
+I	21:44:38.998	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.998	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:38.999	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-AA-00-00-00-1A-00-E1-02-00-00-1D-7D-00
+A	21:44:38.999	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 170 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.9
+Elapsed Time: 125 s" received
+I	21:44:38.999	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:38.999	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:39.194	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-AA-00-00-00-1A-00-E1-02-00-00-1D-7D-00
+A	21:44:39.195	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 170 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.9
+Elapsed Time: 125 s" received
+I	21:44:39.195	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:39.195	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:39.195	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-AA-00-00-00-1A-00-E1-02-00-00-1D-7D-00
+A	21:44:39.195	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 170 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.9
+Elapsed Time: 125 s" received
+I	21:44:39.196	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:39.196	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:39.196	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-AA-00-00-00-1A-00-E1-02-00-00-1D-7D-00
+A	21:44:39.196	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 170 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.9
+Elapsed Time: 125 s" received
+I	21:44:39.385	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:39.385	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:39.387	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-B3-00-00-00-1A-00-E1-02-00-00-1B-7D-00
+A	21:44:39.387	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 179 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.7
+Elapsed Time: 125 s" received
+I	21:44:39.387	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:39.387	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:39.390	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-B3-00-00-00-1A-00-E1-02-00-00-1B-7E-00
+A	21:44:39.391	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 179 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.7
+Elapsed Time: 126 s" received
+I	21:44:39.581	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:39.581	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:39.584	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-B3-00-00-00-1A-00-E1-02-00-00-1B-7E-00
+A	21:44:39.584	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 179 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.7
+Elapsed Time: 126 s" received
+I	21:44:39.585	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:39.585	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:39.586	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-09-02-00-B3-00-00-00-1A-00-E1-02-00-00-1B-7E-00
+A	21:44:39.586	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 521 m
+Instantaneous Pace: 179 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.7
+Elapsed Time: 126 s" received
+I	21:44:39.974	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:39.974	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:39.975	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-B3-00-00-00-1A-00-E1-02-00-00-1B-7E-00
+A	21:44:39.975	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 179 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.7
+Elapsed Time: 126 s" received
+I	21:44:39.975	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:39.975	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:39.975	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-B3-00-00-00-1A-00-E1-02-00-00-1B-7E-00
+A	21:44:39.975	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 179 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.7
+Elapsed Time: 126 s" received
+I	21:44:39.976	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:39.976	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:40.165	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:40.165	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:40.166	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-B3-00-00-00-1A-00-E1-02-00-00-1B-7E-00
+A	21:44:40.166	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 179 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.7
+Elapsed Time: 126 s" received
+I	21:44:40.168	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:40.168	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:40.169	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-BB-00-00-00-1A-00-E1-02-00-00-1A-7E-00
+A	21:44:40.169	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 187 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.6000001
+Elapsed Time: 126 s" received
+I	21:44:40.360	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:40.360	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:40.361	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-BB-00-00-00-1A-00-E1-02-00-00-1A-7E-00
+A	21:44:40.361	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 187 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.6000001
+Elapsed Time: 126 s" received
+I	21:44:40.362	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:40.362	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:40.362	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-BB-00-00-00-1A-00-E1-02-00-00-1A-7E-00
+A	21:44:40.362	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 187 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.6000001
+Elapsed Time: 126 s" received
+I	21:44:40.751	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:40.751	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:40.751	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-BB-00-00-00-1A-00-E1-02-00-00-1A-7F-00
+A	21:44:40.751	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 187 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.6000001
+Elapsed Time: 127 s" received
+I	21:44:40.752	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:40.752	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:40.753	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-BB-00-00-00-1A-00-E1-02-00-00-1A-7F-00
+A	21:44:40.753	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 187 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.6000001
+Elapsed Time: 127 s" received
+I	21:44:40.753	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:40.753	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:40.947	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:40.947	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:40.947	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-BB-00-00-00-1A-00-E1-02-00-00-1A-7F-00
+A	21:44:40.947	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 187 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.6000001
+Elapsed Time: 127 s" received
+I	21:44:40.947	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:40.947	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.141	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-BB-00-00-00-1A-00-E1-02-00-00-1A-7F-00
+A	21:44:41.141	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 187 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.6000001
+Elapsed Time: 127 s" received
+I	21:44:41.141	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:41.141	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.142	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-BB-00-00-00-1A-00-E1-02-00-00-1A-7F-00
+A	21:44:41.142	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 187 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.6000001
+Elapsed Time: 127 s" received
+I	21:44:41.142	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:41.142	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.336	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-7F-00
+A	21:44:41.336	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 127 s" received
+I	21:44:41.336	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:41.336	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.336	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-7F-00
+A	21:44:41.336	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 127 s" received
+I	21:44:41.338	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:41.338	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.531	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-7F-00
+A	21:44:41.531	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 127 s" received
+I	21:44:41.531	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:41.531	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.534	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-80-00
+A	21:44:41.534	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 128 s" received
+I	21:44:41.725	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:41.725	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.726	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-80-00
+A	21:44:41.726	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 128 s" received
+I	21:44:41.726	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:41.726	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.727	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-80-00
+A	21:44:41.727	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 128 s" received
+I	21:44:41.920	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:41.920	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.921	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-80-00
+A	21:44:41.921	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 128 s" received
+I	21:44:41.921	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:41.921	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:41.922	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-80-00
+A	21:44:41.922	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 128 s" received
+I	21:44:42.115	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:42.115	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:42.116	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-80-00
+A	21:44:42.116	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 128 s" received
+I	21:44:42.116	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:42.116	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:42.116	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-80-00
+A	21:44:42.116	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 128 s" received
+I	21:44:42.505	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:42.505	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:42.506	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-C8-00-00-00-1A-00-E1-02-00-00-19-80-00
+A	21:44:42.506	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 200 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.5
+Elapsed Time: 128 s" received
+I	21:44:42.506	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:42.506	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:42.507	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-D1-00-00-00-1A-00-E1-02-00-00-17-80-00
+A	21:44:42.507	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 209 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.3
+Elapsed Time: 128 s" received
+I	21:44:42.507	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:42.507	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:42.702	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:42.702	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:42.702	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-D1-00-00-00-1A-00-E1-02-00-00-17-81-00
+A	21:44:42.702	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 209 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.3
+Elapsed Time: 129 s" received
+I	21:44:42.702	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:42.702	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:42.702	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-D1-00-00-00-1A-00-E1-02-00-00-17-81-00
+A	21:44:42.702	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 209 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.3
+Elapsed Time: 129 s" received
+I	21:44:42.895	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:42.895	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:42.896	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-D1-00-00-00-1A-00-E1-02-00-00-17-81-00
+A	21:44:42.896	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 209 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.3
+Elapsed Time: 129 s" received
+I	21:44:42.896	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:42.896	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:42.896	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-D1-00-00-00-1A-00-E1-02-00-00-17-81-00
+A	21:44:42.896	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 209 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.3
+Elapsed Time: 129 s" received
+I	21:44:43.091	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.091	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.091	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-D1-00-00-00-1A-00-E1-02-00-00-17-81-00
+A	21:44:43.091	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 209 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.3
+Elapsed Time: 129 s" received
+I	21:44:43.091	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.091	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.092	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-D1-00-00-00-1A-00-E1-02-00-00-17-81-00
+A	21:44:43.092	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 209 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.3
+Elapsed Time: 129 s" received
+I	21:44:43.287	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.287	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.288	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-D1-00-00-00-1A-00-E1-02-00-00-17-81-00
+A	21:44:43.288	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 209 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.3
+Elapsed Time: 129 s" received
+I	21:44:43.289	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.289	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.289	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-D1-00-00-00-1A-00-E1-02-00-00-17-81-00
+A	21:44:43.289	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 209 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.3
+Elapsed Time: 129 s" received
+I	21:44:43.480	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.480	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.481	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-E0-00-00-00-1A-00-E1-02-00-00-16-81-00
+A	21:44:43.481	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 224 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.2
+Elapsed Time: 129 s" received
+I	21:44:43.482	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.482	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.484	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0A-02-00-E0-00-00-00-1A-00-E1-02-00-00-16-81-00
+A	21:44:43.484	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 522 m
+Instantaneous Pace: 224 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.2
+Elapsed Time: 129 s" received
+I	21:44:43.675	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.675	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.676	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-E0-00-00-00-1A-00-E1-02-00-00-16-82-00
+A	21:44:43.676	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 224 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.2
+Elapsed Time: 130 s" received
+I	21:44:43.676	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.676	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.677	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-E0-00-00-00-1A-00-E1-02-00-00-16-82-00
+A	21:44:43.677	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 224 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.2
+Elapsed Time: 130 s" received
+I	21:44:43.870	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.870	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.870	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-E0-00-00-00-1A-00-E1-02-00-00-16-82-00
+A	21:44:43.870	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 224 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.2
+Elapsed Time: 130 s" received
+I	21:44:43.870	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:43.870	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:43.872	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-E0-00-00-00-1A-00-E1-02-00-00-16-82-00
+A	21:44:43.872	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 224 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.2
+Elapsed Time: 130 s" received
+I	21:44:44.261	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:44.261	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:44.262	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-E0-00-00-00-1A-00-E1-02-00-00-16-82-00
+A	21:44:44.262	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 224 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.2
+Elapsed Time: 130 s" received
+I	21:44:44.262	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:44.262	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:44.262	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-E0-00-00-00-1A-00-E1-02-00-00-16-82-00
+A	21:44:44.262	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 224 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.2
+Elapsed Time: 130 s" received
+I	21:44:44.262	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:44.262	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:44.457	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:44.457	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:44.458	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-82-00
+A	21:44:44.458	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 130 s" received
+I	21:44:44.459	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:44.459	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:44.459	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-82-00
+A	21:44:44.459	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 130 s" received
+I	21:44:44.651	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:44.651	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:44.653	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:44.653	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:44.653	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:44.653	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:44.654	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:44.654	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:44.848	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:44.848	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:44.848	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:44.848	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:44.849	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:44.849	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.041	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:45.041	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:45.042	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:45.042	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.042	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:45.042	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:45.042	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:45.042	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.236	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:45.236	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:45.237	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:45.237	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.238	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:45.238	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:45.430	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:45.430	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.431	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:45.431	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:45.431	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:45.431	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.432	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:45.432	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:45.628	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:45.628	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.628	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-83-00
+A	21:44:45.628	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 131 s" received
+I	21:44:45.628	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:45.628	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.629	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-84-00
+A	21:44:45.629	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 132 s" received
+I	21:44:45.822	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:45.822	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.827	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-84-00
+A	21:44:45.827	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 132 s" received
+I	21:44:45.830	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:45.830	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:45.831	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-84-00
+A	21:44:45.831	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 132 s" received
+I	21:44:46.015	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.015	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.211	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-84-00
+A	21:44:46.211	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 132 s" received
+I	21:44:46.211	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.211	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.216	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-84-00
+A	21:44:46.216	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 132 s" received
+I	21:44:46.217	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.217	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.217	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-84-00
+A	21:44:46.217	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 132 s" received
+I	21:44:46.406	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.407	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.407	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.407	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.408	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-84-00
+A	21:44:46.408	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 132 s" received
+I	21:44:46.408	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.408	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.408	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:46.408	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:46.630	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.630	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.630	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:46.630	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:46.630	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.630	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.630	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:46.630	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:46.992	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.992	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.995	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:46.995	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:46.995	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.995	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:46.996	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:46.996	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:46.996	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:46.996	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.185	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.185	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.186	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:47.186	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:47.186	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.186	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.188	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:47.188	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:47.380	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.380	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.381	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:47.381	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:47.381	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.381	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.382	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:47.382	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:47.577	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.577	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.577	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-85-00
+A	21:44:47.577	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 133 s" received
+I	21:44:47.584	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.584	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.589	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-86-00
+A	21:44:47.589	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 134 s" received
+I	21:44:47.772	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.772	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.772	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-86-00
+A	21:44:47.772	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 134 s" received
+I	21:44:47.772	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.772	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.773	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-86-00
+A	21:44:47.773	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 134 s" received
+I	21:44:47.965	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.965	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:47.966	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-86-00
+A	21:44:47.966	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 134 s" received
+I	21:44:47.966	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:47.966	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:48.356	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-86-00
+A	21:44:48.356	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 134 s" received
+I	21:44:48.356	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:48.356	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:48.357	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-86-00
+A	21:44:48.357	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 134 s" received
+I	21:44:48.357	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:48.357	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:48.359	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-86-00
+A	21:44:48.359	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 134 s" received
+I	21:44:48.748	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:48.748	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:48.748	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:48.748	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:48.748	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-87-00
+A	21:44:48.749	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 135 s" received
+I	21:44:48.749	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:48.749	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:48.749	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-87-00
+A	21:44:48.749	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 135 s" received
+I	21:44:48.749	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:48.749	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:48.941	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:48.941	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:48.941	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-87-00
+A	21:44:48.941	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 135 s" received
+I	21:44:48.942	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:48.942	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:48.942	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-87-00
+A	21:44:48.942	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 135 s" received
+I	21:44:49.136	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.136	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.136	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-87-00
+A	21:44:49.136	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 135 s" received
+I	21:44:49.136	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.136	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.137	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-87-00
+A	21:44:49.137	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 135 s" received
+I	21:44:49.330	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.330	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.331	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-87-00
+A	21:44:49.331	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 135 s" received
+I	21:44:49.333	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.333	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.333	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-87-00
+A	21:44:49.333	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 135 s" received
+I	21:44:49.525	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.525	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.526	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:49.526	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:49.526	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.526	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.527	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:49.527	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:49.720	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.720	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.721	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:49.721	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:49.721	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.721	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.722	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:49.722	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:49.915	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.915	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.915	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:49.915	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:49.915	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:49.915	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:49.916	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:49.916	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:50.110	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:50.110	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:50.110	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:50.110	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:50.110	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:50.110	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:50.111	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:50.111	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:50.501	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:50.501	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:50.501	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:50.501	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:50.501	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:50.501	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:50.502	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-88-00
+A	21:44:50.502	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 136 s" received
+I	21:44:50.502	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:50.502	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:50.694	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:50.694	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:50.695	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-EB-00-00-00-1A-00-E1-02-00-00-15-89-00
+A	21:44:50.695	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 235 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 2.1000001
+Elapsed Time: 137 s" received
+I	21:44:50.695	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:50.695	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:50.696	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-89-00
+A	21:44:50.696	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 137 s" received
+I	21:44:50.889	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:50.889	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:50.890	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-89-00
+A	21:44:50.890	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 137 s" received
+I	21:44:50.890	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:50.890	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:50.891	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-89-00
+A	21:44:50.891	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 137 s" received
+I	21:44:51.084	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:51.084	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:51.085	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-89-00
+A	21:44:51.085	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 137 s" received
+I	21:44:51.086	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:51.086	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:51.087	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-89-00
+A	21:44:51.087	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 137 s" received
+I	21:44:51.281	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:51.281	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:51.282	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-89-00
+A	21:44:51.282	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 137 s" received
+I	21:44:51.282	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:51.283	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:51.283	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-89-00
+A	21:44:51.283	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 137 s" received
+I	21:44:51.672	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:51.672	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:51.672	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-89-00
+A	21:44:51.672	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 137 s" received
+I	21:44:51.672	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:51.672	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:51.673	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-8A-00
+A	21:44:51.673	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 138 s" received
+I	21:44:51.673	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:51.673	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:51.867	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:51.867	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:51.868	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-8A-00
+A	21:44:51.868	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 138 s" received
+I	21:44:51.868	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:51.868	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:52.256	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-8A-00
+A	21:44:52.256	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 138 s" received
+I	21:44:52.256	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:52.256	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:52.259	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-8A-00
+A	21:44:52.259	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 138 s" received
+I	21:44:52.259	Notification received from 00002a37-0000-1000-8000-00805f9b34fb, value: (0x) 00-00
+A	21:44:52.259	"Heart Rate Measurement: 0 bpm,
+Sensor Contact Not Supported" received
+I	21:44:52.259	Notification received from 00002ad1-0000-1000-8000-00805f9b34fb, value: (0x) 2C-0F-38-33-00-0B-02-00-FF-FF-00-00-1A-00-E1-02-00-00-00-8A-00
+A	21:44:52.259	"Stroke Rate: 28.0 stroke/min
+Stroke Count: 51
+Total Distance: 523 m
+Instantaneous Pace: 65535 s
+Instantaneous Power: 0 W
+Total Energy: 26 kcal
+Energy Per Hour: 737 kcal
+Energy Per Minute: 0 kcal
+Heart Rate: 0 bpm
+Metabolic Equivalent: 0.0
+Elapsed Time: 138 s" received
+
