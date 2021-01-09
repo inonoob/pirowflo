@@ -110,7 +110,7 @@ class DataLogger(object):
         if event['type'] == 'total_kcal_min':  # must calclatre it first
             self.WRValues.update({'total_kcal': 0})
         if event['type'] == 'heart_rate':
-            self.WRValues.update({'heart_rate': 0})  # in cal
+            self.WRValues.update({'heart_rate': (event['value'])})  # in cal
         if event['type'] == 'display_sec':
             self.secondsWR = event['value']
         if event['type'] == 'display_min':

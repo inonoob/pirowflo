@@ -16,6 +16,7 @@ May be thing about to create the elapse time in the code it self and not with th
 the ant node.
   
 - [ ] FIT file export of a workout for Strava and Garmin-connect 
+- [ ] Add Ant HRM data from the waterrower. So don't set it to zero take it directly from the memory map of the waterrower
   
 
 ## DONE
