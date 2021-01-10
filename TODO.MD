@@ -17,7 +17,8 @@ the ant node.
   
 - [ ] FIT file export of a workout for Strava and Garmin-connect 
 - [ ] Add Ant HRM data from the waterrower. So don't set it to zero take it directly from the memory map of the waterrower
-  
+- [ ] add HRM data from S4 waterrower to the Ble heart rate prfile as it is already available in the fitness equipment
+profile
 
 ## DONE
 - [x] add Ant+ capability to send data
