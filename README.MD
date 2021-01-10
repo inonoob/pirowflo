@@ -17,9 +17,9 @@
 
 Supported Apps (07.01.2021)
 
-| Kinomap | Cityrow | waterrower connect | Coxswain|
-|:------:|:------------:|:-----:|:-------:|
-| test pending | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: |
+| Kinomap (BLE) | Cityrow (BLE)| waterrower connect (BLE) | Coxswain (BLE)| Garmin Watch(ANt+) |
+|:------:|:------------:|:-----:|:-------:|:-------:|
+| test pending | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | test pending |
 
 
 
@@ -34,6 +34,10 @@ the Fenix 6 series as the native rowing app can use thoes Data. The Ant+ profile
 
 - [x] Status = Done
 
+Planned to integrate the Smartrow as input interface 
+
+-[ ] Status = Ongoing 
+
 even more, the script will be control via a build in webserver that can control the script to Start/stop 
 and Restart it.
 
@@ -43,23 +47,13 @@ Last idea would be to track and export the workout to a FIT file which is then u
 
 - [ ] Status = Pending
 
+Open for new ideas !
+
 ## Features
 
 - Read Serial Waterrower Data to the Pi
-- Send Waterower Data from the Pi over Bluetooth (Build-in or USB-dongle) 
+- Send Waterrower Data from the Pi over Bluetooth (Build-in or USB-dongle) 
 - Send Waterrower Data from the Pi over Ant+ via Ant+ dongle 
-
-## Supported Fitness app or watches: 
-
-- [x] Coxswain  (bluetooth)
-- [x] Cityrow   (bluetooth)
-- [ ] Kinomap   (bluetooth)     not yet tested 
-- [ ] Garmin fenix 6 watch (Ant+) not yet tested 
-
-## Planned Features
-
-- Webserver to control script in order to start/stop/restart Bluetooth,Ant or Waterrower
-- Export to FIT files (Garmin )
 
 ## Parts of the code based on following Repos:
 
@@ -77,6 +71,9 @@ I wanted to have the ability to use the Android App Coxswain and also my Garmin 
 why not connect the Waterrower via USB to a Raspberry pi and let the Raspberry pi being a BLE and Ant+ transmitter. 
 And wouldn't be even better if it could be control for the Webbrowser. And Last but not least, have at the 
 end of the training a FIT file for Garmin connect or Strava.
+
+With a high demand from people having the Smartrow, I thought why not trying to integrate it as input interface 
+for this project. So it would be either S4 Monitor or Smartrow 
 
 ## Requirements
 
@@ -102,7 +99,6 @@ Bill of Material(BOM)
 | Raspberry Pi || 
 | Micro SD card || 
 | Mini USB to USB typ A ||
-| Micro USB to Typ A || 
 | 5V USB power supply 2A ||
 | **for Ant+ addition** || 
 | Ant+ dongle (avoid Cyclone) ||
@@ -155,9 +151,9 @@ Once installation and reboot complete, go into the WaterrowerAntBle/src folder
 If the script waterrowerthreads is started with -h or --help it shows the available option for the program 
 
 
-    python3 WaterrowerThreads.py -h
+    python3 waterrowerthreads.py -h
     
-    usage: WaterrowerThreads.py [-h] [-i {s4,sr}] [-b] [-a]
+    usage: waterrowerthreads.py [-h] [-i {s4,sr}] [-b] [-a]
 
     Python script to broadcast waterrower data over BLE and ANT
 
@@ -172,7 +168,7 @@ If the script waterrowerthreads is started with -h or --help it shows the availa
     +--------------------------------------------------------------+
 
     To begin choose an interface from where the data will be taken from either the 
-    S4 Monitor connected via USB or he smartrow pully via bluetooth low energy
+    S4 Monitor connected via USB or the smartrow pulley via bluetooth low energy
     
     Then select which broadcast methode will be used. Bluetooth low energy or Ant+ or both.
     
