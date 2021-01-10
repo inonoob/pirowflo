@@ -12,7 +12,7 @@ Python script to broadcast waterrower data over BLE and ANT
     +--------------------------------------------------------------+
 
 To begin choose an interface from where the data will be taken from either the S4 Monitor connected via USB or
-the smartrow pully via bluetooth low energy
+the Smartrow pulley via bluetooth low energy
 
 Then select which broadcast methode will be used. Bluetooth low energy or Ant+ or both.
 
