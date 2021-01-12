@@ -19,7 +19,7 @@ Supported Apps (07.01.2021)
 
 | Kinomap (BLE) | Cityrow (BLE)| waterrower connect (BLE) | Coxswain (BLE)| Garmin Watch(ANt+) |
 |:------:|:------------:|:-----:|:-------:|:-------:|
-| test pending | :heavy_check_mark: | :heavy_check_mark: | :heavy_check_mark: | test pending |
+| test pending | :heavy_check_mark: | not yet | :heavy_check_mark: | :heavy_check_mark: |
 
 
 
@@ -36,7 +36,7 @@ the Fenix 6 series as the native rowing app can use thoes Data. The Ant+ profile
 
 Planned to integrate the Smartrow as input interface 
 
--[ ] Status = Ongoing 
+- [ ] Status = Ongoing 
 
 even more, the script will be control via a build in webserver that can control the script to Start/stop 
 and Restart it.
