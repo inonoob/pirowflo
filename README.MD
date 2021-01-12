@@ -77,7 +77,7 @@ for this project. So it would be either S4 Monitor or Smartrow
 
 ## Target of the project 
 
-<img src="docs/Project-overview.png" width=36% height=36%>
+<img src="docs/Project-overview.png" width=60% height=60%>
 
 ## Requirements
 
