@@ -2,15 +2,22 @@
 
 ## Bug Fixes
 
-- [ ] Elapsed time is bugging. Bluetooth and ANT+ shows 0 or just 00.01 value. Needs to be investigate. 
+- [ ] if the deque is empty and is called it produces an error which kills the bluetooth thread. This error must
+catch. Possible solution check size of the deque message and if it smaller than 1 then pass. Check in the def Waterrower_cb(self): 
+  function for the size before. if smaller than 1 pass and wait next message. 
+
+
+    WaterrowerValuesRaw = ble_in_q_value.pop()
+  
+- [on hold] Elapsed time is bugging. Bluetooth and ANT+ shows 0 or just 00.01 value. Needs to be investigate. 
 May be thing about to create the elapse time in the code it self and not with the 
   waterrower data. e.g something like that 
-  
 
     Time.time()
 
 ## needed Feature
 
+- [ ] add smartrow as an interface for the Rowing data 
 - [ ] add webserver to control the start/stop/restart of the script (Tornado)
 - [ ] add support for heart rate monitors via Ant+ (pi is a client) use other channel of the 8 available from 
 the ant node.
