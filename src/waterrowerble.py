@@ -5,11 +5,6 @@
 # https://github.com/PunchThrough/espresso-ble
 # ---------------------------------------------------------------------------
 #
-
-
-
-
-
 import logging
 import signal
 import dbus
@@ -27,8 +22,6 @@ from ble import (
     Descriptor,
     Agent,
 )
-
-
 
 MainLoop = None
 
@@ -105,7 +98,7 @@ def request_reset_ble():
     out_q_reset.put("reset_ble")
 
 def Convert_Waterrower_raw_to_byte():
-    #WaterrowerValuesRaw = ble_in_q_value.get()
+
     WaterrowerValuesRaw = ble_in_q_value.pop()
     WRBytearray = []
     #print("Ble Values: {0}".format(WaterrowerValuesRaw))
@@ -238,99 +231,26 @@ class RowerData(Characteristic):
         self.iter = 0
 
     def Waterrower_cb(self):
-        # value = [dbus.Byte(0x7F), dbus.Byte(0x3F), dbus.Byte(0), dbus.Byte(0),dbus.Byte(0),
-        #         dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
-        #         dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
-        #         dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),dbus.Byte(0),
-        #         ]
 
-        # value = [#dbus.Byte(0x7F), dbus.Byte(0x3F), # flag for all values
-        #          dbus.Byte(0x2C), dbus.Byte(0x0B),
-        #          dbus.Byte(0x48), dbus.Byte(0x01), dbus.Byte(0x00), #0 0 8 16 stroke rate + stroke count
-        #          #dbus.Byte(0x02), ## 1 1 8 av stroke rate
-        #          dbus.Byte(0x03), dbus.Byte(0x00), dbus.Byte(0x00), # 2 1 16 + 8 distance
-        #          dbus.Byte(0x04), dbus.Byte(0x00),# 3 1 16 instantaneous pace
-        #          #dbus.Byte(0xFF), dbus.Byte(0xFF), # 4 1 16 average pace
-        #          dbus.Byte(0x0C), dbus.Byte(0x00), # 5 1 16 instantaneous power
-        #          #dbus.Byte(0xFF), dbus.Byte(0xFF), # 6 1 16 average power
-        #          #dbus.Byte(0xFF), dbus.Byte(0xFF), # 7 1 16 resitance level
-        #          dbus.Byte(0x09), dbus.Byte(0x00),dbus.Byte(0x0F), dbus.Byte(0x00),dbus.Byte(0x01), # 8 1 16 + 16 +16 Total energy, energy per hour, energy per minute
-        #          dbus.Byte(0x0F), # 9 1  8 heart rate
-        #          #dbus.Byte(0xFF), # 10 1 8 metabolic equivalent 0.1
-        #          dbus.Byte(0x0F),dbus.Byte(0x00), # 11 1 16 elapsed time
-        #          #dbus.Byte(0xFF),dbus.Byte(0xFF), # 12 1 16 reamaining time
-        #          ]
-        # #bytes(input_string, 'utf-8')
-        Waterrower_byte_values = Convert_Waterrower_raw_to_byte()
+        if ble_in_q_value:
 
-        value = [dbus.Byte(0x2C), dbus.Byte(0x0B),
-                 dbus.Byte(Waterrower_byte_values[0]), dbus.Byte(Waterrower_byte_values[1]), dbus.Byte(Waterrower_byte_values[2]),
-                 dbus.Byte(Waterrower_byte_values[3]), dbus.Byte(Waterrower_byte_values[4]), dbus.Byte(Waterrower_byte_values[5]),
-                 dbus.Byte(Waterrower_byte_values[6]), dbus.Byte(Waterrower_byte_values[7]),
-                 dbus.Byte(Waterrower_byte_values[8]), dbus.Byte(Waterrower_byte_values[9]),
-                 dbus.Byte(Waterrower_byte_values[10]), dbus.Byte(Waterrower_byte_values[11]),dbus.Byte(Waterrower_byte_values[12]),dbus.Byte(Waterrower_byte_values[13]),dbus.Byte(Waterrower_byte_values[14]),
-                 dbus.Byte(Waterrower_byte_values[15]),
-                 dbus.Byte(Waterrower_byte_values[16]), dbus.Byte(Waterrower_byte_values[17]),
-                 ]
+            Waterrower_byte_values = Convert_Waterrower_raw_to_byte()
 
-        # 0 0 8 16 stroke rate + stroke count
-        # 1 1 8 av stroke rate
-        # 2 1 16 + 8 distance
-        # 3 1 16 instantaneous pace
-        # 4 1 16 average pace
-        # 5 1 16 instantaneous power
-        # 6 1 16 average power
-        # 7 1 16 resitance level
-        # 8 1 16 + 16 +16 Total energy, energy per hour, energy per minute
-        # 9 1  8 heart rate
-        # 10 1 8 metabolic equivalent 0.1
-        # 11 1 16 elapsed time
-        # 12 1 16 reamaining time
+            value = [dbus.Byte(0x2C), dbus.Byte(0x0B),
+                     dbus.Byte(Waterrower_byte_values[0]), dbus.Byte(Waterrower_byte_values[1]), dbus.Byte(Waterrower_byte_values[2]),
+                     dbus.Byte(Waterrower_byte_values[3]), dbus.Byte(Waterrower_byte_values[4]), dbus.Byte(Waterrower_byte_values[5]),
+                     dbus.Byte(Waterrower_byte_values[6]), dbus.Byte(Waterrower_byte_values[7]),
+                     dbus.Byte(Waterrower_byte_values[8]), dbus.Byte(Waterrower_byte_values[9]),
+                     dbus.Byte(Waterrower_byte_values[10]), dbus.Byte(Waterrower_byte_values[11]),dbus.Byte(Waterrower_byte_values[12]),dbus.Byte(Waterrower_byte_values[13]),dbus.Byte(Waterrower_byte_values[14]),
+                     dbus.Byte(Waterrower_byte_values[15]),
+                     dbus.Byte(Waterrower_byte_values[16]), dbus.Byte(Waterrower_byte_values[17]),
+                     ]
 
-        # #value[0] = 0x01
-        # #value[1] = 0x02
-        # value[2] = 0x30 # stroke count 1 byte /2
-        # value[3] = 0x01 # Stroke Count (4 3)
-        # value[4] = 0x01 # Stroke Count
-        # value[5] = 0x01 # Total Distance (7 5 6)
-        # value[6] = 0x01 # Total Distance
-        # value[7] = 0x01 # Total Distance
-        # value[8] = 0x01  # Instantaneous Pace (9 8)
-        # value[9] = 0x02  # Instantaneous Pace
-        # value[10] = 0x96 # Instantaneous Power (11 10) (0x96)
-        # value[11] = 0x01# Instantaneous Power
-        # value[12] = 0x08 # Total Energy (13 12)
-        # value[13] = 0x02 # Total Energy
-        # value[14] = 0x01 # Energy per Hour
-        # value[16] = 0x01 # Energy per Minute
-        # value[17] = 0x02 # Heart Rate
-        # value[18] = 0x02 # Elasped time (19 18)
-        # value[19] = 0x02 # Elasped time
-
-        # value[2] = 0x00 # stroke count 1 byte /2
-        # value[3] = 0x00 # Stroke Count (4 3)
-        # value[4] = 0x00  # Stroke Count
-        # value[5] = 0x0A # Total Distance (7 5 6)
-        # value[6] = 0x00  # Total Distance
-        # value[7] = 0x00  # Total Distance
-        # value[8] = 0x00  # Instantaneous Pace (9 8)
-        # value[9] = 0x00  # Instantaneous Pace
-        # value[10] = 0x00 # Instantaneous Power (11 10)
-        # value[11] = 0x00# Instantaneous Power
-        # value[12] = 0x00 # Total Energy (13 12)
-        # value[13] = 0x00 # Total Energy
-        # value[14] = 0x00 # Energy per Hour
-        # value[16] = 0x00 # Energy per Minute
-        # value[17] = 0x00 # Heart Rate
-        # value[18] = 0x00 # Elasped time (19 18)
-        # value[19] = 0x00 # Elasped time
-
-
-
-
-    #2C - 0B - 00 - 00 - 00 - 00 - FF - FF - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00 - 00
-        self.PropertiesChanged(GATT_CHRC_IFACE, { 'Value': value }, [])
-        return self.notifying
+            self.PropertiesChanged(GATT_CHRC_IFACE, { 'Value': value }, [])
+            return self.notifying
+        else:
+            logger.warning("no data from s4 interface")
+            pass
 
     def _update_Waterrower_cb_value(self):
         print('Update Waterrower Data')

@@ -3,3 +3,4 @@ PyGObject
 dbus-python
 numpy
 pyusb
+bleak

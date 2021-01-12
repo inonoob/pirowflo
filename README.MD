@@ -75,6 +75,10 @@ end of the training a FIT file for Garmin connect or Strava.
 With a high demand from people having the Smartrow, I thought why not trying to integrate it as input interface 
 for this project. So it would be either S4 Monitor or Smartrow 
 
+## Target of the project 
+
+<img src="docs/Project-overview.png" width=36% height=36%>
+
 ## Requirements
 
 ### Hardware 
