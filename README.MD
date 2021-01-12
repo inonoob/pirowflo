@@ -77,7 +77,7 @@ for this project. So it would be either S4 Monitor or Smartrow
 
 ## Target of the project 
 
-<img src="docs/Project-overview.png" width=60% height=60%>
+<img src="docs/Project-overview.png" width=100% height=100%>
 
 ## Requirements
 
@@ -212,3 +212,8 @@ if you don't see the "dialout", then your $USER needs to be add to this group
     sudo usermod -a -G dialout $USER 
 
 Then you need to log out or reboot that it takes effect. 
+
+I can't connect with the app Coxswain: 
+
+It is only working with Coxswain version higher 7.9. as the low version haven't the improved connectivity code for 
+bluetooth. 
