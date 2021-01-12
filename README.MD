@@ -138,7 +138,8 @@ make install.sh executable:
 
     sudo chmod +x install.sh
 
-execute install.sh in order to setup everything: (This can take 5 - 10 min to set all up)
+execute install.sh in order to setup everything: (This can take 5 - 10 min to set all up). If during the first installation
+you hadn't have your Ant+ dongle. Just re-run the script and it will install the missing Ant+ and udev profiles.
 
     sudo ./install.sh 
 
@@ -190,3 +191,20 @@ For example if the Waterrower should send data over Bluetooth and ANT
 
     python3 waterrowerthreads.py -i s4 -b -a 
 
+
+## FAQ 
+
+I got the error: 
+
+    serial open error waiting
+
+if that is the case, check if your $USER belongs to the group "dialout"
+
+    pi@raspberrypi:/dev $ groups
+    pi adm dialout cdrom sudo audio video plugdev games users input netdev gpio i2c spi
+
+if you don't see the "dialout", then your $USER needs to be add to this group 
+
+    sudo usermod -a -G dialout $USER 
+
+Then you need to log out or reboot that it takes effect. 
