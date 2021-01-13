@@ -17,10 +17,10 @@
 
 Supported Apps (07.01.2021)
 
-| Kinomap (BLE) | Cityrow (BLE)| waterrower connect (BLE) | Coxswain (BLE) 7.9 or higher | Garmin Watch(ANT+) |
-|:------:|:------------:|:-----:|:-------:|:-------:|
-| test pending | :heavy_check_mark: | not yet | :heavy_check_mark: | :heavy_check_mark: |
-
+|        | Kinomap (BLE) | Cityrow (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | Garmin Watch(ANT+) |
+|:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:|
+|Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | - |
+|iOS     | test pending  | test pending       | :heavy_check_mark:         |  -                           | - |
 
 
 This python script replaces the Waterrower com module. A Raspberry Pi is connected via usb with the Waterrower. The rowing
@@ -198,6 +198,8 @@ For example if the Waterrower should send data over Bluetooth and ANT
 
 ## FAQ 
 
+---
+
 I got the error: 
 
     serial open error waiting
@@ -212,6 +214,8 @@ if you don't see the "dialout", then your $USER needs to be add to this group
     sudo usermod -a -G dialout $USER 
 
 Then you need to log out or reboot that it takes effect. 
+
+---
 
 I can't connect with the app Coxswain: 
 
