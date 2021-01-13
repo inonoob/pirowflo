@@ -9,24 +9,21 @@ from collections import deque
 def main(ant_in_q):
     EventCounter = 0
     messages = []       # messages to be sent to
-    Antdongle = ant.clsAntDongle()
-    Antdongle.Calibrate()
+    Antdongle = ant.clsAntDongle() # define the ANt+ dongle
+    Antdongle.Calibrate()   # reset the dongle and defines it as node
     sleep(0.25)
-    Antdongle.Trainer_ChannelConfig()
+    Antdongle.Trainer_ChannelConfig() # define the channel needed for fitness equipements
     sleep(0.25)
-    Waterrower = fe.antFE(Antdongle)
+    Waterrower = fe.antFE(Antdongle) # hand over the class to antfe to give acces to the dongle
 
     while True:
-        if len(ant_in_q) != 0:
-            WaterrowerValuesRaw = ant_in_q.pop()
-            #print(WaterrowerValuesRaw)
-            #WaterrowerValuesRaw = WRValues_test
-            if EventCounter < 255:
-                Waterrower.EventCounter = EventCounter
-                #print(Waterrower.EventCounter)
-                Waterrower.BroadcastTrainerDataMessage(WaterrowerValuesRaw)
-                messages.append(Waterrower.fedata)# Add data to teh message array
-                #print("message to be send is:{0}".format(Waterrower.fedata))
+        if len(ant_in_q) != 0: #as long as the deque data from WR are not empty
+            WaterrowerValuesRaw = ant_in_q.pop() # remove it from the deque and put in variable
+
+            if EventCounter < 255:  # This is important as after 256 message the counter must set to zero as a rollover occures for ant+ data
+                Waterrower.EventCounter = EventCounter # set the eventcounter of the instance
+                Waterrower.BroadcastTrainerDataMessage(WaterrowerValuesRaw) # insert data into instance
+                messages.append(Waterrower.fedata) # depending on the event counter value load the message arrey with the either Fitness equipement, rowerdata, manu data or product data
                 if len(messages) > 0:
                     Antdongle.Write(messages, True, False) # check if length of array is greater than 0 if yes then send data over Ant+
                 EventCounter += 1
@@ -38,8 +35,7 @@ def main(ant_in_q):
         else:
             pass
 
-        # WRValues_test = FakeRower(WRValues_test)
-        sleep(0.25)
+        sleep(0.25) # Ant+ defines to send a message every 25 ms
 
 
 def FakeRower(WRValues_test):
