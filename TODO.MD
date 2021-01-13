@@ -2,9 +2,8 @@
 
 ## Bug Fixes
 
-- [ ] if the deque is empty and is called it produces an error which kills the bluetooth thread. This error must
-catch. Possible solution check size of the deque message and if it smaller than 1 then pass. Check in the def Waterrower_cb(self): 
-  function for the size before. if smaller than 1 pass and wait next message. 
+- [ ] WaterRower Connect finding S4 Comm Pi but won't connect. Might be the fact that not all the Services and 
+charateristics are implemented. Full Implementation of Service "Device Information" is required. 
 
 
     WaterrowerValuesRaw = ble_in_q_value.pop()
@@ -14,6 +13,8 @@ May be thing about to create the elapse time in the code it self and not with th
   waterrower data. e.g something like that 
 
     Time.time()
+
+
 
 ## needed Feature
 
@@ -28,6 +29,7 @@ the ant node.
 profile
 
 ## DONE
+
 - [x] add Ant+ capability to send data
 - [x] python requirement.txt
 - [x] Fix conversion from waterrower to Ant+ format (elasped time 1 = 0.25s. That needs to multiply the elapsed time 
@@ -40,4 +42,8 @@ ant+ ( not yet availalbe). This module would make it more flexible.
     implemented but not tested yet.
     
 - [x] Install.sh file which does all the installation stuff
+
+- [x] if the deque is empty and is called it produces an error which kills the bluetooth thread. This error must
+catch. Possible solution check size of the deque message and if it smaller than 1 then pass. Check in the def Waterrower_cb(self): 
+  function for the size before. if smaller than 1 pass and wait next message.
 
