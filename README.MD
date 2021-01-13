@@ -15,13 +15,15 @@
 
 <img src="docs/Hardware/IMG_20210104_155432.jpg" width=36% height=36%> <img src="docs/Hardware/Selection_015.png" width=30% height=30%>
 
-Supported Apps (07.01.2021)
+## Supported Apps (07.01.2021)
 
 |        | Kinomap (BLE) | Cityrow (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | Garmin Watch(ANT+) |
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:|
 |Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | - |
 |iOS     | test pending  | test pending       | :heavy_check_mark:         |  -                           | - |
 
+
+## Project Overview
 
 This python script replaces the Waterrower com module. A Raspberry Pi is connected via usb with the Waterrower. The rowing
 data are processed by the python script which is then send via bluetooth Low Energy Fitness equipment profile to the connected App. E.g Android
