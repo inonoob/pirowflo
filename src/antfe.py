@@ -26,7 +26,6 @@ class antFE(object):
         self.Speed = (WaterrowerValuesRaw['speed'] * 1000 / 100)#  cm/s to m/s
         self.Heart = 0
         self.StrokeCount = WaterrowerValuesRaw['total_strokes']
-        #self.StrokeCount = min(255, self.StrokeCount)
         self.Cadence = WaterrowerValuesRaw['stroke_rate']/2
         self.Cadence = min(253, self.Cadence)  # Limit to 253
         self.InstPower = WaterrowerValuesRaw['watts']
@@ -45,24 +44,13 @@ class antFE(object):
 
         elif self.EventCounter % 3 == 0 or self.EventCounter % 4 == 0:
 
-            # if self.StrokeCount <= 254:
-            #     self.AccumlatedStrokecount = self.StrokeCount
-            # else:
-            #     self.Rollovercount = int(self.StrokeCount / 254)
-            #     self.AccumlatedStrokecount = self.StrokeCount - (self.Rollovercount * 254)
-
             self.AccumlatedStrokecount = self.Rollovercalc(self.StrokeCount,254)
-            #self.AccumlatedStrokecount = self.StrokeCount
-
-
             self.info = self._ant_dongle.msgPage22_RowingData(self._ant_dongle.channel_FE, self.AccumlatedStrokecount, self.Cadence, self.InstPower)
             self.fedata = self._ant_dongle.ComposeMessage(self._ant_dongle.msgID_BroadcastData, self.info)
 
         else:
-
             self.AccumlatedElapsedTime = self.Rollovercalc(self.ElapsedTime,256)
             self.AccumlatedDistanceTravelled = self.Rollovercalc(self.DistanceTravelled,256)
-
             self.info = self._ant_dongle.msgPage16_GeneralFEdata(self._ant_dongle.channel_FE, self.AccumlatedElapsedTime, self.AccumlatedDistanceTravelled, self.Speed, self.Heart)
             self.fedata = self._ant_dongle.ComposeMessage(self._ant_dongle.msgID_BroadcastData, self.info)
 
