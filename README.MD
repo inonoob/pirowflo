@@ -19,8 +19,8 @@
 
 |        | Kinomap (BLE) | Cityrow (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | Garmin Watch(ANT+) |
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:|
-|Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | - |
-|iOS     | test pending  | test pending       | :heavy_check_mark:         |  -                           | - |
+|Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | :heavy_check_mark:|
+|iOS     | test pending  | test pending       | :heavy_check_mark:         |  -                           | :heavy_check_mark:|
 
 
 ## Project Overview
