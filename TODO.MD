@@ -18,6 +18,9 @@ the ant node.
 - [ ] add HRM data from S4 waterrower to the Ble heart rate prfile as it is already available in the fitness equipment
 profile
   
+- [ ] the Pi sees HRM signal on the S4 and sends it through on ANT+. 
+  Or the Pi sees NO HRM signal on the S4 and tells the watch to get its own.
+  
 ## ON HOLD 
 
 - [ ] Elapsed time is bugging. Bluetooth and ANT+ shows 0 or just 00.01 value. Needs to be investigate. 

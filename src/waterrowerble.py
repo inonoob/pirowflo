@@ -133,8 +133,102 @@ class DeviceInformation(Service):
     def __init__(self, bus, index):
         Service.__init__(self, bus, index, self.DEVICE_INFORMATION_UUID, True)
         self.add_characteristic(ManufacturerNameString(bus, 0, self))
-        self.add_characteristic(SoftwareRevisionString(bus, 1, self))
+        self.add_characteristic(ModelNumberString(bus, 1, self))
+        self.add_characteristic(SerialNumberSring(bus,2,self))
+        self.add_characteristic(HardwareRevisionString(bus,3,self))
+        self.add_characteristic(FirmwareRevisionString(bus,4,self))
+        self.add_characteristic(SoftwareRevisionString(bus, 5, self))
 
+
+class ManufacturerNameString(Characteristic):
+    MANUFACTURER_NAME_STRING_UUID = '2a29'
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.MANUFACTURER_NAME_STRING_UUID,
+            ['read'],
+            service)
+        self.notifying = False
+        self.ManuName = bytes('WaterRower', 'utf-8')
+        self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
+
+
+    def ReadValue(self, options):
+        print('ManufacturerNameString: ' + repr(self.value))
+        return self.value
+
+class ModelNumberString(Characteristic):
+    MANUFACTURER_NAME_STRING_UUID = '2a24'
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.MANUFACTURER_NAME_STRING_UUID,
+            ['read'],
+            service)
+        self.notifying = False
+        self.ManuName = bytes('4', 'utf-8')
+        self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
+
+
+    def ReadValue(self, options):
+        print('ModelNumberString: ' + repr(self.value))
+        return self.value
+
+class SerialNumberSring(Characteristic):
+    MANUFACTURER_NAME_STRING_UUID = '2a25'
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.MANUFACTURER_NAME_STRING_UUID,
+            ['read'],
+            service)
+        self.notifying = False
+        self.ManuName = bytes('0000', 'utf-8')
+        self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
+
+
+    def ReadValue(self, options):
+        print('SerialNumberSring: ' + repr(self.value))
+        return self.value
+
+class HardwareRevisionString(Characteristic):
+    MANUFACTURER_NAME_STRING_UUID = '2a27'
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.MANUFACTURER_NAME_STRING_UUID,
+            ['read'],
+            service)
+        self.notifying = False
+        self.ManuName = bytes('2.2BLE', 'utf-8')
+        self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
+
+
+    def ReadValue(self, options):
+        print('HardwareRevisionString: ' + repr(self.value))
+        return self.value
+
+class FirmwareRevisionString(Characteristic):
+    MANUFACTURER_NAME_STRING_UUID = '2a26'
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.MANUFACTURER_NAME_STRING_UUID,
+            ['read'],
+            service)
+        self.notifying = False
+        self.ManuName = bytes('0.30', 'utf-8')
+        self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
+
+
+    def ReadValue(self, options):
+        print('FirmwareRevisionString: ' + repr(self.value))
+        return self.value
 
 class SoftwareRevisionString(Characteristic):
     SOFTWARE_REVISION_STRING_UUID = '2a28'
@@ -153,25 +247,6 @@ class SoftwareRevisionString(Characteristic):
         self.value[1] = 0x2E
         self.value[2] = 0x33
         #self.value[3] = 0x30
-
-    def ReadValue(self, options):
-        print('SoftwareRevisionString: ' + repr(self.value))
-        return self.value
-
-
-class ManufacturerNameString(Characteristic):
-    MANUFACTURER_NAME_STRING_UUID = '2a29'
-
-    def __init__(self, bus, index, service):
-        Characteristic.__init__(
-            self, bus, index,
-            self.MANUFACTURER_NAME_STRING_UUID,
-            ['read'],
-            service)
-        self.notifying = False
-        self.ManuName = bytes('WaterRower', 'utf-8')
-        self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
-
 
     def ReadValue(self, options):
         print('SoftwareRevisionString: ' + repr(self.value))
@@ -359,7 +434,7 @@ class FTMPAdvertisement(Advertisement):
         )
         self.add_service_uuid(DeviceInformation.DEVICE_INFORMATION_UUID)
         self.add_service_uuid(FTMservice.FITNESS_MACHINE_UUID)
-        self.add_service_uuid(HeartRate.HEART_RATE)
+        #self.add_service_uuid(HeartRate.HEART_RATE)
 
         self.add_local_name("S4 COMMS PI")
         self.include_tx_power = True
