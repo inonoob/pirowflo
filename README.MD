@@ -15,12 +15,19 @@
 
 <img src="docs/Hardware/IMG_20210104_155432.jpg" width=36% height=36%> <img src="docs/Hardware/Selection_015.png" width=30% height=30%>
 
-## Supported Apps (07.01.2021)
+## Supported Apps (14.01.2021)
 
 |        | Kinomap (BLE) | Cityrow (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | Garmin Watch(ANT+) |
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:|
 |Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | :heavy_check_mark:|
 |iOS     | test pending  | test pending       | :heavy_check_mark:         |  -                           | :heavy_check_mark:|
+
+
+## Supported Watches (14.01.2021)
+
+|   Watch model     |  Navtive rowing App  | ErgIQ|
+|:------:|:------: |:------: |
+| Fenix 6 | :heavy_check_mark:  | currently not|
 
 
 ## Project Overview
@@ -89,18 +96,20 @@ Bill of Material(BOM)
 
 <img src="docs/Hardware/IMG_20210104_155452.jpg" width=50% height=50%>
 
-| Item for Raspberry pi 1,2,3| 
+| **Item for Raspberry pi 1,2,3**| 
 |------|
 | Raspberry Pi || 
 | Micro SD card || 
 | Mini USB to USB typ A ||  
-| Bluetooth USB dongle 4.1 (LogiLink BT0015) || 
+| Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
 | Micro USB to Typ A || 
 | 5V USB power supply 2A ||
 | **for Ant+ addition** || 
 | Ant+ dongle (avoid Cyclone) ||
+| **for Smartrow** || 
+| Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
 
-| Item for Raspberry pi 3,4| 
+| **Item for Raspberry pi 3,4**| 
 |------|
 | Raspberry Pi || 
 | Micro SD card || 
@@ -108,10 +117,15 @@ Bill of Material(BOM)
 | 5V USB power supply 2A ||
 | **for Ant+ addition** || 
 | Ant+ dongle (avoid Cyclone) ||
+| **for Smartrow** || 
+| Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
+| Bluetooth USB dongle (not 5.0) (Mandatory to be different bran
+
+
 
 <img src="docs/Hardware/IMG_20210104_155756.jpg" width=50% height=50%>
 
-| Item for Raspberry pi Zero W | 
+| **Item for Raspberry pi Zero W** | 
 |------|
 | Raspberry Pi Zero W || 
 | Micro SD card || 
@@ -120,6 +134,9 @@ Bill of Material(BOM)
 | **for Ant+ addition**  || 
 | Ant+ dongle (avoid Cyclone) ||
 | Micro USB to USB Hub || 
+| **for Smartrow** || 
+| Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
+| Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
 
 <img src="docs/Hardware/IMG_20210104_155825.jpg" width=50% height=50%>
 
