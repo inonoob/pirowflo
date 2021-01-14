@@ -2,8 +2,10 @@
 
 ## Bug Fixes
 
-- [ ] WaterRower Connect finding S4 Comm Pi but won't connect. Might be the fact that not all the Services and 
+- [x] 13.04.2021 WaterRower Connect finding S4 Comm Pi but won't connect. Might be the fact that not all the Services and 
 charateristics are implemented. Full Implementation of Service "Device Information" is required. 
+  Change from 0x30 to 0x31. This is due to the HRM flag in the antdongle.py specification for Fitness equipment 
+  see page 31 8.5.2.6 of Ant+ Fitness equipement device profile rev 5.0 
 
 
     WaterrowerValuesRaw = ble_in_q_value.pop()
