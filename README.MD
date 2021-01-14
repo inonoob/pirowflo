@@ -17,10 +17,10 @@
 
 ## Supported Apps (14.01.2021)
 
-|        | Kinomap (BLE) | Cityrow (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | Garmin Watch(ANT+) |
-|:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:|
-|Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | :heavy_check_mark:|
-|iOS     | test pending  | test pending       | :heavy_check_mark:         |  -                           | :heavy_check_mark:|
+|        | Kinomap (BLE) | Cityrow (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
+|:------:|:------:       |:------------:      |:-----:                     |:-------:                     |
+|Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | 
+|iOS     | test pending  | test pending       | :heavy_check_mark:         |  -                           |
 
 
 ## Supported Watches (14.01.2021)
