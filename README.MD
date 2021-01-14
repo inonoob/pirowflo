@@ -119,7 +119,7 @@ Bill of Material(BOM)
 | Ant+ dongle (avoid Cyclone) ||
 | **for Smartrow** || 
 | Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
-| Bluetooth USB dongle (not 5.0) (Mandatory to be different bran
+| Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
 
 
 

@@ -73,11 +73,12 @@ done
 unset IFS
 
 echo "----------------------------------------------"
-echo " add user to the group bluetoot "
+echo " add user to the group bluetoot and dialout   "
 echo "----------------------------------------------"
 
 
 sudo usermod -a -G bluetooth $USER
+sudo usermod -a -G dialout $USER
 
 echo " "
 echo "----------------------------------------------"
