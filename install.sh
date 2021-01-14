@@ -56,7 +56,7 @@ echo " "
 IFS=$'\n'
 arrayusb=($(lsusb | cut -d " " -f 6 | cut -d ":" -f 2))
 
-for i in ${arrayusb[@]}
+for i in "${arrayusb[@]}"
 do
   if [ $i == 1008 ]|| [ $i == 1009 ] || [ $i == 1004 ]; then
     echo "Ant dongle found"
