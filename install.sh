@@ -31,7 +31,7 @@ echo " "
 echo "----------------------------------------------"
 echo "installed needed packages for python          "
 echo "----------------------------------------------"
-sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev git libboost-python-dev libboost-thread-dev libbluetooth-dev libglib2.0-dev python-dev
+sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev gitibglib2.0-dev python-dev
 echo " "
 
 
