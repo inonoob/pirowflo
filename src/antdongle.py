@@ -776,7 +776,7 @@ class clsAntDongle():
         Cadence = int(min(0xff, Cadence))
         AccumulatedPower = int(min(0xffff, AccumulatedPower))
         CurrentPower = int(min(0x0fff, CurrentPower))
-        Flags = 0x31  # Hmmm.... leave as is but do not understand the value
+        Flags = 0x34  # Hmmm.... leave as is but do not understand the value
             #   0 011 0 0 01
         fChannel = sc.unsigned_char  # First byte of the ANT+ message content
         fDataPageNumber = sc.unsigned_char  # First byte of the ANT+ datapage (payload)
