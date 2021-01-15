@@ -729,7 +729,7 @@ class clsAntDongle():
         Speed = int(min(0xffff, Speed))
         HeartRate = int(min(0xff, HeartRate))
         #Capabilities = 0x30 | 0x03 | 0x00 | 0x00  # IN_USE | HRM | Distance | Speed
-        Capabilities = 0x37   # IN_USE | HRM | Distance | Speed
+        Capabilities = 0x34   # IN_USE | HRM | Distance | Speed
 
         # #               bit 7.... ...0
         # HRM =               0b00000011  # 0b____ __xx bits 0-1 0 = hand contact sensor    (2020-12-28 Unclear why option chosen)
