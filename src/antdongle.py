@@ -731,6 +731,13 @@ class clsAntDongle():
         #Capabilities = 0x30 | 0x03 | 0x00 | 0x00  # IN_USE | HRM | Distance | Speed
         Capabilities = 0x37   # IN_USE | HRM | Distance | Speed
 
+        # #               bit 7.... ...0
+        # HRM =               0b00000011  # 0b____ __xx bits 0-1 0 = hand contact sensor    (2020-12-28 Unclear why option chosen)
+        # Distance =          0b00000000  # 0b____ _x__ bit 2    1 = No distance in byte 3  (2020-12-28 Unclear why option chosen)
+        # VirtualSpeedFlag =  0b00000000  # 0b____ x___ bit 3    0 = Real speed in byte 4/5 (2020-12-28 Could be virtual speed)
+        # FEstate =           0b00110000  # 0b_xxx ____ bits 4-6 3 = IN USE
+        # LapToggleBit =      0b00000000  # 0bx___ ____ bit 7    0 = No lap toggle
+
         fChannel = sc.unsigned_char  # First byte of the ANT+ message content
         fDataPageNumber = sc.unsigned_char  # First byte of the ANT+ datapage (payload)
         fEquipmentType = sc.unsigned_char
@@ -776,8 +783,17 @@ class clsAntDongle():
         Cadence = int(min(0xff, Cadence))
         AccumulatedPower = int(min(0xffff, AccumulatedPower))
         CurrentPower = int(min(0x0fff, CurrentPower))
-        Flags = 0x34  # Hmmm.... leave as is but do not understand the value
-            #   0 011 0 0 01
+        Flags = 0x34
+
+        # #               bit 7.... ...0
+        # HRM =               0b00000001  # 0b____ ___x bits 0-1 1 = Accumulated Strokes
+        # HRM =               0b00000000  # 0b____ __x_ bits 1   0 = Reserved
+        # Distance =          0b00000000  # 0b____ _x__ bit 2    0 = Reserved
+        # VirtualSpeedFlag =  0b00000000  # 0b____ X___ bit 3    0 = Reserved
+        # FEstate =           0b00110000  # 0b_xxx ____ bits 4-6 3 = IN USE
+        # LapToggleBit =      0b00000000  # 0bx___ ____ bit 7    0 = No lap toggle
+
+
         fChannel = sc.unsigned_char  # First byte of the ANT+ message content
         fDataPageNumber = sc.unsigned_char  # First byte of the ANT+ datapage (payload)
         fEvent = sc.unsigned_char
