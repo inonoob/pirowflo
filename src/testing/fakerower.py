@@ -34,6 +34,6 @@ def main(in_q, ble_out_q):
 
 
 if __name__ == '__main__':
-    f = open("Log_2021-01-08_21_16_57.txt","r")
+    f = open("Log_2021-01-08_21_16_57.txt", "r")
     test = []
     FakeSmartRowerData(f,test)
