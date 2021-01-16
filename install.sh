@@ -80,6 +80,15 @@ echo "----------------------------------------------"
 sudo usermod -a -G bluetooth $USER
 sudo usermod -a -G dialout $USER
 
+
+echo "-----------------------------------------------"
+echo " Change bluetooth name of the pi to S4 COMMS pi"
+echo "-----------------------------------------------"
+
+
+echo "PRETTY_HOSTNAME=S4_COMMS_PI" > /etc/machine-info
+
+
 echo " "
 echo "----------------------------------------------"
 echo " installation done ! rebooting in 3, 2, 1 "

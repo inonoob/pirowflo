@@ -50,6 +50,8 @@ BLE gatt server micropython [link](https://github.com/micropython/micropython/bl
 
 Gatt clietn python [link](https://github.com/oscaracena/pygattlib#python-pip)
 
+bluetoot name changer for raspberry pi [link](https://stackoverflow.com/questions/26299053/changing-raspberry-pi-bluetooth-device-name)
+
 ## DBUS
 
 used for:

@@ -17,10 +17,10 @@
 
 ## Supported Apps (14.01.2021)
 
-|        | Kinomap (BLE) | Cityrow (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
+|        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |
 |Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | 
-|iOS     | test pending  | test pending       | :heavy_check_mark:         |  -                           |
+|iOS     | test pending  | :heavy_check_mark: | :heavy_check_mark:         |  -                           |
 
 
 ## Supported Watches (14.01.2021)
@@ -240,3 +240,22 @@ I can't connect with the app Coxswain:
 
 It is only working with Coxswain version higher 7.9. as the low version haven't the improved connectivity code for 
 bluetooth. 
+
+--- 
+
+If you see this kind of error in the console you
+
+    2021-01-16 19:59:14,341 - fakesmartrowble - CRITICAL - Failed to register advertisement: org.bluez.Error.Failed: Failed to register advertisement
+    Exception in thread Thread-2:
+    Traceback (most recent call last):
+      File "/usr/lib/python3.7/threading.py", line 917, in _bootstrap_inner
+        self.run()
+      File "/usr/lib/python3.7/threading.py", line 865, in run
+        self._target(*self._args, **self._kwargs)
+      File "fakesmartrowthreads.py", line 51, in FakeSmartRowBLE
+        FakeSmartRowBLE()
+    TypeError: 'NoneType' object is not callable
+
+That means what a client is still connect with the Raspberry pi and must be disconnect first before restarting the 
+service. So check on your smartphone or tablet is a connection is still active. The simplest thing to fix is to close
+the app and then try again. 
