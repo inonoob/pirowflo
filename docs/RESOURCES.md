@@ -17,6 +17,10 @@ used for:
 - ble.py
 - waterrowerble.py
 
+Gatt-sdk client [link](https://github.com/getsenic/gatt-python) 
+
+Gatt example client [link](https://github.com/Aloz1/iot-raspi/blob/master/gatt_manager.py)
+
 BLE uart server [link](https://scribles.net/creating-ble-gatt-server-uart-service-on-raspberry-pi/)
 
 BLE waterrower cycling profile: [link to waterrower BLE cycling](https://github.com/MostTornBrain/Waterrower)
