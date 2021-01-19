@@ -42,7 +42,7 @@ class SmartRow(gatt.Device):
         super().characteristic_write_value_succeeded()
         logger.debug('Successfully wrote to chrstc [{}]'.format(characteristic.uuid))
 
-    def characteristic_write_value_failed(self, characteristic,error):
+    def characteristic_write_value_failed(self, characteristic, error):
         super().characteristic_write_value_failed()
         logger.debug('Failed to wirte to chrstc [{}]: {}'.format(characteristic.uuid, error))
 
@@ -91,7 +91,9 @@ class SmartRow(gatt.Device):
         self.notify_callbacks(self.buffer)
 
 
-    def send_smartrow_cmd(self, value):
+    def characteristic_write_value(self, value):
+        logging.debug("[{}] Writing data to {} - {} ({})".format(self.logger_name, self.chrstcRowWrite, value, bytearray(value).hex()))
+        self.writing = value
         self.chrstcRowWrite.write_value(value)
 
     def register_callback(self, cb):
@@ -104,16 +106,17 @@ class SmartRow(gatt.Device):
         for cb in self._callbacks:
             cb(event)
 
+#TODO: Add the device manager part in order to look for the smartrow and then connnect to it. The smartrow must be found via MAC address
 
 if __name__ == '__main__':
 
-    def hellotest(event):
-        print("hello test {0}".format(event))
+    # def hellotest(event):
+    #     print("hello test {0}".format(event))
 
     manager = gatt.DeviceManager(adapter_name='hci0')
 
     device = SmartRow(mac_address="00:1A:7D:DA:71:04", manager=manager)
-    device.register_callback(hellotest)
+    #device.register_callback(hellotest)
     device.connect()
 
     manager.run()
