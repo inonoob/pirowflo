@@ -73,6 +73,7 @@ class DataLogger(object):
         self.WRValues = self.WRValues_rst
         self.WRvalue_standstill = self.WRValues_rst
         self.BLEvalues = self.WRValues_rst
+        self.ANTvalues = self.WRValues_rst
         self.secondsWR = 0
         self.minutesWR = 0
         self.hoursWR = 0
