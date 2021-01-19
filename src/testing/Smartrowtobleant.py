@@ -37,7 +37,7 @@ class DataLogger():
             'stroke_rate': 0,
             'total_strokes': 0,
             'total_distance_m': 0,
-            'instantaneous pace': 0,
+            'instantaneous_pace': 0,
             'speed': 0,
             'watts': 0,
             'total_kcal': 0,
@@ -48,7 +48,8 @@ class DataLogger():
             'work': 0,
             'stroke_length': 0,
             'force': 0,
-            'watts_avg':0
+            'watts_avg':0,
+            'pace_avg':0
         }
         self.WRValues = self.WRValues_rst
         self.WRvalue_standstill = self.WRValues_rst
@@ -75,17 +76,14 @@ class DataLogger():
 
         if event[0] == self.POWER_MESSAGE:
             event = event.replace(" ", "0")
-            print(event)
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'watts': int((event[6:9]))})
             self.WRValues.update({'watts_avg': float((event[9:14]))/10})
 
-            #c00109 179 01810E8
 
         if event[0] == self.STROKE_RATE_STROKE_COUNT_MESSAGE:
             #print("Stroke rate and stroke count{0}".format(event))
             event = event.replace(" ", "0")
-            print(event)
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'stroke_rate': float((event[6:8]))*2})
             self.WRValues.update({'total_strokes':int((event[9:13]))})
@@ -95,15 +93,17 @@ class DataLogger():
             #print("Pace is {0}".format(event))
             event = event.replace(" ", "0")
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
-            #self.WRValues.update()
+            pace_inst = int(event[6])*60 + int(event[7:9])
+            self.WRValues.update({'instantaneous_pace': pace_inst})
+            pace_avg = int(event[9])*60 + int(event[10:12])
+            self.WRValues.update({'pace_avg': pace_avg})
+
         if event[0] == self.FORCE_MESSAGE:
             #print("Force{0}".format(event))
             event = event.replace(" ", "0")
-            print(event)
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'force': int((event[7:11]))})
 
-            #f0017300722000AC
             
         print(self.WRValues)
 
