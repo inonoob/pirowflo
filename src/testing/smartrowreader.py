@@ -38,21 +38,21 @@ class SmartRow(gatt.Device):
         super().disconnect_succeeded()
         logger.info("Disconnected [{}]".format(self.mac_address))
 
-    def characteristic_write_value_succeeded(self, characteristic):
-        super().characteristic_write_value_succeeded()
-        logger.debug('Successfully wrote to chrstc [{}]'.format(characteristic.uuid))
-
-    def characteristic_write_value_failed(self, characteristic, error):
-        super().characteristic_write_value_failed()
-        logger.debug('Failed to wirte to chrstc [{}]: {}'.format(characteristic.uuid, error))
-
-    def characteristic_enable_notifications_succeeded(self, characteristic):
-        super().characteristic_enable_notifications_succeeded()
-        logger.debug('Successfully enabled notifications for chrstc [{}]'.format(characteristic.uuid))
-
-    def characteristic_enable_notifications_failed(self, characteristic, error):
-        super().characteristic_enable_notifications_succeeded()
-        logger.debug('Failed to enabled notifications for chrstc [{}]: {}'.format(characteristic.uuid, error))
+    # def characteristic_write_value_succeeded(self, characteristic):
+    #     super().characteristic_write_value_succeeded()
+    #     logger.debug('Successfully wrote to chrstc [{}]'.format(characteristic.uuid))
+    #
+    # def characteristic_write_value_failed(self, characteristic, error):
+    #     super().characteristic_write_value_failed()
+    #     logger.debug('Failed to wirte to chrstc [{}]: {}'.format(characteristic.uuid, error))
+    #
+    # def characteristic_enable_notifications_succeeded(self, characteristic):
+    #     super().characteristic_enable_notifications_succeeded()
+    #     logger.debug('Successfully enabled notifications for chrstc [{}]'.format(characteristic.uuid))
+    #
+    # def characteristic_enable_notifications_failed(self, characteristic, error):
+    #     super().characteristic_enable_notifications_succeeded()
+    #     logger.debug('Failed to enabled notifications for chrstc [{}]: {}'.format(characteristic.uuid, error))
 
 
     def find_service(self, uuid):
@@ -92,8 +92,9 @@ class SmartRow(gatt.Device):
 
 
     def characteristic_write_value(self, value):
-        logging.debug("[{}] Writing data to {} - {} ({})".format(self.logger_name, self.chrstcRowWrite, value, bytearray(value).hex()))
+        #logging.debug("[{}] Writing data to {} - {} ({})".format(self.logger_name, self.chrstcRowWrite, value, bytearray(value).hex()))
         self.writing = value
+        print(value)
         self.chrstcRowWrite.write_value(value)
 
     def register_callback(self, cb):
@@ -107,6 +108,23 @@ class SmartRow(gatt.Device):
             cb(event)
 
 #TODO: Add the device manager part in order to look for the smartrow and then connnect to it. The smartrow must be found via MAC address
+
+class SmartRowManager(gatt.DeviceManager):
+    def device_discovered(self, device):
+        if device.alias() == "FAKE SmartRow":
+            print("found Fakre rower")
+            print(device.mac_address)
+            self.smartrowmac = device.mac_address
+            self.stop()
+
+
+def connecttosmartrow():
+    manager = SmartRowManager(adapter_name='hci0')
+    manager.start_discovery()  # from the DeviceManager class call the methode start_discorvery
+    manager.run()
+    macaddresssmartrower = manager.smartrowmac
+    return macaddresssmartrower
+
 
 if __name__ == '__main__':
 
