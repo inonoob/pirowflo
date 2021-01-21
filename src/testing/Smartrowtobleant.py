@@ -1,10 +1,12 @@
 import logging
+import struct
+
 import gatt
+import threading
 import binascii
 from time import sleep
 
 import smartrowreader
-
 
 
 logger = logging.getLogger(__name__)
@@ -16,7 +18,6 @@ logHandler.setFormatter(formatter)
 filelogHandler.setFormatter(formatter)
 logger.addHandler(filelogHandler)
 logger.addHandler(logHandler)
-
 
 class DataLogger():
 
@@ -62,13 +63,13 @@ class DataLogger():
         if event[0] == self.ENERGIE_KCAL_MESSAGE:
             #print("kCal are {0}".format(event))
             event = event.replace(" ", "0")
-            print(event)
+            #print(event)
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'total_kcal': int((event[6:10]))})
         if event[0] == self.WORK_STROKE_LENGTH_MESSAGE:
             #print("Work and Stroke lengh {0}".format(event))
             event = event.replace(" ", "0")
-            print(event)
+            #print(event)
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'work': float(event[7:11])/10})
             self.WRValues.update({'stroke_length': int((event[11:14]))})
@@ -105,7 +106,7 @@ class DataLogger():
             self.WRValues.update({'force': int((event[7:11]))})
 
             
-        print(self.WRValues)
+        #print(self.WRValues)
 
     def reset(self):
         self.restemsg = ["0D","56","40","0D"] # enter V @ enter is SmartRow reset command.
@@ -121,13 +122,44 @@ class DataLogger():
     #TODO: Elapsed Time must be created
     #TODO: Waterrower is as full stop message f the ! indicates that the system is a stop
 
-def main():
-    manager = gatt.DeviceManager(adapter_name='hci0')
-    smartrow = smartrowreader.SmartRow(mac_address="00:1A:7D:DA:71:04", manager=manager)
-    SRtoBLEANT = DataLogger(smartrow)
+def test(manager,smartrow):
     smartrow.connect()
     manager.run()
 
+def reset(smartrow):
+    smartrow.characteristic_write_value(struct.pack("<b", 13))
+    smartrow.characteristic_write_value(struct.pack("<b", 86))
+    smartrow.characteristic_write_value(struct.pack("<b", 54))
+    smartrow.characteristic_write_value(struct.pack("<b", 13))
+
+def main():
+    macaddresssmartrower = smartrowreader.connecttosmartrow()
+
+    manager = gatt.DeviceManager(adapter_name='hci0')
+    smartrow = smartrowreader.SmartRow(mac_address=macaddresssmartrower, manager=manager)
+    SRtoBLEANT = DataLogger(smartrow)
+
+    try:
+        # smartrow.connect()
+        # manager.run()
+        BC = threading.Thread(target=test, args=(manager,smartrow))
+        BC.daemon = True
+        BC.start()
+        sleep(10)
+        while True:
+            #print("hello after the thread")
+            sleep(1)
+            smartrow.characteristic_write_value(struct.pack("<b", 36))
+            for i in range(20):
+                #if i == 20:
+                print(i)
+                reset(smartrow)
+                sleep(1)
+
+
+    except KeyboardInterrupt:
+        smartrow.disconnect()
+        manager.stop()
 
 if __name__ == '__main__':
     main()
