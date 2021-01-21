@@ -30,6 +30,7 @@ from collections import deque
 import waterrowerble
 import wrtobleant
 import waterrowerant
+import smartrowtobleant
 
 
 logger = logging.getLogger(__name__)
@@ -50,10 +51,16 @@ def main(args=None):
         bleService = waterrowerble.main(out_q, ble_in_q)
         bleService()
 
+
     def Waterrower(in_q, ble_out_q, ant_out_q):
         logger.info("Waterrower Interface started")
         Waterrowerserial = wrtobleant.main(in_q, ble_out_q, ant_out_q)
         Waterrowerserial()
+
+    def Smartrow(in_q, ble_out_q, ant_out_q):
+        logger.info("Waterrower Interface started")
+        Smartrowconnection = smartrowtobleant.main(in_q, ble_out_q, ant_out_q)
+        Smartrowconnection()
 
     def ANTService(ant_in_q):
         logger.info("Start Ant and start broadcast data")
@@ -68,6 +75,14 @@ def main(args=None):
     if args.interface == "s4":
         logger.info("inferface S4 monitor will be used for data input")
         t1 = threading.Thread(target=Waterrower, args=(q, ble_q, ant_q))
+        t1.daemon = True
+        t1.start()
+    else:
+        logger.info("S4 not selected")
+
+    if args.interface == "sr":
+        logger.info("inferface smartrow will be used for data input")
+        t1 = threading.Thread(target=Smartrow, args=(q, ble_q, ant_q))
         t1.daemon = True
         t1.start()
     else:

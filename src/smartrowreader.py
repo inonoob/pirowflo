@@ -131,7 +131,7 @@ if __name__ == '__main__':
     # def hellotest(event):
     #     print("hello test {0}".format(event))
 
-    manager = gatt.DeviceManager(adapter_name='hci0')
+    manager = gatt.DeviceManager(adapter_name='hci1')
 
     device = SmartRow(mac_address="00:1A:7D:DA:71:04", manager=manager)
     #device.register_callback(hellotest)
