@@ -3,7 +3,6 @@ import struct
 
 import gatt
 import threading
-import binascii
 from time import sleep
 
 import smartrowreader
@@ -38,7 +37,7 @@ class DataLogger():
             'stroke_rate': 0,
             'total_strokes': 0,
             'total_distance_m': 0,
-            'instantaneous_pace': 0,
+            'instantaneous pace': 0,
             'speed': 0,
             'watts': 0,
             'total_kcal': 0,
@@ -95,7 +94,7 @@ class DataLogger():
             event = event.replace(" ", "0")
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             pace_inst = int(event[6])*60 + int(event[7:9])
-            self.WRValues.update({'instantaneous_pace': pace_inst})
+            self.WRValues.update({'instantaneous pace': pace_inst})
             pace_avg = int(event[9])*60 + int(event[10:12])
             self.WRValues.update({'pace_avg': pace_avg})
 
@@ -106,13 +105,13 @@ class DataLogger():
             self.WRValues.update({'force': int((event[7:11]))})
 
             
-        #print(self.WRValues)
+        print(self.WRValues)
 
-    def reset(self):
-        self.restemsg = ["0D","56","40","0D"] # enter V @ enter is SmartRow reset command.
-        for msg in self.restemsg:
-            self._rower_interface.characteristic_write_value(msg)
-            sleep(0.05)
+    # def reset(self):
+    #     self.restemsg = ["0D","56","40","0D"] # enter V @ enter is SmartRow reset command.
+    #     for msg in self.restemsg:
+    #         self._rower_interface.characteristic_write_value(msg)
+    #         sleep(0.05)
 
     def heartbeat(self):
         self.heartbeat = ["24"] # $ ssems to be the heartbeat which is send to the Smartrow every second
@@ -132,7 +131,7 @@ def reset(smartrow):
     smartrow.characteristic_write_value(struct.pack("<b", 54))
     smartrow.characteristic_write_value(struct.pack("<b", 13))
 
-def main():
+def main(in_q, ble_out_q,ant_out_q):
     macaddresssmartrower = smartrowreader.connecttosmartrow()
 
     manager = gatt.DeviceManager(adapter_name='hci0')
@@ -146,20 +145,28 @@ def main():
         BC.daemon = True
         BC.start()
         sleep(10)
-        while True:
-            #print("hello after the thread")
-            sleep(1)
-            smartrow.characteristic_write_value(struct.pack("<b", 36))
-            for i in range(20):
-                #if i == 20:
-                print(i)
-                reset(smartrow)
-                sleep(1)
+        logger.info("SmartRow Ready and sending data to BLE and ANT Thread")
 
+
+
+        while True:
+            if not in_q.empty():
+                ResetRequest_ble = in_q.get()
+                print(ResetRequest_ble)
+                reset(smartrow)
+            else:
+                pass
+
+            ble_out_q.append(SRtoBLEANT.WRValues)
+            ant_out_q.append(SRtoBLEANT.WRValues)
+            #print("hello after the thread")
+            #smartrow.characteristic_write_value(struct.pack("<b", 36))
 
     except KeyboardInterrupt:
         smartrow.disconnect()
         manager.stop()
+
+
 
 if __name__ == '__main__':
     main()
