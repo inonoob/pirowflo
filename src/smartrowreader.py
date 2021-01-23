@@ -25,10 +25,12 @@ class SmartRow(gatt.Device):
     def __init__(self, mac_address, manager):
         super().__init__(mac_address=mac_address, manager=manager)
         self._callbacks = set()
+        self.is_connected = False
 
     def connect_succeeded(self):
         super().connect_succeeded()
         logger.info("Connected to [{}]".format(self.mac_address))
+        self.is_connected = True
 
     def connect_failed(self, error):
         super().connect_failed(error)
@@ -87,12 +89,10 @@ class SmartRow(gatt.Device):
     def characteristic_value_updated(self, characteristic, value):
         super().characteristic_value_updated(characteristic, value)
         self.buffer = value.decode()
-        #print(self.buffer)
         self.notify_callbacks(self.buffer)
 
 
     def characteristic_write_value(self, value):
-        #logging.debug("[{}] Writing data to {} - {} ({})".format(self.logger_name, self.chrstcRowWrite, value, bytearray(value).hex()))
         self.writing = value
         print(value)
         self.chrstcRowWrite.write_value(value)
@@ -111,15 +111,15 @@ class SmartRow(gatt.Device):
 
 class SmartRowManager(gatt.DeviceManager):
     def device_discovered(self, device):
-        if device.alias() == "FAKE SmartRow":
-            print("found Fakre rower")
-            print(device.mac_address)
+        if device.alias() == "SmartRow":
+            logging.info("found Fakre rower")
+            logging.info(device.mac_address)
             self.smartrowmac = device.mac_address
             self.stop()
 
 
 def connecttosmartrow():
-    manager = SmartRowManager(adapter_name='hci0')
+    manager = SmartRowManager(adapter_name='hci1')
     manager.start_discovery()  # from the DeviceManager class call the methode start_discorvery
     manager.run()
     macaddresssmartrower = manager.smartrowmac
@@ -128,12 +128,8 @@ def connecttosmartrow():
 
 if __name__ == '__main__':
 
-    # def hellotest(event):
-    #     print("hello test {0}".format(event))
-
     manager = gatt.DeviceManager(adapter_name='hci1')
-
-    device = SmartRow(mac_address="00:1A:7D:DA:71:04", manager=manager)
+    device = SmartRow(mac_address="", manager=manager)
     #device.register_callback(hellotest)
     device.connect()
 
