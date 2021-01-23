@@ -15,12 +15,19 @@
 
 <img src="docs/Hardware/IMG_20210104_155432.jpg" width=36% height=36%> <img src="docs/Hardware/Selection_015.png" width=30% height=30%>
 
-## Supported Apps (14.01.2021)
+## Supported Apps S4 Monitor (14.01.2021)
 
 |        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |
 |Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | 
 |iOS     | test pending  | :heavy_check_mark: | :heavy_check_mark:         |  -                           |
+
+## Supported Apps SmartRow (14.01.2021)
+
+|        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
+|:------:|:------:       |:------------:      |:-----:                     |:-------:                     |
+|Android | test pending  | test pending | not yet                    | :heavy_check_mark:           | 
+|iOS     | test pending  | test pending | test pending       |  -                           |
 
 
 ## Supported Watches (14.01.2021)
