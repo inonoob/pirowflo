@@ -58,16 +58,18 @@ class DataLogger():
         self.WRvalue_standstill = self.WRValues_rst
         self.BLEvalues = self.WRValues_rst
         self.ANTvalues = self.WRValues_rst
-        self.starttime = 0
+        self.starttime = None
         self.fullstop = True
 
     def elapsedtime(self):
         if self.fullstop == False:
             elaspedtimecalc = int(time.time() - self.starttime)
             self.WRValues.update({'elapsedtime':elaspedtimecalc})
+        elif self.fullstop == True and self.WRValues.get('total_distance_m') !=0:
+            elaspedtimecalc = int(time.time() - self.starttime)
+            self.WRValues.update({'elapsedtime':elaspedtimecalc})
         else:
             self.WRValues.update({'elapsedtime': 0})
-
 
     def on_row_event(self, event):
         if event[0] == self.ENERGIE_KCAL_MESSAGE:
@@ -111,8 +113,11 @@ class DataLogger():
             event = event.replace(" ", "0")
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'force': int((event[7:11]))})
-            if event[12] == "!":
+            if event[11] == "!":
                 self.fullstop = True
+            elif self.starttime == None:
+                self.starttime = time.time()
+                self.fullstop = False
             else:
                 self.fullstop = False
             self.elapsedtime()
@@ -133,16 +138,17 @@ def connectSR(manager,smartrow):
 
 def reset(smartrow):
     smartrow.characteristic_write_value(struct.pack("<b", 13))
-    sleep(0.025)
+    sleep(0.002)
     smartrow.characteristic_write_value(struct.pack("<b", 86))
-    sleep(0.025)
+    sleep(0.002)
     smartrow.characteristic_write_value(struct.pack("<b", 64))
-    sleep(0.025)
+    sleep(0.002)
     smartrow.characteristic_write_value(struct.pack("<b", 13))
 
-def heartbeat(smartrow):
-    smartrow.characteristic_write_value(struct.pack("<b", 36))
-    sleep(1)
+def heartbeat(sr):
+    while True:
+        sr.characteristic_write_value(struct.pack("<b", 36))
+        sleep(1)
 
 
 def main(in_q, ble_out_q,ant_out_q):
@@ -151,32 +157,36 @@ def main(in_q, ble_out_q,ant_out_q):
     manager = gatt.DeviceManager(adapter_name='hci1')
     smartrow = smartrowreader.SmartRow(mac_address=macaddresssmartrower, manager=manager)
     SRtoBLEANT = DataLogger(smartrow)
+    #sleep(10)
 
-    if smartrow.is_connected == True:
-        #try:
-        BC = threading.Thread(target=connectSR, args=(manager,smartrow))
-        BC.daemon = True
-        BC.start()
+    #try:
+    BC = threading.Thread(target=connectSR, args=(manager,smartrow))
+    BC.daemon = True
+    BC.start()
 
-        HB = threading.Thread(target=heartbeat, args=smartrow)
-        HB.daemon = True
-        HB.start()
+    logger.info("SmartRow Ready and sending data to BLE and ANT Thread")
 
-        logger.info("SmartRow Ready and sending data to BLE and ANT Thread")
+    sleep(5)
 
-        while True:
-            if not in_q.empty():
-                ResetRequest_ble = in_q.get()
-                print(ResetRequest_ble)
-                reset(smartrow)
-            else:
-                pass
-            ble_out_q.append(SRtoBLEANT.WRValues)
-            ant_out_q.append(SRtoBLEANT.WRValues)
-            # smartrow.characteristic_write_value(struct.pack("<b", 36)) # heart beat
-            # sleep(1)
-    else:
-        logger.warning("not connect to SmartRow!")
+    HB = threading.Thread(target=heartbeat, args=([smartrow]))
+    HB.daemon = True
+    HB.start()
+
+    reset(smartrow)
+    sleep(1)
+
+    while True:
+        if not in_q.empty():
+            ResetRequest_ble = in_q.get()
+            print(ResetRequest_ble)
+            reset(smartrow)
+        else:
+            pass
+        ble_out_q.append(SRtoBLEANT.WRValues)
+        ant_out_q.append(SRtoBLEANT.WRValues)
+        # smartrow.characteristic_write_value(struct.pack("<b", 36)) # heart beat
+        # sleep(1)
+
 
 
         # except KeyboardInterrupt:
