@@ -4,6 +4,8 @@ import struct
 import gatt
 import threading
 from time import sleep
+from threading import Timer
+import time
 
 import smartrowreader
 
@@ -17,6 +19,7 @@ logHandler.setFormatter(formatter)
 filelogHandler.setFormatter(formatter)
 logger.addHandler(filelogHandler)
 logger.addHandler(logHandler)
+
 
 class DataLogger():
 
@@ -55,99 +58,111 @@ class DataLogger():
         self.WRvalue_standstill = self.WRValues_rst
         self.BLEvalues = self.WRValues_rst
         self.ANTvalues = self.WRValues_rst
+        self.starttime = 0
+        self.fullstop = True
+
+    def elapsedtime(self):
+        if self.fullstop == False:
+            elaspedtimecalc = int(time.time() - self.starttime)
+            self.WRValues.update({'elapsedtime':elaspedtimecalc})
+        else:
+            self.WRValues.update({'elapsedtime': 0})
+
 
     def on_row_event(self, event):
-        #print("hello world2 {0}".format(event))
-        #print(event[0])
         if event[0] == self.ENERGIE_KCAL_MESSAGE:
-            #print("kCal are {0}".format(event))
             event = event.replace(" ", "0")
-            #print(event)
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'total_kcal': int((event[6:10]))})
+            self.elapsedtime()
+
         if event[0] == self.WORK_STROKE_LENGTH_MESSAGE:
-            #print("Work and Stroke lengh {0}".format(event))
             event = event.replace(" ", "0")
             #print(event)
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'work': float(event[7:11])/10})
             self.WRValues.update({'stroke_length': int((event[11:14]))})
-
+            self.elapsedtime()
 
         if event[0] == self.POWER_MESSAGE:
             event = event.replace(" ", "0")
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'watts': int((event[6:9]))})
             self.WRValues.update({'watts_avg': float((event[9:14]))/10})
-
+            self.elapsedtime()
 
         if event[0] == self.STROKE_RATE_STROKE_COUNT_MESSAGE:
-            #print("Stroke rate and stroke count{0}".format(event))
             event = event.replace(" ", "0")
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'stroke_rate': float((event[6:8]))*2})
             self.WRValues.update({'total_strokes':int((event[9:13]))})
-            #print("total strokes{0}".format(self.WRValues.get('total_strokes')))
-            #print("stroke rate{0}".format(self.WRValues.get('stroke_rate')))
+            self.elapsedtime()
+
         if event[0] == self.PACE_MESSAGE:
-            #print("Pace is {0}".format(event))
             event = event.replace(" ", "0")
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             pace_inst = int(event[6])*60 + int(event[7:9])
             self.WRValues.update({'instantaneous pace': pace_inst})
             pace_avg = int(event[9])*60 + int(event[10:12])
             self.WRValues.update({'pace_avg': pace_avg})
+            self.elapsedtime()
 
         if event[0] == self.FORCE_MESSAGE:
-            #print("Force{0}".format(event))
             event = event.replace(" ", "0")
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'force': int((event[7:11]))})
+            if event[12] == "!":
+                self.fullstop = True
+            else:
+                self.fullstop = False
+            self.elapsedtime()
 
-            
         print(self.WRValues)
 
-    # def reset(self):
-    #     self.restemsg = ["0D","56","40","0D"] # enter V @ enter is SmartRow reset command.
-    #     for msg in self.restemsg:
-    #         self._rower_interface.characteristic_write_value(msg)
-    #         sleep(0.05)
-
-    def heartbeat(self):
-        self.heartbeat = ["24"] # $ ssems to be the heartbeat which is send to the Smartrow every second
-        self._rower_interface.characteristic_write_value(self.heartbeat)
-        # TODO: check how to send every second the signal
+    # def heartbeat(self):
+    #     self.heartbeat = ["24"] # $ ssems to be the heartbeat which is send to the Smartrow every second
+    #     self._rower_interface.characteristic_write_value(self.heartbeat)
+    #     # TODO: check how to send every second the signal
 
     #TODO: Elapsed Time must be created
     #TODO: Waterrower is as full stop message f the ! indicates that the system is a stop
 
-def test(manager,smartrow):
+def connectSR(manager,smartrow):
     smartrow.connect()
     manager.run()
 
 def reset(smartrow):
     smartrow.characteristic_write_value(struct.pack("<b", 13))
+    sleep(0.025)
     smartrow.characteristic_write_value(struct.pack("<b", 86))
-    smartrow.characteristic_write_value(struct.pack("<b", 54))
+    sleep(0.025)
+    smartrow.characteristic_write_value(struct.pack("<b", 64))
+    sleep(0.025)
     smartrow.characteristic_write_value(struct.pack("<b", 13))
+
+def heartbeat(smartrow):
+    smartrow.characteristic_write_value(struct.pack("<b", 36))
+    sleep(1)
+
 
 def main(in_q, ble_out_q,ant_out_q):
     macaddresssmartrower = smartrowreader.connecttosmartrow()
 
-    manager = gatt.DeviceManager(adapter_name='hci0')
+    manager = gatt.DeviceManager(adapter_name='hci1')
     smartrow = smartrowreader.SmartRow(mac_address=macaddresssmartrower, manager=manager)
     SRtoBLEANT = DataLogger(smartrow)
 
-    try:
-        # smartrow.connect()
-        # manager.run()
-        BC = threading.Thread(target=test, args=(manager,smartrow))
+    if smartrow.is_connected == True:
+        #try:
+        BC = threading.Thread(target=connectSR, args=(manager,smartrow))
         BC.daemon = True
         BC.start()
-        sleep(10)
+
+        HB = threading.Thread(target=heartbeat, args=smartrow)
+        HB.daemon = True
+        HB.start()
+
         logger.info("SmartRow Ready and sending data to BLE and ANT Thread")
-
-
 
         while True:
             if not in_q.empty():
@@ -156,15 +171,17 @@ def main(in_q, ble_out_q,ant_out_q):
                 reset(smartrow)
             else:
                 pass
-
             ble_out_q.append(SRtoBLEANT.WRValues)
             ant_out_q.append(SRtoBLEANT.WRValues)
-            #print("hello after the thread")
-            #smartrow.characteristic_write_value(struct.pack("<b", 36))
+            # smartrow.characteristic_write_value(struct.pack("<b", 36)) # heart beat
+            # sleep(1)
+    else:
+        logger.warning("not connect to SmartRow!")
 
-    except KeyboardInterrupt:
-        smartrow.disconnect()
-        manager.stop()
+
+        # except KeyboardInterrupt:
+        #     smartrow.disconnect()
+        #     manager.stop()
 
 
 
