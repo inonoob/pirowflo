@@ -147,7 +147,10 @@ Bill of Material(BOM)
 | Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
 | Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
 
+
 <img src="docs/Hardware/IMG_20210104_155825.jpg" width=50% height=50%>
+
+
 
 I would recommend buying the Raspberry pi in a kit where most of the parts are included 
 
