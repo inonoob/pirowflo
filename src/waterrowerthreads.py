@@ -1,7 +1,7 @@
 """
 Python script to broadcast waterrower data over BLE and ANT
 
-      Waterrower Ant and BLE Raspberry Pi Module
+      FLO-ROW for Waterrower
                                                                  +-+
                                                XX+-----------------+
                   +-------+                 XXXX    |----|       | |
