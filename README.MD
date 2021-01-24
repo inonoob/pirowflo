@@ -1,7 +1,7 @@
-# BLE and Ant+ for Waterrower
+# FLO-ROW for Waterrower
 
 
-      Waterrower Ant and BLE Raspberry Pi Module
+      FLO-ROW for Waterrower
                                                                  +-+
                                                XX+-----------------+
                   +-------+                 XXXX    |----|       | |
@@ -190,7 +190,7 @@ If the script waterrowerthreads is started with -h or --help it shows the availa
 
     Python script to broadcast waterrower data over BLE and ANT
 
-      Waterrower Ant and BLE Raspberry Pi Module
+      FLO-ROW for Waterrower
                                                                  +-+
                                                XX+-----------------+
                   +-------+                 XXXX    |----|       | |
@@ -222,6 +222,7 @@ If the script waterrowerthreads is started with -h or --help it shows the availa
 For example if the Waterrower should send data over Bluetooth and ANT 
 
     python3 waterrowerthreads.py -i s4 -b -a 
+
 
 
 ## FAQ 
