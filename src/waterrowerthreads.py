@@ -1,7 +1,7 @@
 """
 Python script to broadcast waterrower data over BLE and ANT
 
-      FLO-ROW for Waterrower
+      PiRowFlo for Waterrower
                                                                  +-+
                                                XX+-----------------+
                   +-------+                 XXXX    |----|       | |
