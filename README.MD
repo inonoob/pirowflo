@@ -1,7 +1,7 @@
-# FLO-ROW for Waterrower
+# PiRowFlo for Waterrower
 
 
-      FLO-ROW for Waterrower
+      PiRowFlo for Waterrower
                                                                  +-+
                                                XX+-----------------+
                   +-------+                 XXXX    |----|       | |
@@ -193,7 +193,7 @@ If the script waterrowerthreads is started with -h or --help it shows the availa
 
     Python script to broadcast waterrower data over BLE and ANT
 
-      FLO-ROW for Waterrower
+      PiRowFlo for Waterrower
                                                                  +-+
                                                XX+-----------------+
                   +-------+                 XXXX    |----|       | |
