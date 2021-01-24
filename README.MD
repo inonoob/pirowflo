@@ -15,6 +15,8 @@
 
 <img src="docs/Hardware/IMG_20210104_155432.jpg" width=36% height=36%> <img src="docs/Hardware/Selection_015.png" width=30% height=30%>
 
+Read the LICENCE first, by using this software you agree to the licence. 
+
 ## Supported Apps S4 Monitor (14.01.2021)
 
 |        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
