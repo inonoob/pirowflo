@@ -122,15 +122,7 @@ class DataLogger():
                 self.fullstop = False
             self.elapsedtime()
 
-        print(self.WRValues)
-
-    # def heartbeat(self):
-    #     self.heartbeat = ["24"] # $ ssems to be the heartbeat which is send to the Smartrow every second
-    #     self._rower_interface.characteristic_write_value(self.heartbeat)
-    #     # TODO: check how to send every second the signal
-
-    #TODO: Elapsed Time must be created
-    #TODO: Waterrower is as full stop message f the ! indicates that the system is a stop
+        #print(self.WRValues)
 
 def connectSR(manager,smartrow):
     smartrow.connect()
@@ -184,16 +176,6 @@ def main(in_q, ble_out_q,ant_out_q):
             pass
         ble_out_q.append(SRtoBLEANT.WRValues)
         ant_out_q.append(SRtoBLEANT.WRValues)
-        # smartrow.characteristic_write_value(struct.pack("<b", 36)) # heart beat
-        # sleep(1)
-
-
-
-        # except KeyboardInterrupt:
-        #     smartrow.disconnect()
-        #     manager.stop()
-
-
 
 if __name__ == '__main__':
     main()

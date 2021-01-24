@@ -40,23 +40,6 @@ class SmartRow(gatt.Device):
         super().disconnect_succeeded()
         logger.info("Disconnected [{}]".format(self.mac_address))
 
-    # def characteristic_write_value_succeeded(self, characteristic):
-    #     super().characteristic_write_value_succeeded()
-    #     logger.debug('Successfully wrote to chrstc [{}]'.format(characteristic.uuid))
-    #
-    # def characteristic_write_value_failed(self, characteristic, error):
-    #     super().characteristic_write_value_failed()
-    #     logger.debug('Failed to wirte to chrstc [{}]: {}'.format(characteristic.uuid, error))
-    #
-    # def characteristic_enable_notifications_succeeded(self, characteristic):
-    #     super().characteristic_enable_notifications_succeeded()
-    #     logger.debug('Successfully enabled notifications for chrstc [{}]'.format(characteristic.uuid))
-    #
-    # def characteristic_enable_notifications_failed(self, characteristic, error):
-    #     super().characteristic_enable_notifications_succeeded()
-    #     logger.debug('Failed to enabled notifications for chrstc [{}]: {}'.format(characteristic.uuid, error))
-
-
     def find_service(self, uuid):
         for service in self.services:
             if service.uuid == uuid:
@@ -107,12 +90,10 @@ class SmartRow(gatt.Device):
         for cb in self._callbacks:
             cb(event)
 
-#TODO: Add the device manager part in order to look for the smartrow and then connnect to it. The smartrow must be found via MAC address
-
 class SmartRowManager(gatt.DeviceManager):
     def device_discovered(self, device):
         if device.alias() == "SmartRow":
-            logging.info("found Fakre rower")
+            logging.info("found SmartRow")
             logging.info(device.mac_address)
             self.smartrowmac = device.mac_address
             self.stop()
@@ -130,7 +111,6 @@ if __name__ == '__main__':
 
     manager = gatt.DeviceManager(adapter_name='hci1')
     device = SmartRow(mac_address="", manager=manager)
-    #device.register_callback(hellotest)
     device.connect()
 
     manager.run()
