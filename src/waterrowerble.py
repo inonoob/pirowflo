@@ -150,7 +150,7 @@ class ManufacturerNameString(Characteristic):
             ['read'],
             service)
         self.notifying = False
-        self.ManuName = bytes('WaterRower', 'utf-8')
+        self.ManuName = bytes('Rower', 'utf-8')
         self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
 
 
