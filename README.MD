@@ -70,6 +70,7 @@ Open for new ideas !
 ## Features
 
 - Read Serial Waterrower Data to the Pi
+- Read SmartRow data to the Pi via bluetooth
 - Send Waterrower Data from the Pi over Bluetooth (Build-in or USB-dongle) 
 - Send Waterrower Data from the Pi over Ant+ via Ant+ dongle 
 
@@ -163,11 +164,11 @@ On a fresh installed Raspbian, git must be installed first
 
 Clone the repo from Github: 
 
-    git clone https://github.com/inonoob/WaterrowerAntBle.git 
+    git clone https://github.com/inonoob/pirowflo.git 
     
 go into the folder: 
 
-    cd WaterrowerAntBle 
+    cd pirowflo 
 
 make install.sh executable: 
 
@@ -180,7 +181,7 @@ you hadn't have your Ant+ dongle. Just re-run the script and it will install the
 
 Once installation and reboot complete, go into the WaterrowerAntBle/src folder
 
-    cd /home/pi/WaterrowerAntBle/src
+    cd /home/pi/pirowflo/src
 
 ### Getting Started
 
