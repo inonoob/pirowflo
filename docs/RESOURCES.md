@@ -1,7 +1,6 @@
 # Resources
 
-## Waterrower Serial 
-
+## Waterrower Serial
 interface to Waterrower serial [link](https://github.com/bfritscher/waterrower/blob/master/waterrower/interface.py)
 
 - links to the waterrowerInterface.py which is also used in this project. 
@@ -10,9 +9,7 @@ Waterrower interface [link](https://github.com/bfritscher/waterrower)
 
 - Water Rower S4 S5 USB Protocol Iss 1 04.pdf is the document specifying the USB specification.   
 
-
 ## BLE
-
 used for: 
 - ble.py
 - waterrowerble.py
@@ -57,7 +54,6 @@ Gatt clietn python [link](https://github.com/oscaracena/pygattlib#python-pip)
 bluetoot name changer for raspberry pi [link](https://stackoverflow.com/questions/26299053/changing-raspberry-pi-bluetooth-device-name)
 
 ## DBUS
-
 used for:
 - ble.py
 - waterrowerble.py 
@@ -68,8 +64,7 @@ Python dbus Tutorial: [Link](https://dbus.freedesktop.org/doc/dbus-python/tutori
 
 Python dbus types: [Link](https://dbus.freedesktop.org/doc/dbus-python/tutorial.html#basic-types)
 
-## ANT+ 
-
+## ANT+
 used for: 
 - antdongle.py
 - antfe.py
@@ -89,8 +84,7 @@ GoldenCheetah [link](https://github.com/GoldenCheetah/GoldenCheetah/blob/master/
 
 hacking ant [link](https://hackingantblog.wordpress.com/)
 
-## bash 
-
+## bash
 used for: 
 - install.sh
 
