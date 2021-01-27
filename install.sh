@@ -1,5 +1,6 @@
 #!/bin/bash
-
+clone_dir=$(cd $(dirname $0) > /dev/null 2>&1; pwd -P)
+python3_path=$(which python3)
 # https://stackoverflow.com/questions/9449417/how-do-i-assign-the-output-of-a-command-into-an-array
 
 echo " "
@@ -86,7 +87,13 @@ echo " Change bluetooth name of the pi to S4 COMMS pi"
 echo "-----------------------------------------------"
 
 
-echo "PRETTY_HOSTNAME=S4_COMMS_PI" > /etc/machine-info
+echo "PRETTY_HOSTNAME=PiRowFlo" > /etc/machine-info
+
+# update supervisord.conf with path to this repo and python3
+export repo_dir=$(cd $(dirname $0) > /dev/null 2>&1; pwd -P)
+export python3_path=$(which python3)
+sed -i 's@#PYTHON3#@'"$python3_path"'@g' supervisord.conf
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.conf
 
 
 echo " "
