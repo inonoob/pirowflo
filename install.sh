@@ -87,14 +87,20 @@ echo " Change bluetooth name of the pi to S4 COMMS pi"
 echo "-----------------------------------------------"
 
 
-echo "PRETTY_HOSTNAME=PiRowFlo" > /etc/machine-info
+echo "PRETTY_HOSTNAME=PiRowFlo" | sudo tee -a /etc/machine-info > /dev/null
 
 # update supervisord.conf with path to this repo and python3
+#
 export repo_dir=$(cd $(dirname $0) > /dev/null 2>&1; pwd -P)
 export python3_path=$(which python3)
+export supervisord_path=$(which supervisord)
+cp supervisord.conf.orig supervisord.conf
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' supervisord.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.conf
 
+# start supervisord from rc.local
+#
+sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
 
 echo " "
 echo "----------------------------------------------"
