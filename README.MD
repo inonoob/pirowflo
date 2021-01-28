@@ -273,3 +273,13 @@ If you see this kind of error in the console you
 That means what a client is still connect with the Raspberry pi and must be disconnect first before restarting the 
 service. So check on your smartphone or tablet is a connection is still active. The simplest thing to fix is to close
 the app and then try again. 
+
+--- 
+
+If you can connect to the PI with your third party app and don't get any data also don't get any data to your watch via ant+ then there is 
+a high chance that the connection between S4 Monitor and the Rasbperry pi is not working correctly. 
+
+- Check if you have heard the reset "BEEP" from the S4 Monitor. If not that means that the connection is not correct
+  try to unplug and replug it in. 
+- Check the usb cable first. Try a different one. Cheap one tend to break as you need to plug and unplug it. 
+
