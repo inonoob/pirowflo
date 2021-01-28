@@ -1,6 +1,4 @@
 #!/bin/bash
-clone_dir=$(cd $(dirname $0) > /dev/null 2>&1; pwd -P)
-python3_path=$(which python3)
 # https://stackoverflow.com/questions/9449417/how-do-i-assign-the-output-of-a-command-into-an-array
 
 echo " "
