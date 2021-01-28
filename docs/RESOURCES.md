@@ -96,3 +96,8 @@ udev rules for more serial stuff [link](https://medium.com/@inegm/persistent-nam
 ## Converter e.g dec to hex 
 
 Convert dec to hex and so on[link](https://www.binaryhexconverter.com/decimal-to-hex-converter)
+
+
+## Case for raspberry pi zero: 
+
+Pi zero case which need to be change in oreder to fit the usbhub. [link](https://www.thingiverse.com/thing:4297526)
