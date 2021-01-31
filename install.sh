@@ -63,7 +63,6 @@ do
     echo 'ACTION=="add", ATTRS{idVendor}=="0fcf", ATTRS{idProduct}=="'$i'", RUN+="/sbin/modprobe ftdi_sio" RUN+="/bin/sh -c '"'echo 0fcf 1008 > /sys/bus/usb-serial/drivers/ftdi_sio/new_id'\""'' > /etc/udev/rules.d/99-garmin.rules
     echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="0fcf", ATTR{idProduct}=="'$i'", MODE="666"' >> /etc/udev/rules.d/99-garmin.rules
     echo "udev rule written to /etc/udev/rules.d/99-garmin.rules"
- >> fileName
     break
   else
     echo "No Ant stick found !"
@@ -88,6 +87,15 @@ echo "-----------------------------------------------"
 
 echo "PRETTY_HOSTNAME=S4_COMMS_PI" > /etc/machine-info
 
+
+
+echo "-----------------------------------------------"
+echo " update bluart file as it prevents the start of"
+echo " internal bluetooth if usb bluetooth dongle is "
+echo " present                                       "
+echo "-----------------------------------------------"
+
+sudo sed -i 's/hci0/hci2/g' /usr/bin/btuart
 
 echo " "
 echo "----------------------------------------------"

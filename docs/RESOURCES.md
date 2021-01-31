@@ -101,3 +101,12 @@ Convert dec to hex and so on[link](https://www.binaryhexconverter.com/decimal-to
 ## Case for raspberry pi zero: 
 
 Pi zero case which need to be change in oreder to fit the usbhub. [link](https://www.thingiverse.com/thing:4297526)
+Pi zero case rev 2 [link](https://www.thingiverse.com/thing:4607660/files)
+
+## Fixe bluetooth raspberry pi onboard 
+
+https://github.com/pelwell/pi-bluetooth/blob/master/usr/bin/btuart 
+
+$HCIATTACH /dev/serial1 bcm43xx 921600 noflow - $BDADDR
+
+        sudo /usr/bin/hciattach /dev/serial1 bcm43xx 921600 noflow - b8:27:eb:10:10:10
