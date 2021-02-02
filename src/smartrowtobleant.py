@@ -103,9 +103,9 @@ class DataLogger():
         if event[0] == self.PACE_MESSAGE:
             event = event.replace(" ", "0")
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
-            pace_inst = (int(event[6])*60 + int(event[7:9])) * 500
+            pace_inst = int(event[6])*60 + int(event[7:9])
             self.WRValues.update({'instantaneous pace': pace_inst})
-            pace_avg = (int(event[9])*60 + int(event[10:12])) * 500
+            pace_avg = int(event[9])*60 + int(event[10:12])
             self.WRValues.update({'pace_avg': pace_avg})
             self.elapsedtime()
 
