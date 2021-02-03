@@ -87,7 +87,12 @@ echo "-----------------------------------------------"
 
 echo "PRETTY_HOSTNAME=PiRowFlo" | sudo tee -a /etc/machine-info > /dev/null
 
-# update supervisord.conf with path to this repo and python3
+echo " "
+echo "----------------------------------------------"
+echo " configuring web interface on http://${HOSTNAME}:9001 "
+echo "----------------------------------------------"
+
+# generate supervisord.conf from supervisord.conf.orig with updated paths
 #
 export repo_dir=$(cd $(dirname $0) > /dev/null 2>&1; pwd -P)
 export python3_path=$(which python3)
