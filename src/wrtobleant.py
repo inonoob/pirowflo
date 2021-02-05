@@ -166,7 +166,6 @@ class DataLogger(object):
             self.WRValues.update({'elapsedtime': self.elapsetime})
             self.elapsetimeprevious = self.elapsetime
 
-
     def WRvalueStandstill(self):
         self.WRvalue_standstill = self.WRValues
         self.WRvalue_standstill.update({'stroke_rate': 0})
@@ -189,7 +188,6 @@ class DataLogger(object):
                     self._InstaPowerStroke = []
                 else:
                     pass
-
 
 
     def SendToBLE(self):
