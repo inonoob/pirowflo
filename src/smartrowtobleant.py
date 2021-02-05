@@ -60,6 +60,8 @@ class DataLogger():
         self.ANTvalues = self.WRValues_rst
         self.starttime = None
         self.fullstop = True
+        self.SmartRowHalt = False
+
 
     def elapsedtime(self):
         if self.fullstop == False:
@@ -116,15 +118,37 @@ class DataLogger():
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             self.WRValues.update({'force': int((event[7:11]))})
             if event[11] == "!":
+                self.SmartRowHalt = True
                 self.fullstop = True
             elif self.starttime == None:
                 self.starttime = time.time()
+                self.SmartRowHalt = False
                 self.fullstop = False
             else:
+                self.SmartRowHalt = False
                 self.fullstop = False
             self.elapsedtime()
 
         print(self.WRValues)
+        
+    def SRvalueStandstill(self):
+        self.WRvalue_standstill = self.WRValues
+        self.WRvalue_standstill.update({'stroke_rate': 0})
+        self.WRvalue_standstill.update({'instantaneous pace': 0})
+        self.WRvalue_standstill.update({'speed': 0})
+        self.WRvalue_standstill.update({'watts': 0})
+
+    def SendToBLE(self):
+        if self.SmartRowHalt:
+            self.BLEvalues = self.WRvalue_standstill
+        else:
+            self.BLEvalues = self.WRValues
+
+    def SendToANT(self):
+        if self.SmartRowHalt:
+            self.ANTvalues = self.WRvalue_standstill
+        else:
+            self.ANTvalues = self.WRValues
 
 def connectSR(manager,smartrow):
     smartrow.connect()
@@ -176,6 +200,8 @@ def main(in_q, ble_out_q,ant_out_q):
             reset(smartrow)
         else:
             pass
+        SRtoBLEANT.SendToBLE()
+        SRtoBLEANT.SendToANT()
         ble_out_q.append(SRtoBLEANT.WRValues)
         ant_out_q.append(SRtoBLEANT.WRValues)
         sleep(0.1)
