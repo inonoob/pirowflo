@@ -110,3 +110,13 @@ https://github.com/pelwell/pi-bluetooth/blob/master/usr/bin/btuart
 $HCIATTACH /dev/serial1 bcm43xx 921600 noflow - $BDADDR
 
         sudo /usr/bin/hciattach /dev/serial1 bcm43xx 921600 noflow - b8:27:eb:10:10:10
+
+## Raspberry pi Oled screen sh1106 Waveshare. 
+
+Oled screen configratuion and display [link](https://luma-oled.readthedocs.io/en/latest/api-documentation.html)
+Oled github 
+
+
+## Raspberry pi TFT screen 
+
+TFT screen configuration and display [link](https://github.com/juj/fbcp-ili9341)

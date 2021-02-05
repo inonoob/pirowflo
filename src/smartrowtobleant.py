@@ -105,6 +105,8 @@ class DataLogger():
             self.WRValues.update({'total_distance_m': int((event[1:5]))})
             pace_inst = int(event[6])*60 + int(event[7:9])
             self.WRValues.update({'instantaneous pace': pace_inst})
+            speed = (500 * 100 / pace_inst) # speed in cm/s
+            self.WRValues.update({'speed': speed})
             pace_avg = int(event[9])*60 + int(event[10:12])
             self.WRValues.update({'pace_avg': pace_avg})
             self.elapsedtime()
@@ -122,7 +124,7 @@ class DataLogger():
                 self.fullstop = False
             self.elapsedtime()
 
-        #print(self.WRValues)
+        print(self.WRValues)
 
 def connectSR(manager,smartrow):
     smartrow.connect()
@@ -158,8 +160,8 @@ def main(in_q, ble_out_q,ant_out_q):
 
     logger.info("SmartRow Ready and sending data to BLE and ANT Thread")
 
-    sleep(5)
-
+    sleep(10)
+    #todo: have a check to see if connection has been etablished
     HB = threading.Thread(target=heartbeat, args=([smartrow]))
     HB.daemon = True
     HB.start()
@@ -176,6 +178,7 @@ def main(in_q, ble_out_q,ant_out_q):
             pass
         ble_out_q.append(SRtoBLEANT.WRValues)
         ant_out_q.append(SRtoBLEANT.WRValues)
+        sleep(0.1)
 
 if __name__ == '__main__':
     main()

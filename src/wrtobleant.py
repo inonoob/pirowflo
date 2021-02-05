@@ -99,6 +99,7 @@ class DataLogger(object):
                 self.WRValues.update({'speed':0})
             else:
                 self.InstantaneousPace = (500 * 100) / event['value']
+                print(self.InstantaneousPace)
                 self.WRValues.update({'instantaneous pace': self.InstantaneousPace})
                 self.WRValues.update({'speed':event['value']})
         if event['type'] == 'watts':
