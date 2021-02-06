@@ -24,7 +24,7 @@ class antFE(object):
         self.WaterrowerValueRaw = WaterrowerValuesRaw
         self.ElapsedTime = WaterrowerValuesRaw['elapsedtime'] * 4 # the unit for ant+ is 1 equals to 0.25 sec therfore I need to multipli the elapsedtime by 4.
         self.DistanceTravelled = WaterrowerValuesRaw['total_distance_m']
-        self.Speed = (WaterrowerValuesRaw['speed'] * 1000 / 100)#  cm/s to m/s
+        self.Speed = (WaterrowerValuesRaw['speed'] * 1000 / 100) #  cm/s to m/s (/100) and multiply by 1000 cause ant+ 0.001 m/s
         self.Heart = 0
         self.StrokeCount = WaterrowerValuesRaw['total_strokes']
         self.Cadence = WaterrowerValuesRaw['stroke_rate']/2

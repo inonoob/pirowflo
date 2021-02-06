@@ -60,6 +60,8 @@ class DataLogger():
         self.ANTvalues = self.WRValues_rst
         self.starttime = None
         self.fullstop = True
+        self.SmartRowHalt = False
+
 
     def elapsedtime(self):
         if self.fullstop == False:
@@ -74,55 +76,73 @@ class DataLogger():
     def on_row_event(self, event):
         if event[0] == self.ENERGIE_KCAL_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             self.WRValues.update({'total_kcal': int((event[6:10]))})
             self.elapsedtime()
 
         if event[0] == self.WORK_STROKE_LENGTH_MESSAGE:
             event = event.replace(" ", "0")
             #print(event)
-            self.WRValues.update({'total_distance_m': int((event[1:5]))})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             self.WRValues.update({'work': float(event[7:11])/10})
             self.WRValues.update({'stroke_length': int((event[11:14]))})
             self.elapsedtime()
 
         if event[0] == self.POWER_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))})
-            self.WRValues.update({'watts': int((event[6:9]))})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
+            if self.SmartRowHalt == True:
+                self.WRValues.update({'watts': 0})
+            else:
+                self.WRValues.update({'watts': int((event[6:9]))})
             self.WRValues.update({'watts_avg': float((event[9:14]))/10})
             self.elapsedtime()
 
         if event[0] == self.STROKE_RATE_STROKE_COUNT_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))})
-            self.WRValues.update({'stroke_rate': float((event[6:8]))*2})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
+            if self.SmartRowHalt == True:
+                self.WRValues.update({'stroke_rate': 0})
+            else:
+                self.WRValues.update({'stroke_rate': float((event[6:8]))*2})
             self.WRValues.update({'total_strokes':int((event[9:13]))})
             self.elapsedtime()
 
         if event[0] == self.PACE_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             pace_inst = int(event[6])*60 + int(event[7:9])
-            self.WRValues.update({'instantaneous pace': pace_inst})
+            if self.SmartRowHalt == True:
+                self.WRValues.update({'instantaneous pace': 0})
+            else:
+                self.WRValues.update({'instantaneous pace': pace_inst})
+            if pace_inst != 0:
+                speed = int(500 * 100 / pace_inst) # speed in cm/s
+                self.WRValues.update({'speed': speed})
+            else:
+                self.WRValues.update({'speed': 0})
             pace_avg = int(event[9])*60 + int(event[10:12])
             self.WRValues.update({'pace_avg': pace_avg})
             self.elapsedtime()
 
         if event[0] == self.FORCE_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             self.WRValues.update({'force': int((event[7:11]))})
             if event[11] == "!":
+                self.SmartRowHalt = True
                 self.fullstop = True
             elif self.starttime == None:
                 self.starttime = time.time()
+                self.SmartRowHalt = False
                 self.fullstop = False
             else:
+                self.SmartRowHalt = False
                 self.fullstop = False
             self.elapsedtime()
 
-        #print(self.WRValues)
+        print(self.WRValues)
+
 
 def connectSR(manager,smartrow):
     smartrow.connect()
@@ -145,7 +165,7 @@ def heartbeat(sr):
 
 def main(in_q, ble_out_q,ant_out_q):
     macaddresssmartrower = smartrowreader.connecttosmartrow()
-
+    sleep(5)
     manager = gatt.DeviceManager(adapter_name='hci1')
     smartrow = smartrowreader.SmartRow(mac_address=macaddresssmartrower, manager=manager)
     SRtoBLEANT = DataLogger(smartrow)
@@ -158,8 +178,9 @@ def main(in_q, ble_out_q,ant_out_q):
 
     logger.info("SmartRow Ready and sending data to BLE and ANT Thread")
 
-    sleep(5)
-
+    sleep(20)
+    print("heart beat")
+    #todo: have a check to see if connection has been etablished
     HB = threading.Thread(target=heartbeat, args=([smartrow]))
     HB.daemon = True
     HB.start()
@@ -176,6 +197,7 @@ def main(in_q, ble_out_q,ant_out_q):
             pass
         ble_out_q.append(SRtoBLEANT.WRValues)
         ant_out_q.append(SRtoBLEANT.WRValues)
+        sleep(0.1)
 
 if __name__ == '__main__':
     main()

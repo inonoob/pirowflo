@@ -77,7 +77,7 @@ class SmartRow(gatt.Device):
 
     def characteristic_write_value(self, value):
         self.writing = value
-        print(value)
+        #print(value)
         self.chrstcRowWrite.write_value(value)
 
     def register_callback(self, cb):
