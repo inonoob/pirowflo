@@ -99,6 +99,7 @@ class DataLogger(object):
                 self.WRValues.update({'speed':0})
             else:
                 self.InstantaneousPace = (500 * 100) / event['value']
+                print(self.InstantaneousPace)
                 self.WRValues.update({'instantaneous pace': self.InstantaneousPace})
                 self.WRValues.update({'speed':event['value']})
         if event['type'] == 'watts':
@@ -165,7 +166,6 @@ class DataLogger(object):
             self.WRValues.update({'elapsedtime': self.elapsetime})
             self.elapsetimeprevious = self.elapsetime
 
-
     def WRvalueStandstill(self):
         self.WRvalue_standstill = self.WRValues
         self.WRvalue_standstill.update({'stroke_rate': 0})
@@ -188,7 +188,6 @@ class DataLogger(object):
                     self._InstaPowerStroke = []
                 else:
                     pass
-
 
 
     def SendToBLE(self):
