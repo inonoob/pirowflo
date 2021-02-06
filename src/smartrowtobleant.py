@@ -76,21 +76,21 @@ class DataLogger():
     def on_row_event(self, event):
         if event[0] == self.ENERGIE_KCAL_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))*10})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             self.WRValues.update({'total_kcal': int((event[6:10]))})
             self.elapsedtime()
 
         if event[0] == self.WORK_STROKE_LENGTH_MESSAGE:
             event = event.replace(" ", "0")
             #print(event)
-            self.WRValues.update({'total_distance_m': int((event[1:5]))*10})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             self.WRValues.update({'work': float(event[7:11])/10})
             self.WRValues.update({'stroke_length': int((event[11:14]))})
             self.elapsedtime()
 
         if event[0] == self.POWER_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))*10})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             if self.SmartRowHalt == True:
                 self.WRValues.update({'watts': 0})
             else:
@@ -100,7 +100,7 @@ class DataLogger():
 
         if event[0] == self.STROKE_RATE_STROKE_COUNT_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))*10})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             if self.SmartRowHalt == True:
                 self.WRValues.update({'stroke_rate': 0})
             else:
@@ -110,7 +110,7 @@ class DataLogger():
 
         if event[0] == self.PACE_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))*10})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             pace_inst = int(event[6])*60 + int(event[7:9])
             if self.SmartRowHalt == True:
                 self.WRValues.update({'instantaneous pace': 0})
@@ -127,7 +127,7 @@ class DataLogger():
 
         if event[0] == self.FORCE_MESSAGE:
             event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:5]))*10})
+            self.WRValues.update({'total_distance_m': int((event[1:6]))})
             self.WRValues.update({'force': int((event[7:11]))})
             if event[11] == "!":
                 self.SmartRowHalt = True
