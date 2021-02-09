@@ -4,11 +4,12 @@ version: 14.01.2021
 
 ## Bug Fixes
 
-None 
+see  
 
-## Next Features
+## Possible Features
 
-- [ ] add Smartrow as an interface for the Rowing data 
+## Possible Features
+
 - [ ] add webserver to control the start/stop/restart of the script (Tornado)
 - [ ] add support for heart rate monitors via Ant+ (pi is a client) use other channel of the 8 available from 
 the ant node.
@@ -33,7 +34,9 @@ May be thing about to create the elapse time in the code it self and not with th
 
 ## DONE
 
-- [x] 13.04.2021 WaterRower Connect finding S4 Comm Pi but won't connect. Might be the fact that not all the Services and 
+
+- [x] 01.02.2021 add Smartrow as an interface for the Rowing data 
+- [x] 19.01.2021 WaterRower Connect finding S4 Comm Pi but won't connect. Might be the fact that not all the Services and 
   charateristics are implemented. Full Implementation of Service "Device Information" is required. 
   Change from 0x30 to 0x31. This is due to the HRM flag in the antdongle.py specification for Fitness equipment
   see page 31 8.5.2.6 of Ant+ Fitness equipement device profile rev 5.0
@@ -47,7 +50,6 @@ function for the size before. if smaller than 1 pass and wait next message.
     WaterrowerValuesRaw = ble_in_q_value.pop()
   
 
-  
 - [x] 09.01.2021 add check for the which ANT+ dongle is available vendorid and productid e.g.  
 - [x] 09.01.2021 Install.sh file which does all the installation stuff
 - [x] 05.01.2021 add argparser module in order to make choose e.g choose to have ant+ activate or heart rate monitor over 
