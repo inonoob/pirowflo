@@ -1,6 +1,6 @@
 # PiRowFlo for Waterrower
 
-<img src="docs/logo/PIROWFLO2.png" width=100% height=100%>
+<img src="docs/logo/PIROWFLO2.png" width=36% height=36%>
 
 
       PiRowFlo for Waterrower
@@ -231,10 +231,7 @@ For example if the Waterrower should send data over Bluetooth and ANT
 
     python3 waterrowerthreads.py -i s4 -b -a 
 
-## Donations
-
-## Donaation: 
-
+## Donation
 
 [<img alt="Donate" src="https://www.paypalobjects.com/en_US/DE/i/btn/btn_donateCC_LG.gif" />](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UKBXZKEU772HA)
 
