@@ -85,7 +85,7 @@ echo " Change bluetooth name of the pi to S4 COMMS pi"
 echo "-----------------------------------------------"
 
 
-echo "PRETTY_HOSTNAME=S4_COMMS_PI" > /etc/machine-info
+echo "PRETTY_HOSTNAME=S4_Comms_PI" > /etc/machine-info
 
 
 
