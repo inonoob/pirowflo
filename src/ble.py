@@ -417,13 +417,13 @@ class Agent(dbus.service.Object):
             return
         raise Rejected("Passkey doesn't match")
 
-    # @dbus.service.method(AGENT_INTERFACE, in_signature="o", out_signature="")
-    # def RequestAuthorization(self, device):
-    #     logger.info("RequestAuthorization (%s)" % (device))
-    #     auth = "yes" #ask("Authorize? (yes/no): ")
-    #     if auth == "yes":
-    #         return
-    #     raise Rejected("Pairing rejected")
+    @dbus.service.method(AGENT_INTERFACE, in_signature="o", out_signature="")
+    def RequestAuthorization(self, device):
+        logger.info("RequestAuthorization (%s)" % (device))
+        auth = "yes" #ask("Authorize? (yes/no): ")
+        if auth == "yes":
+            return
+        raise Rejected("Pairing rejected")
 
     @dbus.service.method(AGENT_INTERFACE, in_signature="", out_signature="")
     def Cancel(self):
