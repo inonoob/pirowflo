@@ -178,7 +178,7 @@ def main(in_q, ble_out_q,ant_out_q):
 
     logger.info("SmartRow Ready and sending data to BLE and ANT Thread")
 
-    sleep(20)
+    sleep(30)
     print("heart beat")
     #todo: have a check to see if connection has been etablished
     HB = threading.Thread(target=heartbeat, args=([smartrow]))
