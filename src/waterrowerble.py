@@ -150,7 +150,7 @@ class ManufacturerNameString(Characteristic):
             ['read'],
             service)
         self.notifying = False
-        self.ManuName = bytes('Rower', 'utf-8')
+        self.ManuName = bytes('Waterrower', 'utf-8')
         self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
 
 
@@ -391,23 +391,23 @@ class FitnessMachineControlPoint(Characteristic):
             print('Reset')
             self.fmcp_cb(byte)
 
-# class HeartRate(Service):
-#     HEART_RATE = '180D'
-#
-#     def __init__(self, bus, index):
-#         Service.__init__(self, bus, index, self.HEART_RATE, True)
-#         self.add_characteristic(HeartRateMeasurement(bus, 0, self))
-#
-# class HeartRateMeasurement(Characteristic):
-#     HEART_RATE_MEASUREMENT = '2a37'
-#
-#     def __init__(self, bus, index, service):
-#         Characteristic.__init__(
-#             self, bus, index,
-#             self.HEART_RATE_MEASUREMENT,
-#             ['notify'],
-#             service)
-#         self.notifying = False
+class HeartRate(Service):
+    HEART_RATE = '180D'
+
+    def __init__(self, bus, index):
+        Service.__init__(self, bus, index, self.HEART_RATE, True)
+        self.add_characteristic(HeartRateMeasurement(bus, 0, self))
+
+class HeartRateMeasurement(Characteristic):
+    HEART_RATE_MEASUREMENT = '2a37'
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.HEART_RATE_MEASUREMENT,
+            ['notify'],
+            service)
+        self.notifying = False
 
 
 
