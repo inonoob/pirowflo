@@ -494,7 +494,7 @@ def main(out_q,ble_in_q): #out_q
     app = Application(bus)
     app.add_service(DeviceInformation(bus, 1))
     app.add_service(FTMservice(bus, 2))
-    #app.add_service(HeartRate(bus,3))
+    app.add_service(HeartRate(bus,3))
 
     mainloop = MainLoop()
 
