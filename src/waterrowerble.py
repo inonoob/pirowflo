@@ -499,7 +499,7 @@ def main(out_q,ble_in_q): #out_q
     mainloop = MainLoop()
 
     agent_manager = dbus.Interface(obj, "org.bluez.AgentManager1")
-    agent_manager.RegisterAgent(AGENT_PATH, "NoInputNoOutput")
+    agent_manager.RegisterAgent(AGENT_PATH, "NoInputNoOutput") # register the bluetooth agent with no input and output which should avoid asking for pairing 
 
     ad_manager.RegisterAdvertisement(
         advertisement.get_path(),
