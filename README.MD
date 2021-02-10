@@ -70,8 +70,7 @@ Open for new ideas !
 ## Features
 
 - Read Serial Waterrower Data to the Pi
-- Read SmartRow data to the Pi via bluetooth (for pi 3,4 and Zero W internal bluetooth + USB Bluetooth dongle needed - 
-  for pi 1,2,3 without internal bluetooth 2 USB bluetooth dongle from different brands are needed)
+- Read SmartRow data to the Pi via bluetooth
 - Send Waterrower Data from the Pi over Bluetooth (Build-in or USB-dongle) 
 - Send Waterrower Data from the Pi over Ant+ via Ant+ dongle 
 
@@ -82,7 +81,7 @@ Open for new ideas !
 is self based on the Bluez Gatt server example
 - [Link to repo](https://github.com/WouterJD/FortiusANT) base code for the Ant+ part used for this project
 
-Those Repos with some of their code are used as  base code 
+Thoses Repos with some of their code are used as  base code 
 which then have been rewritten to meet the requirements of this project. 
 
 ## Motivation
@@ -118,7 +117,6 @@ Bill of Material(BOM)
 | **for Ant+ addition** || 
 | Ant+ dongle (avoid Cyclone) ||
 | **for Smartrow** || 
-| Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
 | Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
 
 | **Item for Raspberry pi 3,4**| 
@@ -131,7 +129,7 @@ Bill of Material(BOM)
 | Ant+ dongle (avoid Cyclone) ||
 | **for Smartrow** || 
 | Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
-| ~~Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)~~
+| Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
 
 
 
@@ -148,7 +146,7 @@ Bill of Material(BOM)
 | Micro USB to USB Hub || 
 | **for Smartrow** || 
 | Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
-| ~~Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)~~
+| Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
 
 
 <img src="docs/Hardware/IMG_20210104_155825.jpg" width=50% height=50%>
