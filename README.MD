@@ -227,13 +227,6 @@ For example if the Waterrower should send data over Bluetooth and ANT
 
     python3 waterrowerthreads.py -i s4 -b -a 
 
-## Donations
-
-## Donaation: 
-
-
-[<img alt="Donate" src="https://www.paypalobjects.com/en_US/DE/i/btn/btn_donateCC_LG.gif" />](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=UKBXZKEU772HA)
-
 ## FAQ 
 
 ---
