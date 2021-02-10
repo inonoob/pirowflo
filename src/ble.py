@@ -382,7 +382,7 @@ class Agent(dbus.service.Object):
     @dbus.service.method(AGENT_INTERFACE, in_signature="os", out_signature="")
     def AuthorizeService(self, device, uuid):
         logger.info("AuthorizeService (%s, %s)" % (device, uuid))
-        authorize = ask("Authorize connection (yes/no): ")
+        authorize = "yes" # ask("Authorize connection (yes/no): ")
         if authorize == "yes":
             return
         raise Rejected("Connection rejected by user")
@@ -411,7 +411,7 @@ class Agent(dbus.service.Object):
     @dbus.service.method(AGENT_INTERFACE, in_signature="ou", out_signature="")
     def RequestConfirmation(self, device, passkey):
         logger.info("RequestConfirmation (%s, %06d)" % (device, passkey))
-        confirm = ask("Confirm passkey (yes/no): ")
+        confirm = "yes" #ask("Confirm passkey (yes/no): ")
         if confirm == "yes":
             set_trusted(device)
             return
@@ -420,7 +420,7 @@ class Agent(dbus.service.Object):
     @dbus.service.method(AGENT_INTERFACE, in_signature="o", out_signature="")
     def RequestAuthorization(self, device):
         logger.info("RequestAuthorization (%s)" % (device))
-        auth = ask("Authorize? (yes/no): ")
+        auth = "yes" #ask("Authorize? (yes/no): ")
         if auth == "yes":
             return
         raise Rejected("Pairing rejected")
