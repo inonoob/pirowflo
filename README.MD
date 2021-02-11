@@ -8,6 +8,14 @@
 
 Read the LICENCE first, by using this software you agree to the licence. 
 
+## News 11.02.2021 
+
+- Display with button currently working on 
+  <img src="docs/Screen/Screen-test2.jpg" width=20% height=20%>
+
+- Bug Smartrow and iOS is not working. iOS keeps asking to pair with pirowflo [issue](https://github.com/inonoob/pirowflo/issues/15)
+
+
 ## Supported Apps S4 Monitor (14.01.2021)
 
 |        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
