@@ -96,3 +96,27 @@ udev rules for more serial stuff [link](https://medium.com/@inegm/persistent-nam
 ## Converter e.g dec to hex 
 
 Convert dec to hex and so on[link](https://www.binaryhexconverter.com/decimal-to-hex-converter)
+
+
+## Case for raspberry pi zero: 
+
+Pi zero case which need to be change in oreder to fit the usbhub. [link](https://www.thingiverse.com/thing:4297526)
+Pi zero case rev 2 [link](https://www.thingiverse.com/thing:4607660/files)
+
+## Fixe bluetooth raspberry pi onboard 
+
+https://github.com/pelwell/pi-bluetooth/blob/master/usr/bin/btuart 
+
+$HCIATTACH /dev/serial1 bcm43xx 921600 noflow - $BDADDR
+
+        sudo /usr/bin/hciattach /dev/serial1 bcm43xx 921600 noflow - b8:27:eb:10:10:10
+
+## Raspberry pi Oled screen sh1106 Waveshare. 
+
+Oled screen configratuion and display [link](https://luma-oled.readthedocs.io/en/latest/api-documentation.html)
+Oled github 
+
+
+## Raspberry pi TFT screen 
+
+TFT screen configuration and display [link](https://github.com/juj/fbcp-ili9341)

@@ -62,7 +62,6 @@ do
     echo 'ACTION=="add", ATTRS{idVendor}=="0fcf", ATTRS{idProduct}=="'$i'", RUN+="/sbin/modprobe ftdi_sio" RUN+="/bin/sh -c '"'echo 0fcf 1008 > /sys/bus/usb-serial/drivers/ftdi_sio/new_id'\""'' > /etc/udev/rules.d/99-garmin.rules
     echo 'SUBSYSTEM=="usb", ATTR{idVendor}=="0fcf", ATTR{idProduct}=="'$i'", MODE="666"' >> /etc/udev/rules.d/99-garmin.rules
     echo "udev rule written to /etc/udev/rules.d/99-garmin.rules"
- >> fileName
     break
   else
     echo "No Ant stick found !"
@@ -81,9 +80,8 @@ sudo usermod -a -G dialout $USER
 
 
 echo "-----------------------------------------------"
-echo " Change bluetooth name of the pi to S4 COMMS pi"
+echo " Change bluetooth name of the pi to PiRowFlo"
 echo "-----------------------------------------------"
-
 
 echo "PRETTY_HOSTNAME=PiRowFlo" | sudo tee -a /etc/machine-info > /dev/null
 
@@ -101,9 +99,19 @@ cp supervisord.conf.orig supervisord.conf
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' supervisord.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.conf
 
-# start supervisord from rc.local
+# update bluetooth configuration and start supervisord from rc.local
 #
+sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local
 sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
+
+
+echo "-----------------------------------------------"
+echo " update bluart file as it prevents the start of"
+echo " internal bluetooth if usb bluetooth dongle is "
+echo " present                                       "
+echo "-----------------------------------------------"
+
+sudo sed -i 's/hci0/hci2/g' /usr/bin/btuart
 
 echo " "
 echo "----------------------------------------------"

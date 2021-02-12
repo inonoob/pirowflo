@@ -1,21 +1,21 @@
 # PiRowFlo for Waterrower
 
+<img src="docs/logo/PIROWFLO2.png" width=36% height=36%>
 
-      PiRowFlo for Waterrower
-                                                                 +-+
-                                               XX+-----------------+
-                  +-------+                 XXXX    |----|       | |
-                   +-----+                XXX +----------------+ | |
-                   |     |             XXX    |XXXXXXXXXXXXXXXX| | |
-    +--------------X-----X----------+XXX+------------------------+-+
-    |                                                              |
-    +--------------------------------------------------------------+
-
-
+---- 
 
 <img src="docs/Hardware/IMG_20210104_155432.jpg" width=36% height=36%> <img src="docs/Hardware/Selection_015.png" width=30% height=30%> <img src="docs/Hardware/SmartRow.png" width=30% height=30%>
 
 Read the LICENCE first, by using this software you agree to the licence. 
+
+## News 11.02.2021 
+
+- Display with Buttons currently working on 
+  
+  <img src="docs/Screen/Screen-test2.jpg" width=36% height=36%>
+
+- Bug Smartrow and iOS is not working. iOS keeps asking to pair with pirowflo [issue](https://github.com/inonoob/pirowflo/issues/15)
+
 
 ## Supported Apps S4 Monitor (14.01.2021)
 
@@ -70,7 +70,8 @@ Open for new ideas !
 ## Features
 
 - Read Serial Waterrower Data to the Pi
-- Read SmartRow data to the Pi via bluetooth
+- Read SmartRow data to the Pi via bluetooth (for pi 3,4 and Zero W internal bluetooth + USB Bluetooth dongle needed - 
+  for pi 1,2,3 without internal bluetooth 2 USB bluetooth dongle from different brands are needed)
 - Send Waterrower Data from the Pi over Bluetooth (Build-in or USB-dongle) 
 - Send Waterrower Data from the Pi over Ant+ via Ant+ dongle 
 
@@ -81,7 +82,7 @@ Open for new ideas !
 is self based on the Bluez Gatt server example
 - [Link to repo](https://github.com/WouterJD/FortiusANT) base code for the Ant+ part used for this project
 
-Thoses Repos with some of their code are used as  base code 
+Those Repos with some of their code are used as  base code 
 which then have been rewritten to meet the requirements of this project. 
 
 ## Motivation
@@ -117,6 +118,7 @@ Bill of Material(BOM)
 | **for Ant+ addition** || 
 | Ant+ dongle (avoid Cyclone) ||
 | **for Smartrow** || 
+| Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
 | Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
 
 | **Item for Raspberry pi 3,4**| 
@@ -129,7 +131,7 @@ Bill of Material(BOM)
 | Ant+ dongle (avoid Cyclone) ||
 | **for Smartrow** || 
 | Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
-| Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
+| ~~Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)~~
 
 
 
@@ -146,7 +148,7 @@ Bill of Material(BOM)
 | Micro USB to USB Hub || 
 | **for Smartrow** || 
 | Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
-| Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
+| ~~Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)~~
 
 
 <img src="docs/Hardware/IMG_20210104_155825.jpg" width=50% height=50%>
@@ -227,8 +229,6 @@ For example if the Waterrower should send data over Bluetooth and ANT
 
     python3 waterrowerthreads.py -i s4 -b -a 
 
-
-
 ## FAQ 
 
 ---
@@ -273,3 +273,13 @@ If you see this kind of error in the console you
 That means what a client is still connect with the Raspberry pi and must be disconnect first before restarting the 
 service. So check on your smartphone or tablet is a connection is still active. The simplest thing to fix is to close
 the app and then try again. 
+
+--- 
+
+If you can connect to the PI with your third party app and don't get any data also don't get any data to your watch via ant+ then there is 
+a high chance that the connection between S4 Monitor and the Rasbperry pi is not working correctly. 
+
+- Check if you have heard the reset "BEEP" from the S4 Monitor. If not that means that the connection is not correct
+  try to unplug and replug it in. 
+- Check the usb cable first. Try a different one. Cheap one tend to break as you need to plug and unplug it. 
+

@@ -150,7 +150,7 @@ class ManufacturerNameString(Characteristic):
             ['read'],
             service)
         self.notifying = False
-        self.ManuName = bytes('Rower', 'utf-8')
+        self.ManuName = bytes('Waterrower', 'utf-8')
         self.value = dbus.Array(self.ManuName)  # ble com module waterrower software revision
 
 
@@ -391,39 +391,39 @@ class FitnessMachineControlPoint(Characteristic):
             print('Reset')
             self.fmcp_cb(byte)
 
-class HeartRate(Service):
-    HEART_RATE = '180D'
-
-    def __init__(self, bus, index):
-        Service.__init__(self, bus, index, self.HEART_RATE, True)
-        self.add_characteristic(HeartRateMeasurement(bus, 0, self))
-
-class HeartRateMeasurement(Characteristic):
-    HEART_RATE_MEASUREMENT = '2a37'
-
-    def __init__(self, bus, index, service):
-        Characteristic.__init__(
-            self, bus, index,
-            self.HEART_RATE_MEASUREMENT,
-            ['notify'],
-            service)
-        self.notifying = False
-
-
-
-    def StartNotify(self):
-        if self.notifying:
-            print('Already notifying, nothing to do')
-            return
-
-        self.notifying = True
-
-    def StopNotify(self):
-        if not self.notifying:
-            print('Not notifying, nothing to do')
-            return
-
-        self.notifying = False
+# class HeartRate(Service):
+#     HEART_RATE = '180D'
+#
+#     def __init__(self, bus, index):
+#         Service.__init__(self, bus, index, self.HEART_RATE, True)
+#         self.add_characteristic(HeartRateMeasurement(bus, 0, self))
+#
+# class HeartRateMeasurement(Characteristic):
+#     HEART_RATE_MEASUREMENT = '2a37'
+#
+#     def __init__(self, bus, index, service):
+#         Characteristic.__init__(
+#             self, bus, index,
+#             self.HEART_RATE_MEASUREMENT,
+#             ['notify'],
+#             service)
+#         self.notifying = False
+#
+#
+#
+#     def StartNotify(self):
+#         if self.notifying:
+#             print('Already notifying, nothing to do')
+#             return
+#
+#         self.notifying = True
+#
+#     def StopNotify(self):
+#         if not self.notifying:
+#             print('Not notifying, nothing to do')
+#             return
+#
+#         self.notifying = False
 
 
 class FTMPAdvertisement(Advertisement):
@@ -494,12 +494,12 @@ def main(out_q,ble_in_q): #out_q
     app = Application(bus)
     app.add_service(DeviceInformation(bus, 1))
     app.add_service(FTMservice(bus, 2))
-    app.add_service(HeartRate(bus,3))
+    #app.add_service(HeartRate(bus,3))
 
     mainloop = MainLoop()
 
     agent_manager = dbus.Interface(obj, "org.bluez.AgentManager1")
-    agent_manager.RegisterAgent(AGENT_PATH, "NoInputNoOutput")
+    agent_manager.RegisterAgent(AGENT_PATH, "NoInputNoOutput") # register the bluetooth agent with no input and output which should avoid asking for pairing 
 
     ad_manager.RegisterAdvertisement(
         advertisement.get_path(),
