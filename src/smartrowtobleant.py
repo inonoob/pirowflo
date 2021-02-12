@@ -164,23 +164,22 @@ def heartbeat(sr):
 
 
 def main(in_q, ble_out_q,ant_out_q):
+    # this starts discovery, calls manager.run() and returns manager.smartrowmac
+    # 
     macaddresssmartrower = smartrowreader.connecttosmartrow()
-    sleep(5)
     manager = gatt.DeviceManager(adapter_name='hci1')
     smartrow = smartrowreader.SmartRow(mac_address=macaddresssmartrower, manager=manager)
     SRtoBLEANT = DataLogger(smartrow)
-    #sleep(10)
 
-    #try:
     BC = threading.Thread(target=connectSR, args=(manager,smartrow))
     BC.daemon = True
     BC.start()
 
     logger.info("SmartRow Ready and sending data to BLE and ANT Thread")
+    while not smartrow.ready() :
+      sleep(0.2)
 
-    sleep(15)
-    print("heart beat")
-    #todo: have a check to see if connection has been etablished
+    print("starting heart beat")
     HB = threading.Thread(target=heartbeat, args=([smartrow]))
     HB.daemon = True
     HB.start()

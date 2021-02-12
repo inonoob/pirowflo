@@ -1,5 +1,4 @@
 #!/bin/bash
-
 # https://stackoverflow.com/questions/9449417/how-do-i-assign-the-output-of-a-command-into-an-array
 
 echo " "
@@ -81,12 +80,29 @@ sudo usermod -a -G dialout $USER
 
 
 echo "-----------------------------------------------"
-echo " Change bluetooth name of the pi to S4 COMMS pi"
+echo " Change bluetooth name of the pi to PiRowFlo"
 echo "-----------------------------------------------"
 
+echo "PRETTY_HOSTNAME=PiRowFlo" | sudo tee -a /etc/machine-info > /dev/null
 
-echo "PRETTY_HOSTNAME=S4_Comms_PI" > /etc/machine-info
+echo " "
+echo "----------------------------------------------"
+echo " configuring web interface on http://${HOSTNAME}:9001 "
+echo "----------------------------------------------"
 
+# generate supervisord.conf from supervisord.conf.orig with updated paths
+#
+export repo_dir=$(cd $(dirname $0) > /dev/null 2>&1; pwd -P)
+export python3_path=$(which python3)
+export supervisord_path=$(which supervisord)
+cp supervisord.conf.orig supervisord.conf
+sed -i 's@#PYTHON3#@'"$python3_path"'@g' supervisord.conf
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.conf
+
+# update bluetooth configuration and start supervisord from rc.local
+#
+sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local
+sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
 
 
 echo "-----------------------------------------------"

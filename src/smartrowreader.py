@@ -1,5 +1,7 @@
 import gatt
 import logging
+import threading
+from time import time
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -25,12 +27,17 @@ class SmartRow(gatt.Device):
     def __init__(self, mac_address, manager):
         super().__init__(mac_address=mac_address, manager=manager)
         self._callbacks = set()
+        self.lock = threading.Lock()
         self.is_connected = False
 
+    def ready(self):
+      with self.lock:
+          return self.is_connected
+      
     def connect_succeeded(self):
         super().connect_succeeded()
         logger.info("Connected to [{}]".format(self.mac_address))
-        self.is_connected = True
+
 
     def connect_failed(self, error):
         super().connect_failed(error)
@@ -68,7 +75,9 @@ class SmartRow(gatt.Device):
         self.chrstcRowData.enable_notifications()
 
         self.chrstcRowWrite = self.find_characteristic(self.serviceSmartRow, self.CHARACTERISTIC_UUID_ROWWRITE)
-
+        with self.lock:
+            self.is_connected = True
+        
     def characteristic_value_updated(self, characteristic, value):
         super().characteristic_value_updated(characteristic, value)
         self.buffer = value.decode()
@@ -91,19 +100,33 @@ class SmartRow(gatt.Device):
             cb(event)
 
 class SmartRowManager(gatt.DeviceManager):
+    def __init__(self,*args,**kwargs):
+        gatt.DeviceManager.__init__(self, *args, **kwargs)
+        self.lock = threading.Lock()
+        self.discovered=False 
+
+    def ready(self):
+        with self.lock:
+            return self.discovered
+        
     def device_discovered(self, device):
         if device.alias() == "SmartRow":
             logging.info("found SmartRow")
             logging.info(device.mac_address)
             self.smartrowmac = device.mac_address
             self.stop()
+            with self.lock:
+                self.discovered=True
 
 
 def connecttosmartrow():
     manager = SmartRowManager(adapter_name='hci1')
+    logger.info("starting discovery")
     manager.start_discovery()  # from the DeviceManager class call the methode start_discorvery
     manager.run()
-    macaddresssmartrower = manager.smartrowmac
+    while not manager.ready():
+        time.sleep(0.2)
+    macaddresssmartrower = manager.smartrowmac    
     return macaddresssmartrower
 
 

@@ -4,3 +4,4 @@ dbus-python
 numpy
 pyusb
 gatt
+supervisor
