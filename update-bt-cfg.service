@@ -1,0 +1,10 @@
+[Unit]
+Description=set bluetooth option for apple specifications
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/home/pi/pirowflo/update-bt-cfg.sh
+
+[Install]
+WantedBy=multi-user.target
