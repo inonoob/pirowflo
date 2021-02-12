@@ -85,7 +85,7 @@ echo "-----------------------------------------------"
 echo " "
 
 #echo "PRETTY_HOSTNAME=PiRowFlo" | sudo tee -a /etc/machine-info > /dev/null
-echo "PRETTY_HOSTNAME=S4_Comms_PI" | sudo tee -a /etc/machine-info > /dev/null
+echo "PRETTY_HOSTNAME=S4 Comms PI" | sudo tee -a /etc/machine-info > /dev/null
 
 echo " "
 echo "------------------------------------------------------"

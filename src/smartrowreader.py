@@ -31,7 +31,7 @@ class SmartRow(gatt.Device):
         self.is_connected = False
 
     def ready(self):
-      with self.lock:
+      with self.lock: #"Lock Acquired"
           return self.is_connected
       
     def connect_succeeded(self):
@@ -75,7 +75,7 @@ class SmartRow(gatt.Device):
         self.chrstcRowData.enable_notifications()
 
         self.chrstcRowWrite = self.find_characteristic(self.serviceSmartRow, self.CHARACTERISTIC_UUID_ROWWRITE)
-        with self.lock:
+        with self.lock: #"Lock Acquired"
             self.is_connected = True
         
     def characteristic_value_updated(self, characteristic, value):
@@ -115,7 +115,7 @@ class SmartRowManager(gatt.DeviceManager):
             logging.info(device.mac_address)
             self.smartrowmac = device.mac_address
             self.stop()
-            with self.lock:
+            with self.lock: #"Lock Acquired"
                 self.discovered=True
 
 
