@@ -101,7 +101,7 @@ sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.conf
 
 # update bluetooth configuration and start supervisord from rc.local
 #
-sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local
+sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local # Update to respect iOS bluetooth specifications
 sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
 
 
