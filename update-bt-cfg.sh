@@ -1,8 +1,9 @@
 #!/bin/sh
-# This script will update the bluetooth interface for iOS compatbility
+# This script will update the bluetooth interface for iOS compatibility
 # usage:
 # update-bt-cfg.sh [interface] [conn_min_interval] [conn_max_interval] [supervision_timeout]
-# if no argeuments are provided the script will use the following defailts: hci0, 12, 12, 500
+# if no arguments are provided the script will use the following defaults: hci0, 12, 12, 500
+# https://stackoverflow.com/questions/55189681/unable-to-maintain-ble-connection-bluez-linux-ios/55228279?fbclid=IwAR1Icm-sRfzDsBzFJzTp2KYzhIgM6FTyW0t-WbDdHh2DpGeQ9lhEUCgxu28#55228279
 #
 print_bt_config() {
   conn_min_interval=$(cat ${bt_dir}/conn_min_interval)

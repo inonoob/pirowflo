@@ -4,7 +4,7 @@ version: 14.01.2021
 
 ## Bug Fixes
 
-see  
+see github issues
 
 ## Possible Features
 

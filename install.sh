@@ -78,17 +78,20 @@ echo "----------------------------------------------"
 sudo usermod -a -G bluetooth $USER
 sudo usermod -a -G dialout $USER
 
-
+echo " "
 echo "-----------------------------------------------"
 echo " Change bluetooth name of the pi to PiRowFlo"
 echo "-----------------------------------------------"
+echo " "
 
-echo "PRETTY_HOSTNAME=PiRowFlo" | sudo tee -a /etc/machine-info > /dev/null
+#echo "PRETTY_HOSTNAME=PiRowFlo" | sudo tee -a /etc/machine-info > /dev/null
+echo "PRETTY_HOSTNAME=S4_Comms_PI" | sudo tee -a /etc/machine-info > /dev/null
 
 echo " "
-echo "----------------------------------------------"
+echo "------------------------------------------------------"
 echo " configuring web interface on http://${HOSTNAME}:9001 "
-echo "----------------------------------------------"
+echo "------------------------------------------------------"
+echo " "
 
 # generate supervisord.conf from supervisord.conf.orig with updated paths
 #
@@ -98,11 +101,17 @@ export supervisord_path=$(which supervisord)
 cp supervisord.conf.orig supervisord.conf
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' supervisord.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.conf
+sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
 
+echo " "
+  echo "----------------------------------------------------------"
+echo " Update bluetooth settings according to Apple specifications"
+echo "------------------------------------------------------------"
+echo " "
 # update bluetooth configuration and start supervisord from rc.local
 #
 sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local # Update to respect iOS bluetooth specifications
-sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
+
 
 
 echo "-----------------------------------------------"

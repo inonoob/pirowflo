@@ -59,7 +59,7 @@ Planned to integrate the Smartrow as input interface
 even more, the script will be control via a build in webserver that can control the script to Start/stop 
 and Restart it.
 
-- [ ] Status = Pending
+- [x] Status = Done  ==> Thank you flynch 
 
 Last idea would be to track and export the workout to a FIT file which is then used for Garmin-connect or Strava. 
 
