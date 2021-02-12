@@ -167,7 +167,7 @@ def main(in_q, ble_out_q,ant_out_q):
     # this starts discovery, calls manager.run() and returns manager.smartrowmac
     # 
     macaddresssmartrower = smartrowreader.connecttosmartrow()
-    manager = gatt.DeviceManager(adapter_name='hci1')
+    manager = gatt.DeviceManager(adapter_name='hci0')
     smartrow = smartrowreader.SmartRow(mac_address=macaddresssmartrower, manager=manager)
     SRtoBLEANT = DataLogger(smartrow)
 

@@ -120,7 +120,7 @@ class SmartRowManager(gatt.DeviceManager):
 
 
 def connecttosmartrow():
-    manager = SmartRowManager(adapter_name='hci1')
+    manager = SmartRowManager(adapter_name='hci0')
     logger.info("starting discovery")
     manager.start_discovery()  # from the DeviceManager class call the methode start_discorvery
     manager.run()
