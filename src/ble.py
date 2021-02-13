@@ -1,7 +1,6 @@
 import dbus
 
 import logging
-#import sys
 
 DBUS_OM_IFACE = "org.freedesktop.DBus.ObjectManager"
 DBUS_PROP_IFACE = "org.freedesktop.DBus.Properties"
@@ -17,14 +16,6 @@ BLUEZ_SERVICE_NAME = "org.bluez"
 GATT_MANAGER_IFACE = "org.bluez.GattManager1"
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logHandler = logging.StreamHandler()
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-logHandler.setFormatter(formatter)
-logger.addHandler(logHandler)
-
-logger.setLevel(logging.DEBUG)
-
 
 class InvalidArgsException(dbus.exceptions.DBusException):
     _dbus_error_name = "org.freedesktop.DBus.Error.InvalidArgs"

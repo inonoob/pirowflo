@@ -7,19 +7,12 @@
 # -*- coding: utf-8 -*-
 import threading
 import logging
+
 import time
 import serial
 import serial.tools.list_ports
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logHandler = logging.StreamHandler()
-filelogHandler = logging.FileHandler("logs.log")
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-logHandler.setFormatter(formatter)
-filelogHandler.setFormatter(formatter)
-logger.addHandler(filelogHandler)
-logger.addHandler(logHandler)
 
 MEMORY_MAP = {'055': {'type': 'total_distance_m', 'size': 'double', 'base': 16},
               '140': {'type': 'total_strokes', 'size': 'double', 'base': 16},

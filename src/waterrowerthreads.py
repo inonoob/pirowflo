@@ -22,6 +22,7 @@ python3 waterrowerthreads.py -i s4 -b -a
 """
 
 import logging
+import logging.config
 import threading
 import argparse
 from queue import Queue
@@ -32,19 +33,10 @@ import wrtobleant
 import waterrowerant
 import smartrowtobleant
 
-
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logHandler = logging.StreamHandler()
-filelogHandler = logging.FileHandler("logs.log")
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-logHandler.setFormatter(formatter)
-filelogHandler.setFormatter(formatter)
-logger.addHandler(filelogHandler)
-logger.addHandler(logHandler)
-
 
 def main(args=None):
+    logging.config.fileConfig('logging.conf', disable_existing_loggers=False)
 
     def BleService(out_q, ble_in_q):
         logger.info("Start BLE Advertise and BLE GATT Server")
