@@ -48,18 +48,7 @@ LE_ADVERTISEMENT_IFACE = "org.bluez.LEAdvertisement1"
 BLUEZ_SERVICE_NAME = "org.bluez"
 GATT_MANAGER_IFACE = "org.bluez.GattManager1"
 
-
-
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logHandler = logging.StreamHandler()
-filelogHandler = logging.FileHandler("logs.log")
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-logHandler.setFormatter(formatter)
-filelogHandler.setFormatter(formatter)
-logger.addHandler(filelogHandler)
-logger.addHandler(logHandler)
-
 
 mainloop = None
 

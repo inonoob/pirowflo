@@ -12,15 +12,6 @@ import numpy
 import waterrowerinterface
 
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG)
-logHandler = logging.StreamHandler()
-filelogHandler = logging.FileHandler("logs.log")
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-logHandler.setFormatter(formatter)
-filelogHandler.setFormatter(formatter)
-logger.addHandler(filelogHandler)
-logger.addHandler(logHandler)
-
 '''
 We register 3 callback function to the WaterrowerInterface with the event as input. Those function get exectuted 
 as soon as an event is register from "capturing". 
