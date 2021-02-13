@@ -8,28 +8,28 @@
 
 Read the LICENCE first, by using this software you agree to the licence. 
 
-## News 11.02.2021 
+## News 13.02.2021 
 
 - Display with Buttons currently working on 
   
   <img src="docs/Screen/Screen-test2.jpg" width=36% height=36%>
 
-- Bug Smartrow and iOS is not working. iOS keeps asking to pair with pirowflo [issue](https://github.com/inonoob/pirowflo/issues/15)
+- Cases for the project are currently worked on 
 
 
 ## Supported Apps S4 Monitor (14.01.2021)
 
 |        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |
-|Android | test pending  | :heavy_check_mark: | not yet                    | :heavy_check_mark:           | 
+|Android | test pending  | :heavy_check_mark: | devs need to update app                  | :heavy_check_mark:           | 
 |iOS     | test pending  | :heavy_check_mark: | :heavy_check_mark:         |  -                           |
 
 ## Supported Apps SmartRow (23.01.2021)
 
 |        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |
-|Android | test pending  | test pending | not yet                    | :heavy_check_mark:           | 
-|iOS     | test pending  | test pending | test pending       |  -                           |
+|Android | test pending  | test pending | devs need to update app                   | :heavy_check_mark:           | 
+|iOS     | test pending  | :heavy_check_mark:   | :heavy_check_mark:         |  -                           |
 
 
 ## Supported Watches (14.01.2021)
@@ -59,7 +59,7 @@ Planned to integrate the Smartrow as input interface
 even more, the script will be control via a build in webserver that can control the script to Start/stop 
 and Restart it.
 
-- [x] Status = Done  ==> Thank you flynch 
+- [x] Status = Done  ==> Thank you flynch
 
 Last idea would be to track and export the workout to a FIT file which is then used for Garmin-connect or Strava. 
 
