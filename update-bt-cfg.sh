@@ -15,7 +15,7 @@ print_bt_config() {
   echo "supervision_timeout : ${supervision_timeout}"
 }
 
-device_id="${1:-hci0}"
+device_id="${1:-hci1}"
 echo "device: ${device_id}"
 
 bt_dir="/sys/kernel/debug/bluetooth/${device_id}/"
