@@ -75,8 +75,8 @@ echo " add user to the group bluetoot and dialout   "
 echo "----------------------------------------------"
 
 
-sudo usermod -a -G bluetooth $USER
-sudo usermod -a -G dialout $USER
+sudo usermod -a -G bluetooth pi
+sudo usermod -a -G dialout pi
 
 echo " "
 echo "-----------------------------------------------"

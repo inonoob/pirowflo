@@ -36,7 +36,7 @@ import smartrowtobleant
 logger = logging.getLogger(__name__)
 
 def main(args=None):
-    logging.config.fileConfig('logging.conf', disable_existing_loggers=False)
+    logging.config.fileConfig('/home/pi/pirowflo/src/logging.conf', disable_existing_loggers=False)
 
     def BleService(out_q, ble_in_q):
         logger.info("Start BLE Advertise and BLE GATT Server")
