@@ -32,11 +32,14 @@ import waterrowerble
 import wrtobleant
 import waterrowerant
 import smartrowtobleant
+import pathlib
+
+loggerconfigpath = str(pathlib.Path(__file__).parent.absolute()) +'/' +'logging.conf'
 
 logger = logging.getLogger(__name__)
 
 def main(args=None):
-    logging.config.fileConfig('/home/pi/pirowflo/src/logging.conf', disable_existing_loggers=False)
+    logging.config.fileConfig(loggerconfigpath, disable_existing_loggers=False)
 
     def BleService(out_q, ble_in_q):
         logger.info("Start BLE Advertise and BLE GATT Server")

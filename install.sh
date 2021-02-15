@@ -103,7 +103,8 @@ sed -i 's@#PYTHON3#@'"$python3_path"'@g' supervisord.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.conf
 #sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
 sudo mv supervisord.service /etc/systemd/system/
-sudo chmod 640 /etc/systemd/system/supervisord.service
+sudo chown root:root /etc/systemd/system/supervisord.service
+sudo chmod 655 /etc/systemd/system/supervisord.service
 sudo systemctl enable supervisord
 
 echo " "
@@ -115,7 +116,8 @@ echo " "
 #
 #sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local # Update to respect iOS bluetooth specifications
 sudo mv update-bt-cfg.service /etc/systemd/system/
-sudo chmod 640 /etc/systemd/system/update-bt-cfg.service
+sudo chown root:root /etc/systemd/system/update-bt-cfg.service
+sudo chmod 655 /etc/systemd/system/update-bt-cfg.service
 sudo systemctl enable update-bt-cfg
 
 
