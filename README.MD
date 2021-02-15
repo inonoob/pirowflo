@@ -274,6 +274,35 @@ That means what a client is still connect with the Raspberry pi and must be disc
 service. So check on your smartphone or tablet is a connection is still active. The simplest thing to fix is to close
 the app and then try again. 
 
+---
+
+if you see this kind of error in the console: 
+
+    pi@raspberrypi:~/pirowflo/src $ python3 waterrowerthreads.py -i s4 -b -a 
+    2021-02-15 06:57:00,481 - __main__ - INFO - inferface S4 monitor will be used for data input
+    2021-02-15 06:57:00,489 - __main__ - INFO - Waterrower Interface started
+    2021-02-15 06:57:00,491 - __main__ - INFO - no interface selected
+    2021-02-15 06:57:00,504 - __main__ - INFO - Start BLE Advertise and BLE GATT Server
+    2021-02-15 06:57:00,528 - __main__ - INFO - Start Ant and start broadcast data
+    start search for dongle
+    2021-02-15 06:57:00,585 - dbus.proxies - ERROR - Introspect error on :1.5:/: dbus.exceptions.DBusException: org.freedesktop.DBus.Error.AccessDenied: Rejected send message, 2 matched rules; type="method_call", sender=":1.15" (uid=1000 pid=627 comm="python3 waterrowerthreads.py -i s4 -b -a ") interface="org.freedesktop.DBus.Introspectable" member="Introspect" error name="(unset)" requested_reply="0" destination=":1.5" (uid=0 pid=369 comm="/usr/lib/bluetooth/bluetoothd ")
+    2021-02-15 06:57:00,985 - waterrowerinterface - WARNING - port not found retrying in 5s
+    Exception in thread Thread-4:
+
+
+that means that the current user is not in the group "bluetooth". The used to be a bug in the install.sh. But you can
+also add it manually with the following command: 
+
+    sudo usermod -a -G bluetooth pi 
+
+This command run as sudo will add the user "pi" to the group "bluetooth". Then reboot in order to take effect.  This should fix the issue. 
+
+In order to check if it had worked, use the following command: 
+
+    pi@raspberrypi:~/pirowflo $ groups
+    pi adm dialout cdrom sudo audio video plugdev games users input netdev bluetooth gpio i2c spi
+
+
 --- 
 
 If you can connect to the PI with your third party app and don't get any data also don't get any data to your watch via ant+ then there is 
