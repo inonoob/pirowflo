@@ -54,7 +54,10 @@ def draw(device):
     if counter > 5: globalParameters.counter = 0
     if counter < 0: globalParameters.counter = 5
 
-
+'''
+if the joystick button is pushed at the position with the counter number then the following function are exectuded depeding on the 
+case
+'''
 def trigger():
     counter = globalParameters.counter
     if counter == 0:
