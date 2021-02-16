@@ -40,6 +40,7 @@ def draw(device):
             draw.text((2, 30), text="\uf204", font=fontawesome, fill="white")
             draw.text((2, 40), text="\uf204", font=fontawesome, fill="white")
             draw.text((2, 50), text="\uf204", font=fontawesome, fill="white")
+            draw.text((2, 100), text="\uf067", font=fontawesome, fill="white")
 
             draw.text((5, 2),  text="   S4 Blue + Ant+", font=font, fill="white")  # back
             draw.text((5, 12), text="   S4 Blue only", font=font, fill="white")  # radio (old icon: f145)
@@ -47,6 +48,8 @@ def draw(device):
             draw.text((5, 32), text="   SR Blue + Ant+", font=font, fill="white")  # shutdown
             draw.text((5, 42), text="   SR Blue only", font=font, fill="white")  # shutdown
             draw.text((5, 52), text="   SR Ant+ only", font=font, fill="white")  # shutdown
+
+            draw.text((2, 100), text="\uf067", font=fontawesome, fill="white")
     # Keep the cursor in the screen
     if counter > 5: globalParameters.counter = 0
     if counter < 0: globalParameters.counter = 5
