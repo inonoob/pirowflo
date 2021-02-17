@@ -3,6 +3,7 @@ from time import sleep
 import helperFunctions
 import screens.mainmenu
 import screens.pirowflosettings
+import screens.buttonhelp
 from globalParameters import globalParameters
 from setupHandler import device, shutdown
 
@@ -22,21 +23,11 @@ while True:
             screens.buttonhelp.draw(device)
 
 
-        # # elif globalParameters.activemenu == 4: screens.playlistmenu.draw(device)
-        # elif globalParameters.activemenu == 2:
-        #     screens.emptyscreen.draw(device)
-        #     print("third menu")
-
-        # # elif globalParameters.activemenu == 4: screens.playlistmenu.draw(device)
-        # elif globalParameters.activemenu == 3:
-        #     screens.emptyscreen.draw(device)
-        #     print("third menu")
-
         #Send trigger event to active screen
         if globalParameters.trigger == True:
             globalParameters.trigger = False
             #if globalParameters.activemenu == 0: screens.idlescreen.trigger()
-            if globalParameters.activemenu ==
+            if globalParameters.activemenu == 0: screens.mainmenu.trigger()
             elif globalParameters.activemenu == 1: screens.pirowflosettings.trigger()
             elif globalParameters.activemenu == 2: screens.buttonhelp.trigger()
 

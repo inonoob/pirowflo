@@ -4,14 +4,15 @@ import helperFunctions
 from globalParameters import globalParameters
 
 pirowflosettingid = 1
-
+maxcounter = 3
+mincounter = 0
 # Main menu (screenid: 1)
 def draw(device):
     #faicons = ImageFont.truetype(globalParameters.font_icons, size=18)
     font = ImageFont.truetype(globalParameters.font_text, size=10)
     fontawesome = ImageFont.truetype(globalParameters.font_icons, size=10)
     counter = globalParameters.counter
-    if counter != globalParameters.oldcounter and counter <= 5 and counter >= 0:
+    if counter != globalParameters.oldcounter and counter <= maxcounter and counter >= mincounter:
         globalParameters.oldcounter = counter
         with canvas(device) as draw:
             if counter == 0:
@@ -55,8 +56,8 @@ def draw(device):
 
 
     # Keep the cursor in the screen
-    if counter > 3: globalParameters.counter = 0
-    if counter < 0: globalParameters.counter = 3
+    if counter > maxcounter: globalParameters.counter = mincounter
+    if counter < mincounter: globalParameters.counter = maxcounter
 
 '''
 if the joystick button is pushed at the position with the counter number then the following function are exectuded depeding on the 
