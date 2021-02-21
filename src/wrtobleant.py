@@ -8,7 +8,6 @@ import time
 import datetime
 import logging
 import numpy
-from copy import deepcopy
 
 import waterrowerinterface
 
@@ -33,13 +32,12 @@ class DataLogger(object):
         self._rower_interface.register_callback(self.reset_requested)
         self._rower_interface.register_callback(self.pulse)
         self._rower_interface.register_callback(self.on_rower_event)
-        self._stop_event = threading.Event()
-
-        self._reset_state()
-
-    def _reset_state(self):
+        self._event = {}
+        self._events = []
         self._InstaPowerStroke = []
         self.maxpowerStroke = 0
+        self._activity = None
+        self._stop_event = threading.Event()
         self._StrokeStart = False
         self.Watts = 0
         self._maxpowerfivestrokes = []
@@ -63,10 +61,10 @@ class DataLogger(object):
                 'heart_rate': 0,
                 'elapsedtime': 0.0,
             }
-        self.WRValues = deepcopy(self.WRValues_rst)
-        self.WRValues_standstill = deepcopy(self.WRValues_rst)
-        self.BLEvalues = deepcopy(self.WRValues_rst)
-        self.ANTvalues = deepcopy(self.WRValues_rst)
+        self.WRValues = self.WRValues_rst
+        self.WRvalue_standstill = self.WRValues_rst
+        self.BLEvalues = self.WRValues_rst
+        self.ANTvalues = self.WRValues_rst
         self.secondsWR = 0
         self.minutesWR = 0
         self.hoursWR = 0
@@ -92,7 +90,7 @@ class DataLogger(object):
                 self.WRValues.update({'speed':0})
             else:
                 self.InstantaneousPace = (500 * 100) / event['value']
-                #print(self.InstantaneousPace)
+                print(self.InstantaneousPace)
                 self.WRValues.update({'instantaneous pace': self.InstantaneousPace})
                 self.WRValues.update({'speed':event['value']})
         if event['type'] == 'watts':
@@ -127,12 +125,28 @@ class DataLogger(object):
             self.PaddleTurning = False
             self._StrokeStart = False
             self.PulseEventTime = 0
-            self.WRValuesStandstill()
+            self.WRvalueStandstill()
 
 
     def reset_requested(self,event):
         if event['type'] == 'reset':
-            self._reset_state()
+            self.rowerreset = True
+            self.WRValues_rst = {
+                'stroke_rate': 0,
+                'total_strokes': 0,
+                'total_distance_m': 0,
+                'instantaneous pace': 0,
+                'speed': 0,
+                'watts': 0,
+                'total_kcal': 0,
+                'total_kcal_hour': 0,
+                'total_kcal_min': 0,
+                'heart_rate': 0,
+                'elapsedtime': 0.0,
+            }
+            self.secondsWR = 0
+            self.minutesWR = 0
+            self.hoursWR = 0
             logger.info("value reseted")
 
     def TimeElapsedcreator(self):
@@ -143,12 +157,12 @@ class DataLogger(object):
             self.WRValues.update({'elapsedtime': self.elapsetime})
             self.elapsetimeprevious = self.elapsetime
 
-    def WRValuesStandstill(self):
-        self.WRValues_standstill = deepcopy(self.WRValues)
-        self.WRValues_standstill.update({'stroke_rate': 0})
-        self.WRValues_standstill.update({'instantaneous pace': 0})
-        self.WRValues_standstill.update({'speed': 0})
-        self.WRValues_standstill.update({'watts': 0})
+    def WRvalueStandstill(self):
+        self.WRvalue_standstill = self.WRValues
+        self.WRvalue_standstill.update({'stroke_rate': 0})
+        self.WRvalue_standstill.update({'instantaneous pace': 0})
+        self.WRvalue_standstill.update({'speed': 0})
+        self.WRvalue_standstill.update({'watts': 0})
 
     def avgInstaPowercalc(self,watts):
         if watts != 0:
@@ -167,19 +181,21 @@ class DataLogger(object):
                     pass
 
 
-    def get_WRValues(self):
-        if self.rowerreset:
-            return deepcopy(self.WRValues_rst)
-        elif not self.rowerreset and not self.PaddleTurning:
-            return deepcopy(self.WRValues_standstill)
-        elif not self.rowerreset and self.PaddleTurning:
-            return deepcopy(self.WRValues)
-
     def SendToBLE(self):
-        self.BLEvalues = self.get_WRValues()
-
+        if self.rowerreset:
+            self.BLEvalues = self.WRValues_rst
+        elif not self.rowerreset and not self.PaddleTurning:
+            self.BLEvalues = self.WRvalue_standstill
+        elif not self.rowerreset and self.PaddleTurning:
+            self.BLEvalues = self.WRValues
+            
     def SendToANT(self):
-        self.ANTvalues = self.get_WRValues()
+        if self.rowerreset:
+            self.ANTvalues = self.WRValues_rst
+        elif not self.rowerreset and not self.PaddleTurning:
+            self.ANTvalues = self.WRvalue_standstill
+        elif not self.rowerreset and self.PaddleTurning:
+            self.ANTvalues = self.WRValues
 
 def main(in_q, ble_out_q,ant_out_q):
     S4 = waterrowerinterface.Rower()
@@ -217,7 +233,7 @@ def main(in_q, ble_out_q,ant_out_q):
 #             #ant_out_q.append(WRtoBLEANT.ANTvalues)
 #             #print("Rowering_value  {0}".format(WRtoBLEANT.WRValues))
 #             #print("Rowering_value_rst  {0}".format(WRtoBLEANT.WRValues_rst))
-#             #print("Rowering_value_standstill  {0}".format(WRtoBLEANT.WRValues_standstill))
+#             #print("Rowering_value_standstill  {0}".format(WRtoBLEANT.WRvalue_standstill))
 #             print("Reset  {0}".format(WRtoBLEANT.rowerreset))
 #             #print("Paddleturning  {0}".format(WRtoBLEANT.PaddleTurning))
 #             #print("Lastcheck {0}".format(WRtoBLEANT.Lastcheckforpulse))
