@@ -35,6 +35,29 @@ class DataLogger(object):
         self._rower_interface.register_callback(self.on_rower_event)
         self._stop_event = threading.Event()
 
+        self._InstaPowerStroke = None
+        self.maxpowerStroke = None
+        self._StrokeStart = None
+        self.Watts = None
+        self._maxpowerfivestrokes = None
+        self.AvgInstaPower = None
+        self.Lastcheckforpulse = None
+        self.PulseEventTime = None
+        self.InstantaneousPace = None
+        self.DeltaPulse = None
+        self.PaddleTurning = None
+        self.rowerreset = None
+        self.WRValues_rst = None
+        self.WRValues = None
+        self.WRValues_standstill = None
+        self.BLEvalues = None
+        self.ANTvalues = None
+        self.secondsWR = None
+        self.minutesWR = None
+        self.hoursWR = None
+        self.elapsetime = None
+        self.elapsetimeprevious = None
+
         self._reset_state()
 
     def _reset_state(self):

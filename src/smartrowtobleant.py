@@ -29,6 +29,13 @@ class DataLogger():
         self._rower_interface = rower_interface
         self._rower_interface.register_callback(self.on_row_event)
 
+        self.WRValues_rst = None
+        self.WRValues = None
+        self.WRValues_standstill = None
+        self.starttime = None
+        self.fullstop = None
+        self.SmartRowHalt = None
+
         self._reset_state()
 
     def _reset_state(self):
