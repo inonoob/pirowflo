@@ -1,6 +1,5 @@
 from PIL import ImageFont
 from luma.core.render import canvas
-import helperFunctions
 from globalParameters import globalParameters
 
 pirowflosettingid = 1

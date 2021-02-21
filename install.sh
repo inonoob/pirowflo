@@ -30,7 +30,7 @@ echo " "
 echo "----------------------------------------------"
 echo "installed needed packages for python          "
 echo "----------------------------------------------"
-sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev
+sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev libjpeg-dev zlib1g-dev libfreetype6-dev liblcms2-dev libopenjp2-7 libtiff5
 echo " "
 
 
@@ -113,7 +113,7 @@ sudo chmod 655 /etc/systemd/system/supervisord.service
 sudo systemctl enable supervisord
 
 echo " "
-  echo "----------------------------------------------------------"
+echo "------------------------------------------------------------"
 echo " Update bluetooth settings according to Apple specifications"
 echo "------------------------------------------------------------"
 echo " "
@@ -126,6 +126,23 @@ sudo mv update-bt-cfg.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/update-bt-cfg.service
 sudo chmod 655 /etc/systemd/system/update-bt-cfg.service
 sudo systemctl enable update-bt-cfg
+
+
+echo " "
+echo "------------------------------------------------------------"
+echo " setup screen setting to start up at boot                   "
+echo "------------------------------------------------------------"
+echo " "
+
+sudo sed -i 's/#dtparam=spi=on/dtparam=spi=on/g' /boot/config.txt
+sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/screen/settings.ini
+
+sed -i 's@#PYTHON3#@'"$python3_path"'@g' screen.service
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' screen.service
+sudo mv screen.service /etc/systemd/system/
+#sudo chown root:root /etc/systemd/system/screen.service
+sudo chmod 655 /etc/systemd/system/screen.service
+sudo systemctl enable screen
 
 
 echo "-----------------------------------------------"

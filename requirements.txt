@@ -5,3 +5,4 @@ numpy
 pyusb
 gatt
 supervisor
+luma.oled

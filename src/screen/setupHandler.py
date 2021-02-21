@@ -14,7 +14,6 @@ import threading
 from luma.oled.device import sh1106
 from luma.core.interface.serial import i2c, spi
 from time import sleep
-import helperFunctions
 import screens.startscreen
 import screens.mainmenu
 import subprocess
@@ -68,14 +67,9 @@ def button_start_callback(channel):
     status = str(result.stdout)
     status = status[2:-3].strip()
     status = status.split(' ')
-    #print(status[1])
     globalParameters.status = status[1]
     globalParameters.activemenu = 0
     globalParameters.setScreen(0)
-    #screens.mainmenu.draw(device)
-    # print("stdout:", result.stdout)
-    # print("stderr:", result.stderr)
-    print("Start Script button was pushed!")
     Lockbutton.release()
 
 def button_stop_callback(channel):
@@ -93,14 +87,11 @@ def button_stop_callback(channel):
     else:
         globalParameters.activemenu = 0
         globalParameters.setScreen(0)
-    print("Stop Script button was pushed!")
     Lockbutton.release()
 
 def button_resetpi_callback(channel):
     Lockbutton.acquire()
-    #subprocess.run(["sudo","reboot"])
-    helperFunctions.updatePiRowFlo()
-    print("Button was pushed!")
+    subprocess.run(["sudo","reboot"])
     Lockbutton.release()
 
 def shutdown():
@@ -112,7 +103,6 @@ def shutdown():
 def JoyButtonmenuaction(channel):
     Lockbutton.acquire()
     globalParameters.trigger = True
-    print("joystickbutton was pushed!")
     Lockbutton.release()
 
 def menuback(channel):
@@ -121,9 +111,7 @@ def menuback(channel):
          globalParameters.activemenu = 2# back the main menu
     else:
         globalParameters.activemenu -= 1
-    print(globalParameters.activemenu)
     globalParameters.setScreen(globalParameters.activemenu)
-    print("left was pushed!")
     Lockbutton.release()
 
 def menuforward(channel):
@@ -132,21 +120,17 @@ def menuforward(channel):
         globalParameters.activemenu = 0
     else:
         globalParameters.activemenu += 1 # back the main menu
-    print(globalParameters.activemenu)
     globalParameters.setScreen(globalParameters.activemenu)
-    print("right was pushed!")
     Lockbutton.release()
 
 def menuup(channel):
     Lockbutton.acquire()
     globalParameters.counter -= 1
-    print("Up was pushed!")
     Lockbutton.release()
 
 def menudown(channel):
     Lockbutton.acquire()
     globalParameters.counter += 1 # the menu's always start
-    print("Down was pushed!")
     Lockbutton.release()
 
 print("Attaching interrupts")

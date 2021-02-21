@@ -5,32 +5,53 @@ from subprocess import run # this is needed to run os commands from linux
 from time import sleep
 import threading
 from luma.core.render import canvas # lib to draw on the screen
+import requests
+import tarfile
 
-def drawMenu(draw, entries):
-    counter = globalParameters.counter  # default is 0
-    position = 0
-    #Draw menu
-    for i in range(len(entries)):
-        x = 6
-        y = 2+position*12
-        #fontawesome = ImageFont.truetype(globalParameters.font_icons, size=10) # defines the font to use and the size create font object from file
-        font = ImageFont.truetype(globalParameters.font_text, size=10) # defines the font to use and the size create font object from file
-        draw.rectangle((x, y, x+120, y+12), outline=255, fill=0)
-        if entries[i] == "Zurück":
-            #draw.text((x+2, y+2), text="\uf053", font=fontawesome, fill="white")
-            draw.text((x+12, y+1), "Zurück", font=font, fill="white")
-        else:
-            draw.text((x+2, y+1), entries[i], font=font, fill="white")
-        position += 1
-
-    #Draw entry selector
-    draw.polygon(((0, 2+counter*12), (0, 10+counter*12), (5, 6+counter*12)), fill="white")
+# def drawMenu(draw, entries):
+#     counter = globalParameters.counter  # default is 0
+#     position = 0
+#     #Draw menu
+#     for i in range(len(entries)):
+#         x = 6
+#         y = 2+position*12
+#         #fontawesome = ImageFont.truetype(globalParameters.font_icons, size=10) # defines the font to use and the size create font object from file
+#         font = ImageFont.truetype(globalParameters.font_text, size=10) # defines the font to use and the size create font object from file
+#         draw.rectangle((x, y, x+120, y+12), outline=255, fill=0)
+#         if entries[i] == "Zurück":
+#             #draw.text((x+2, y+2), text="\uf053", font=fontawesome, fill="white")
+#             draw.text((x+12, y+1), "Zurück", font=font, fill="white")
+#         else:
+#             draw.text((x+2, y+1), entries[i], font=font, fill="white")
+#         position += 1
+#
+#     #Draw entry selector
+#     draw.polygon(((0, 2+counter*12), (0, 10+counter*12), (5, 6+counter*12)), fill="white")
 
 def shutdownSystem():
     print("Shutting down system")
     device.cleanup()
     run(["sudo shutdown","-h","now"])
     exit()
+
+# def updatePiRowFlo():
+#     response = requests.get("https://api.github.com/repos/inonoob/pirowflo/releases/latest")
+#     resp = response.json()["tarball_url"]
+#     response2 = requests.get(resp, stream=True)
+#     file = open("pirowflo-lastversion.tar.gz","wb")
+#     file.write(response2.content)
+#     file.close()
+#
+#     my_tar = tarfile.open('pirowflo-lastversion.tar.gz')
+#     my_tar.extractall('./my_folder')  # specify which folder to extract to
+#     my_tar.close()
+    #
+    # print(response2)
+    # if response.status_code == 200:
+    #     with open(response2.content, 'wb') as f:
+    #         f.write(response.raw.read())
+
+
 
 # def playRadioStation(stationid):
 #     print("Playing ID", stationid)

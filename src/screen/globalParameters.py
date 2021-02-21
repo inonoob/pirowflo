@@ -1,4 +1,6 @@
 import configparser
+import pathlib
+
 
 
 class globalParameterBuilder():
@@ -12,10 +14,12 @@ class globalParameterBuilder():
         self.blackscreen = False
         ########
 
+        loggerconfigpath = str(pathlib.Path(__file__).parent.absolute()) + '/' + 'settings.ini'
+
         #Load Config
         print("Load configuration file")
         self.config = configparser.ConfigParser() # initiloze the configerparger module
-        self.config.read("settings.ini") # reads the setting file with the settings
+        self.config.read(loggerconfigpath) # reads the setting file with the settings
 
         #get ipaddress
 
