@@ -53,7 +53,7 @@ def main(args=None):
         Waterrowerserial()
 
     def Smartrow(in_q, ble_out_q, ant_out_q):
-        logger.info("Waterrower Interface started")
+        logger.info("Smartrow Interface started")
         Smartrowconnection = smartrowtobleant.main(in_q, ble_out_q, ant_out_q)
         Smartrowconnection()
 
@@ -81,7 +81,7 @@ def main(args=None):
         t1.daemon = True
         t1.start()
     else:
-        logger.info("no interface selected")
+        logger.info("sr not selected")
 
     if args.blue == True:
         t2 = threading.Thread(target=BleService, args=(q, ble_q))
