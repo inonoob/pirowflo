@@ -126,7 +126,7 @@ def find_port():
                 return path
 
         #print("port not found retrying in 5s")
-        if ((attempts - 1) % 60) == 0: # message every ~5 minutes
+        if ((attempts - 1) % 360) == 0: # message every ~30 minutes
           logger.warning("port not found in %d attempts; retrying every 5s",
               attempts)
         time.sleep(5)
