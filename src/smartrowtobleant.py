@@ -52,16 +52,20 @@ class DataLogger():
         }
         self.WRValues = deepcopy(self.WRValues_rst)
         self.WRValues_standstill = deepcopy(self.WRValues_rst)
-        self.starttime = None
+        self.starttime = None # time.time() # was None
         self.fullstop = True
         self.SmartRowHalt = False
+        self.Initial_reset = False
 
 
     def elapsedtime(self):
+        print(self.fullstop)
         if self.fullstop == False:
             elaspedtimecalc = int(time.time() - self.starttime)
             self.WRValues.update({'elapsedtime':elaspedtimecalc})
-        elif self.fullstop == True and self.WRValues.get('total_distance_m') !=0:
+        elif self.fullstop == True and self.WRValues.get('total_distance_m') !=0 and self.Initial_reset == True:
+            if not self.starttime:
+                   self.starttime = time.time()
             elaspedtimecalc = int(time.time() - self.starttime)
             self.WRValues.update({'elapsedtime':elaspedtimecalc})
         else:
@@ -177,9 +181,10 @@ def main(in_q, ble_out_q,ant_out_q):
     HB = threading.Thread(target=heartbeat, args=([smartrow]))
     HB.daemon = True
     HB.start()
-
+    sleep(3)
     reset(smartrow)
     sleep(1)
+    SRtoBLEANT.Initial_reset = True
 
     while True:
         if not in_q.empty():
