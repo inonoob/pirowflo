@@ -116,16 +116,20 @@ SIZE_PARSE_MAP = {'single': lambda cmd: cmd[6:8],
 
 
 def find_port():
-    ports = serial.tools.list_ports.comports()
-    for (i, (path, name, _)) in enumerate(ports):
-        if "WR" in name:
-            logger.info("port found: %s" % path)
-            return path
+    attempts = 0
+    while True:
+        attempts += 1
+        ports = serial.tools.list_ports.comports()
+        for (i, (path, name, _)) in enumerate(ports):
+            if "WR" in name:
+                logger.info("port found: %s" % path)
+                return path
 
-    #print("port not found retrying in 5s")
-    logger.warning("port not found retrying in 5s")
-    time.sleep(5)
-    return find_port()
+        #print("port not found retrying in 5s")
+        if ((attempts - 1) % 360) == 0: # message every ~30 minutes
+          logger.warning("port not found in %d attempts; retrying every 5s",
+              attempts)
+        time.sleep(5)
 
 
 def build_daemon(target):

@@ -53,7 +53,7 @@ def main(args=None):
         Waterrowerserial()
 
     def Smartrow(in_q, ble_out_q, ant_out_q):
-        logger.info("Waterrower Interface started")
+        logger.info("Smartrow Interface started")
         Smartrowconnection = smartrowtobleant.main(in_q, ble_out_q, ant_out_q)
         Smartrowconnection()
 
@@ -67,38 +67,47 @@ def main(args=None):
     q = Queue()
     ble_q = deque(maxlen=1)
     ant_q = deque(maxlen=1)
+    threads = []
     if args.interface == "s4":
         logger.info("inferface S4 monitor will be used for data input")
-        t1 = threading.Thread(target=Waterrower, args=(q, ble_q, ant_q))
-        t1.daemon = True
-        t1.start()
+        t = threading.Thread(target=Waterrower, args=(q, ble_q, ant_q))
+        t.daemon = True
+        t.start()
+        threads.append(t)
     else:
         logger.info("S4 not selected")
 
     if args.interface == "sr":
         logger.info("inferface smartrow will be used for data input")
-        t1 = threading.Thread(target=Smartrow, args=(q, ble_q, ant_q))
-        t1.daemon = True
-        t1.start()
+        t = threading.Thread(target=Smartrow, args=(q, ble_q, ant_q))
+        t.daemon = True
+        t.start()
+        threads.append(t)
     else:
-        logger.info("no interface selected")
+        logger.info("sr not selected")
 
     if args.blue == True:
-        t2 = threading.Thread(target=BleService, args=(q, ble_q))
-        t2.daemon = True
-        t2.start()
+        t = threading.Thread(target=BleService, args=(q, ble_q))
+        t.daemon = True
+        t.start()
+        threads.append(t)
     else:
         logger.info("Bluetooth service not used")
     if args.antfe == True:
-        t3 = threading.Thread(target=ANTService, args=(
+        t = threading.Thread(target=ANTService, args=(
         [ant_q]))  # [] are needed to tell threading that the list "deque" is one args and not a list of arguement !
-        t3.daemon = True
-        t3.start()
+        t.daemon = True
+        t.start()
+        threads.append(t)
     else:
         logger.info("Ant service not used")
 
     while True:
-        pass
+        for thread in threads:
+            thread.join(timeout=60)
+            if not thread.is_alive():
+                logger.info("Thread died - exiting")
+                return
 
 if __name__ == '__main__':
     try:
