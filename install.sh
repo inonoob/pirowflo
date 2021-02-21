@@ -144,7 +144,7 @@ sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' screen.service
 sudo mv screen.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/screen.service
 sudo chmod 655 /etc/systemd/system/screen.service
-sudo systemctl enable screen
+#sudo systemctl enable screen
 
 
 echo "-----------------------------------------------"
