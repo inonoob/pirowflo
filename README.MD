@@ -181,7 +181,7 @@ you hadn't have your Ant+ dongle. Just re-run the script and it will install the
 
     sudo ./install.sh 
 
-Once installation and reboot complete, go into the WaterrowerAntBle/src folder
+Once installation and reboot complete, go into the pirowflo/src folder
 
     cd /home/pi/pirowflo/src
 

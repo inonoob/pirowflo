@@ -124,3 +124,8 @@ TFT screen configuration and display [link](https://github.com/juj/fbcp-ili9341)
 ## systemd stuff
 
 https://www.howtogeek.com/687970/how-to-run-a-linux-program-at-startup-with-systemd/ 
+
+Supervisor to run as normal user: 
+
+https://drumcoder.co.uk/blog/2010/nov/24/running-supervisorctl-non-root/ 
+

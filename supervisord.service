@@ -4,9 +4,9 @@ Documentation=http://supervisord.org
 After=network.target
 
 [Service]
-ExecStart=/usr/local/bin/supervisord -n -c /home/pi/pirowflo/supervisord.conf
-ExecStop=/usr/local/bin/supervisorctl $OPTIONS shutdown
-ExecReload=/usr/local/bin/supervisorctl $OPTIONS reload
+ExecStart=#SUPERVISORD_PATH# -n -c #REPO_DIR#/supervisord.conf
+ExecStop=#SUPERVISORCTL_PATH# $OPTIONS shutdown
+ExecReload=#SUPERVISORCTL_PATH# $OPTIONS reload
 KillMode=process
 Restart=on-failure
 RestartSec=50s

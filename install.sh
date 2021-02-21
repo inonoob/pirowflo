@@ -6,7 +6,7 @@ echo " "
 echo " "
 echo " "
 echo "  PiRowFlo for Waterrower"
-echo "                                                             +-+"
+echo "                                                             +-+"supervisord.service
 echo "                                           XX+-----------------+"
 echo "              +-------+                 XXXX    |----|       | |"
 echo "               +-----+                XXX +----------------+ | |"
@@ -30,7 +30,9 @@ echo " "
 echo "----------------------------------------------"
 echo "installed needed packages for python          "
 echo "----------------------------------------------"
-sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev
+
+sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev libglib2.0-dev libgirepository1.0-dev libcairo2-dev zlib1g-dev libfreetype6-dev liblcms2-dev libopenjp2-7 libtiff5
+
 echo " "
 
 
@@ -98,27 +100,51 @@ echo " "
 export repo_dir=$(cd $(dirname $0) > /dev/null 2>&1; pwd -P)
 export python3_path=$(which python3)
 export supervisord_path=$(which supervisord)
+export supervisorctl_path=$(which supervisorctl)
 cp supervisord.conf.orig supervisord.conf
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' supervisord.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.conf
 #sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
+
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.service
+sed -i 's@#SUPERVISORD_PATH#@'"$supervisord_path"'@g' supervisord.service
+sed -i 's@#SUPERVISORCTL_PATH#@'"$supervisorctl_path"'@g' supervisord.service
 sudo mv supervisord.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/supervisord.service
 sudo chmod 655 /etc/systemd/system/supervisord.service
 sudo systemctl enable supervisord
 
 echo " "
-  echo "----------------------------------------------------------"
+echo "------------------------------------------------------------"
 echo " Update bluetooth settings according to Apple specifications"
 echo "------------------------------------------------------------"
 echo " "
 # update bluetooth configuration and start supervisord from rc.local
 #
 #sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local # Update to respect iOS bluetooth specifications
+
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' update-bt-cfg.service
 sudo mv update-bt-cfg.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/update-bt-cfg.service
 sudo chmod 655 /etc/systemd/system/update-bt-cfg.service
 sudo systemctl enable update-bt-cfg
+
+
+echo " "
+echo "------------------------------------------------------------"
+echo " setup screen setting to start up at boot                   "
+echo "------------------------------------------------------------"
+echo " "
+
+sudo sed -i 's/#dtparam=spi=on/dtparam=spi=on/g' /boot/config.txt
+sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/screen/settings.ini
+
+sed -i 's@#PYTHON3#@'"$python3_path"'@g' screen.service
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' screen.service
+sudo mv screen.service /etc/systemd/system/
+sudo chown root:root /etc/systemd/system/screen.service
+sudo chmod 655 /etc/systemd/system/screen.service
+sudo systemctl enable screen
 
 
 echo "-----------------------------------------------"
