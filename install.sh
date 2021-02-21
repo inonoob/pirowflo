@@ -6,7 +6,7 @@ echo " "
 echo " "
 echo " "
 echo "  PiRowFlo for Waterrower"
-echo "                                                             +-+"supervisord.service
+echo "                                                             +-+"
 echo "                                           XX+-----------------+"
 echo "              +-------+                 XXXX    |----|       | |"
 echo "               +-----+                XXX +----------------+ | |"
@@ -154,6 +154,12 @@ echo " present                                       "
 echo "-----------------------------------------------"
 
 sudo sed -i 's/hci0/hci2/g' /usr/bin/btuart
+
+echo "----------------------------------------------"
+echo " Add absolut path to the logging.conf file    "
+echo "----------------------------------------------"
+
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/logging.conf
 
 echo " "
 echo "----------------------------------------------"
