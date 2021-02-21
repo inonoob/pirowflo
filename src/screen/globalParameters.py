@@ -14,12 +14,12 @@ class globalParameterBuilder():
         self.blackscreen = False
         ########
 
-        loggerconfigpath = str(pathlib.Path(__file__).parent.absolute()) + '/' + 'settings.ini'
+        self.loggerconfigpath = str(pathlib.Path(__file__).parent.absolute()) + '/' + 'settings.ini'
 
         #Load Config
         print("Load configuration file")
         self.config = configparser.ConfigParser() # initiloze the configerparger module
-        self.config.read(loggerconfigpath) # reads the setting file with the settings
+        self.config.read(self.loggerconfigpath) # reads the setting file with the settings
 
         #get ipaddress
 
@@ -53,7 +53,7 @@ class globalParameterBuilder():
         self.config.set("PiRowFloSettings", "S4MonitorOn", str(self.S4MonitorOn))
         self.config.set("PiRowFloSettings", "BluetoothOn", str(self.BluetoothOn))
         self.config.set("PiRowFloSettings", "AntplusOn", str(self.AntplusOn))
-        with open("settings.ini","w") as f:
+        with open(self.loggerconfigpath,"w") as f:
             self.config.write(f)
             f.close()
 
