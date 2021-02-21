@@ -68,6 +68,9 @@ class DataLogger():
             self.WRValues.update({'elapsedtime': 0})
 
     def on_row_event(self, event):
+        if self.starttime is None:
+            self.starttime = time.time()
+
         if event[0] == self.ENERGIE_KCAL_MESSAGE:
             event = event.replace(" ", "0")
             self.WRValues.update({'total_distance_m': int((event[1:6]))})
@@ -126,10 +129,6 @@ class DataLogger():
             if event[11] == "!":
                 self.SmartRowHalt = True
                 self.fullstop = True
-            elif self.starttime == None:
-                self.starttime = time.time()
-                self.SmartRowHalt = False
-                self.fullstop = False
             else:
                 self.SmartRowHalt = False
                 self.fullstop = False
