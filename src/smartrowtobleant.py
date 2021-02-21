@@ -6,6 +6,7 @@ import threading
 from time import sleep
 from threading import Timer
 import time
+from copy import deepcopy
 
 import smartrowreader
 
@@ -27,6 +28,10 @@ class DataLogger():
     def __init__(self, rower_interface):
         self._rower_interface = rower_interface
         self._rower_interface.register_callback(self.on_row_event)
+
+        self._reset_state()
+
+    def _reset_state(self):
         self.WRValues_rst = {
             'stroke_rate': 0,
             'total_strokes': 0,
@@ -45,10 +50,8 @@ class DataLogger():
             'watts_avg':0,
             'pace_avg':0
         }
-        self.WRValues = self.WRValues_rst
-        self.WRvalue_standstill = self.WRValues_rst
-        self.BLEvalues = self.WRValues_rst
-        self.ANTvalues = self.WRValues_rst
+        self.WRValues = deepcopy(self.WRValues_rst)
+        self.WRValues_standstill = deepcopy(self.WRValues_rst)
         self.starttime = None
         self.fullstop = True
         self.SmartRowHalt = False
