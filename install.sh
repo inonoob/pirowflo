@@ -140,7 +140,7 @@ sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/screen/settings.ini
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' screen.service
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' screen.service
 sudo mv screen.service /etc/systemd/system/
-#sudo chown root:root /etc/systemd/system/screen.service
+sudo chown root:root /etc/systemd/system/screen.service
 sudo chmod 655 /etc/systemd/system/screen.service
 sudo systemctl enable screen
 
