@@ -101,15 +101,15 @@ export repo_dir=$(cd $(dirname $0) > /dev/null 2>&1; pwd -P)
 export python3_path=$(which python3)
 export supervisord_path=$(which supervisord)
 export supervisorctl_path=$(which supervisorctl)
-cp supervisord.conf.orig supervisord.conf
-sed -i 's@#PYTHON3#@'"$python3_path"'@g' supervisord.conf
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.conf
+cp services/supervisord.conf.orig services/supervisord.conf
+sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/supervisord.conf
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.conf
 #sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
 
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' supervisord.service
-sed -i 's@#SUPERVISORD_PATH#@'"$supervisord_path"'@g' supervisord.service
-sed -i 's@#SUPERVISORCTL_PATH#@'"$supervisorctl_path"'@g' supervisord.service
-sudo mv supervisord.service /etc/systemd/system/
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.service
+sed -i 's@#SUPERVISORD_PATH#@'"$supervisord_path"'@g' services/supervisord.service
+sed -i 's@#SUPERVISORCTL_PATH#@'"$supervisorctl_path"'@g' services/supervisord.service
+sudo mv services/supervisord.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/supervisord.service
 sudo chmod 655 /etc/systemd/system/supervisord.service
 sudo systemctl enable supervisord
@@ -123,8 +123,8 @@ echo " "
 #
 #sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local # Update to respect iOS bluetooth specifications
 
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' update-bt-cfg.service
-sudo mv update-bt-cfg.service /etc/systemd/system/
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/update-bt-cfg.service
+sudo mv services/update-bt-cfg.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/update-bt-cfg.service
 sudo chmod 655 /etc/systemd/system/update-bt-cfg.service
 sudo systemctl enable update-bt-cfg
@@ -137,11 +137,11 @@ echo "------------------------------------------------------------"
 echo " "
 
 sudo sed -i 's/#dtparam=spi=on/dtparam=spi=on/g' /boot/config.txt
-sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/screen/settings.ini
+sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/adapters/screen/settings.ini
 
-sed -i 's@#PYTHON3#@'"$python3_path"'@g' screen.service
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' screen.service
-sudo mv screen.service /etc/systemd/system/
+sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/screen.service
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/screen.service
+sudo mv services/screen.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/screen.service
 sudo chmod 655 /etc/systemd/system/screen.service
 #sudo systemctl enable screen

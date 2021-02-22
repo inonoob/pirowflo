@@ -5,7 +5,7 @@ After=network.target
 [Service]
 User=pi
 Group=pi
-ExecStart=#PYTHON3# #REPO_DIR#/src/screen/oled.py
+ExecStart=#PYTHON3# #REPO_DIR#/src/adapters/screen/oled.py
 KillMode=process
 
 [Install]

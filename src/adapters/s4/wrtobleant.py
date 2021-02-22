@@ -10,7 +10,7 @@ import logging
 import numpy
 from copy import deepcopy
 
-import waterrowerinterface
+from . import waterrowerinterface
 
 logger = logging.getLogger(__name__)
 '''

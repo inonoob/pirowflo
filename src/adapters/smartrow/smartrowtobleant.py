@@ -4,11 +4,10 @@ import struct
 import gatt
 import threading
 from time import sleep
-from threading import Timer
 import time
 from copy import deepcopy
 
-import smartrowreader
+from . import smartrowreader
 
 logger = logging.getLogger(__name__)
 

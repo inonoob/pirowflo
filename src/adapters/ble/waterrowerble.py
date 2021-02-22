@@ -13,7 +13,7 @@ import dbus.mainloop.glib
 import dbus.service
 import struct
 
-from ble import (
+from .ble import (
     Advertisement,
     Characteristic,
     Service,

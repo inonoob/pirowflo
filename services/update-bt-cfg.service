@@ -4,7 +4,7 @@ Description=set bluetooth option for apple specifications
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=#REPO_DIR#/update-bt-cfg.sh
+ExecStart=#REPO_DIR#/services/update-bt-cfg.sh
 
 [Install]
 WantedBy=multi-user.target

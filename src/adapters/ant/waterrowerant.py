@@ -1,8 +1,8 @@
 
 from time import sleep
 
-import antdongle as ant
-import antfe as fe
+from . import antdongle as ant
+from . import antfe as fe
 
 from collections import deque
 

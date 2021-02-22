@@ -28,10 +28,10 @@ import argparse
 from queue import Queue
 from collections import deque
 
-import waterrowerble
-import wrtobleant
-import waterrowerant
-import smartrowtobleant
+from adapters.ble import waterrowerble
+from adapters.s4 import wrtobleant
+from adapters.ant import waterrowerant
+from adapters.smartrow import smartrowtobleant
 import pathlib
 
 loggerconfigpath = str(pathlib.Path(__file__).parent.absolute()) +'/' +'logging.conf'

@@ -12,8 +12,7 @@ import struct
 import usb.core
 import time
 
-import structconstants      as sc
-
+from . import structconstants as sc
 
 logger = logging.getLogger(__name__)
 

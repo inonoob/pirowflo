@@ -1,10 +1,11 @@
 import threading
 from time import sleep
+from globalParameters import globalParameters
+from setupHandler import device, shutdown
 import screens.mainmenu
 import screens.pirowflosettings
 import screens.buttonhelp
-from globalParameters import globalParameters
-from setupHandler import device, shutdown
+
 
 
 updaterun = threading.Event()

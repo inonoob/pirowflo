@@ -2,7 +2,7 @@ from PIL import ImageFont
 from luma.core.render import canvas
 from globalParameters import globalParameters
 
-print(globalParameters.font_icons)
+#print(globalParameters.font_icons)
 #Functions for startscreen
 def draw(device):
     with canvas(device) as draw:

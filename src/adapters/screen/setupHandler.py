@@ -12,10 +12,7 @@ except:
 from globalParameters import globalParameters
 import threading
 from luma.oled.device import sh1106
-from luma.core.interface.serial import i2c, spi
-from time import sleep
-import screens.startscreen
-import screens.mainmenu
+from luma.core.interface.serial import spi
 import subprocess
 
 def getipaddress():
@@ -31,7 +28,10 @@ print("Connect to display")
 serial = spi(device=0, port=0) # set the screen port
 device = sh1106(serial, rotate=2) # give the screenport to the screen sh1106
 device.contrast(245) # set the contrast of the display
-screens.startscreen.draw(device)  # User should have something to look at during start
+#src.adapters.screen.screens.startscreen.draw(device)  # User should have something to look at during start
+import screens.startscreen
+
+screens.startscreen.draw(device)
 
 # Set up buttons and joystick
 print("Set up rotary encoder")
