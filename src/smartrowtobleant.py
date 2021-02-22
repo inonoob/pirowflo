@@ -188,10 +188,11 @@ def main(in_q, ble_out_q,ant_out_q):
     HB = threading.Thread(target=heartbeat, args=([smartrow]))
     HB.daemon = True
     HB.start()
-    sleep(3)
+    sleep(3) # this sleep is needed in order give the user time to putt back the handle after pulling it to activate it.
+    # The SmartRow device is very sensitive to touches which then triggers 1 m very easy after a reset which then already starts after a restart.
     reset(smartrow)
     sleep(1)
-    SRtoBLEANT.Initial_reset = True
+    SRtoBLEANT.Initial_reset = True # this should help to check if the first reset has been performed
 
     while True:
         if not in_q.empty():
