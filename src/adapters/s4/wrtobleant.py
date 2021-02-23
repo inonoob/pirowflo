@@ -25,6 +25,7 @@ Depeding on thoses cases send to the bluetooth module only the value dict with t
 '''
 
 IGNORE_LIST = ['graph', 'tank_volume', 'display_sec_dec']
+POWER_AVG_STROKES = 4
 
 
 class DataLogger(object):
@@ -38,8 +39,8 @@ class DataLogger(object):
         self._InstaPowerStroke = None
         self.maxpowerStroke = None
         self._StrokeStart = None
+        self._StrokeTotal = None
         self.Watts = None
-        self._maxpowerfivestrokes = None
         self.AvgInstaPower = None
         self.Lastcheckforpulse = None
         self.PulseEventTime = None
@@ -64,8 +65,8 @@ class DataLogger(object):
         self._InstaPowerStroke = []
         self.maxpowerStroke = 0
         self._StrokeStart = False
+        self._StrokeTotal = 0
         self.Watts = 0
-        self._maxpowerfivestrokes = []
         self.AvgInstaPower = 0
         self.Lastcheckforpulse = 0
         self.PulseEventTime = 0
@@ -106,6 +107,7 @@ class DataLogger(object):
         if event['type'] == 'stroke_rate':
             self.WRValues.update({'stroke_rate': (event['value']*2)})
         if event['type'] == 'total_strokes':
+            self._StrokeTotal = event['value']
             self.WRValues.update({'total_strokes': event['value']})
         if event['type'] == 'total_distance_m':
             self.WRValues.update({'total_distance_m': (event['value'])})
@@ -150,8 +152,9 @@ class DataLogger(object):
             self.PaddleTurning = False
             self._StrokeStart = False
             self.PulseEventTime = 0
+            self._InstaPowerStroke = []
+            self.AvgInstaPower = 0
             self.WRValuesStandstill()
-
 
     def reset_requested(self,event):
         if event['type'] == 'reset':
@@ -174,32 +177,30 @@ class DataLogger(object):
         self.WRValues_standstill.update({'watts': 0})
 
     def avgInstaPowercalc(self,watts):
-        if watts != 0:
-            if self._StrokeStart == True:
-                self._InstaPowerStroke.append(watts)
-            elif self._StrokeStart == False:
-                if len(self._InstaPowerStroke) != 0:
-                    self.maxpowerStroke = numpy.max(self._InstaPowerStroke)
-                    if len(self._maxpowerfivestrokes) > 4:
-                        del self._maxpowerfivestrokes[0]
-                    self._maxpowerfivestrokes.append(self.maxpowerStroke)
-                    self.AvgInstaPower = int(numpy.average(self._maxpowerfivestrokes))
-                    self.WRValues.update({'watts': self.AvgInstaPower})
-                    self._InstaPowerStroke = []
-                else:
-                    pass
+        if self._StrokeStart:
+            self.maxpowerStroke = max(self.maxpowerStroke, watts)
+        else:
+            if self.maxpowerStroke:
+                self._InstaPowerStroke.append(self.maxpowerStroke)
+                self.maxpowerStroke = 0
+            while len(self._InstaPowerStroke) > POWER_AVG_STROKES:
+                self._InstaPowerStroke.pop(0)
+            if len(self._InstaPowerStroke) == POWER_AVG_STROKES:
+                self.AvgInstaPower = int(numpy.average(self._InstaPowerStroke))
+                self.WRValues.update({'watts': self.AvgInstaPower})
 
 
     def get_WRValues(self):
         if self.rowerreset:
             return deepcopy(self.WRValues_rst)
-        elif not self.rowerreset and not self.PaddleTurning:
-            return deepcopy(self.WRValues_standstill)
-        elif not self.rowerreset and self.PaddleTurning:
+        elif self.PaddleTurning:
             return deepcopy(self.WRValues)
+        else:
+            return deepcopy(self.WRValues_standstill)
 
     def SendToBLE(self):
         self.BLEvalues = self.get_WRValues()
+        #logger.debug("Watts: %4.1f Strokes: %5d Strokes/s: %5f Dist: %5g", self.BLEvalues['watts'], self.BLEvalues['total_strokes'], self.BLEvalues['stroke_rate'], self.BLEvalues['total_distance_m'])
 
     def SendToANT(self):
         self.ANTvalues = self.get_WRValues()
