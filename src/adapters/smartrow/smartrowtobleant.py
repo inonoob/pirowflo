@@ -118,6 +118,7 @@ class DataLogger():
             pace_inst = int(event[6])*60 + int(event[7:9])
             if self.SmartRowHalt == True:
                 self.WRValues.update({'instantaneous pace': 0})
+                self.WRValues.update({'speed': 0})
             else:
                 self.WRValues.update({'instantaneous pace': pace_inst})
             if pace_inst != 0:

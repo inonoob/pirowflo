@@ -33,13 +33,25 @@ from adapters.s4 import wrtobleant
 from adapters.ant import waterrowerant
 from adapters.smartrow import smartrowtobleant
 import pathlib
+import signal
 
 loggerconfigpath = str(pathlib.Path(__file__).parent.absolute()) +'/' +'logging.conf'
 
 logger = logging.getLogger(__name__)
 
+
+class Graceful:
+    run = True
+    def __init__(self):
+        signal.signal(signal.SIGINT, self.exit_gracefully)
+        signal.signal(signal.SIGTERM, self.exit_gracefully)
+
+    def exit_gracefully(self,signum, frame):
+        self.run = False
+
 def main(args=None):
     logging.config.fileConfig(loggerconfigpath, disable_existing_loggers=False)
+    grace = Graceful()
 
     def BleService(out_q, ble_in_q):
         logger.info("Start BLE Advertise and BLE GATT Server")
