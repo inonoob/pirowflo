@@ -17,14 +17,14 @@ Read the LICENCE first, by using this software you agree to the licence.
 - Case is still in Prototype stage 
 
 
-## Supported Apps S4 Monitor (14.01.2021)
+## Supported Apps S4 Monitor (23.02.2021)
 
 |        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | Holofit| 
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:     
 |Android | test pending  | :heavy_check_mark: | devs need to update app                  | :heavy_check_mark:           |  :heavy_check_mark:           |
 |iOS     | test pending  | :heavy_check_mark: | :heavy_check_mark:         |  -                           | :heavy_check_mark:           |
 
-## Supported Apps SmartRow (23.01.2021)
+## Supported Apps SmartRow (23.02.2021)
 
 |        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher |Holofit | 
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:  |
@@ -157,15 +157,15 @@ Once installation and reboot complete, go into the pirowflo/src folder
 
 Start PiRowFlo from the webserver which is available under the: 
 
-http://<raspberry-pi-IP>:9001 
+http://"raspberry-pi-IP":9001 
 
-<img src="docs/webserver/Selection_023.png" width=36% height=36%>
+<img src="docs/webserver/Selection_023.png" width=60% height=60%>
 
 or 
 
 Use the Screen to start PiRowFlo
 
-<img src="docs/Screen/IMG_20210221_235228.jpg" width=36% height=36%>
+<img src="docs/Screen/IMG_20210221_235228.jpg" width=60% height=60%>
 
 or 
 
