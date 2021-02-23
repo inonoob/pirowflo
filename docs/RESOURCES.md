@@ -129,3 +129,14 @@ Supervisor to run as normal user:
 
 https://drumcoder.co.uk/blog/2010/nov/24/running-supervisorctl-non-root/ 
 
+## Create gifs from mp4 
+
+ffmpeg \
+  -i opengl-rotating-triangle.mp4 \
+  -r 15 \
+  -vf scale=512:-1 \
+  -ss 00:00:03 -to 00:00:06 \
+  opengl-rotating-triangle.gif
+
+https://askubuntu.com/questions/648603/how-to-create-an-animated-gif-from-mp4-video-via-command-line 
+

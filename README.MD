@@ -6,30 +6,30 @@
 
 <img src="docs/Hardware/IMG_20210104_155432.jpg" width=36% height=36%> <img src="docs/Hardware/Selection_015.png" width=30% height=30%> <img src="docs/Hardware/SmartRow.png" width=30% height=30%>
 
+
+<img src="docs/Screen/screenPiRowFlo.gif" width=36% height=36%>
+
 Read the LICENCE first, by using this software you agree to the licence. 
+
 
 ## News 13.02.2021 
 
-- Display with Buttons currently working on 
-  
-  <img src="docs/Screen/Screen-test2.jpg" width=36% height=36%>
-
-- Cases for the project are currently worked on 
+- Case is still in Prototype stage 
 
 
 ## Supported Apps S4 Monitor (14.01.2021)
 
-|        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
-|:------:|:------:       |:------------:      |:-----:                     |:-------:                     |
-|Android | test pending  | :heavy_check_mark: | devs need to update app                  | :heavy_check_mark:           | 
-|iOS     | test pending  | :heavy_check_mark: | :heavy_check_mark:         |  -                           |
+|        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | Holofit| 
+|:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:     
+|Android | test pending  | :heavy_check_mark: | devs need to update app                  | :heavy_check_mark:           |  :heavy_check_mark:           |
+|iOS     | test pending  | :heavy_check_mark: | :heavy_check_mark:         |  -                           | :heavy_check_mark:           |
 
 ## Supported Apps SmartRow (23.01.2021)
 
-|        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | 
-|:------:|:------:       |:------------:      |:-----:                     |:-------:                     |
-|Android | test pending  | test pending | devs need to update app                   | :heavy_check_mark:           | 
-|iOS     | test pending  | :heavy_check_mark:   | :heavy_check_mark:         |  -                           |
+|        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher |Holofit | 
+|:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:  |
+|Android | test pending  | test pending | devs need to update app                   | :heavy_check_mark:           |  :heavy_check_mark:           |
+|iOS     | test pending  | :heavy_check_mark:   | :heavy_check_mark:         |  -                           | :heavy_check_mark:           |
 
 
 ## Supported Watches (14.01.2021)
@@ -41,31 +41,7 @@ Read the LICENCE first, by using this software you agree to the licence.
 
 ## Project Overview
 
-This python script replaces the Waterrower com module. A Raspberry Pi is connected via usb with the Waterrower. The rowing
-data are processed by the python script which is then send via bluetooth Low Energy Fitness equipment profile to the connected App. E.g Android
-app Coxswain, Kinomap or Cityrow. 
 
-- [x] Status = Done
-
-Additionally, it is planned to have the processed data to be sent also via Ant+. This is an idea for Garmin watches especially 
-the Fenix 6 series as the native rowing app can use thoes Data. The Ant+ profile used here is the Fitness Machine. 
-
-- [x] Status = Done
-
-Planned to integrate the Smartrow as input interface 
-
-- [x] Status = Done
-
-even more, the script will be control via a build in webserver that can control the script to Start/stop 
-and Restart it.
-
-- [x] Status = Done  ==> Thank you flynch
-
-Last idea would be to track and export the workout to a FIT file which is then used for Garmin-connect or Strava. 
-
-- [ ] Status = Pending
-
-Open for new ideas !
 
 ## Features
 
@@ -75,15 +51,7 @@ Open for new ideas !
 - Send Waterrower Data from the Pi over Bluetooth (Build-in or USB-dongle) 
 - Send Waterrower Data from the Pi over Ant+ via Ant+ dongle 
 
-## Parts of the code based on following Repos:
 
-- [Link to repo](https://github.com/bfritscher/waterrower) base code used to get the Waterrower Data over USB Interface 
-- [Link to repo](https://github.com/PunchThrough/espresso-ble) base code for the BLE GATT server and Advertiser example which
-is self based on the Bluez Gatt server example
-- [Link to repo](https://github.com/WouterJD/FortiusANT) base code for the Ant+ part used for this project
-
-Those Repos with some of their code are used as  base code 
-which then have been rewritten to meet the requirements of this project. 
 
 ## Motivation
 
@@ -187,6 +155,22 @@ Once installation and reboot complete, go into the pirowflo/src folder
 
 ### Getting Started
 
+Start PiRowFlo from the webserver which is available under the: 
+
+http://<raspberry-pi-IP>:9001 
+
+<img src="docs/webserver/Selection_023.png" width=36% height=36%>
+
+or 
+
+Use the Screen to start PiRowFlo
+
+<img src="docs/Screen/IMG_20210221_235228.jpg" width=36% height=36%>
+
+or 
+
+start PiRowFlo from console 
+
 If the script waterrowerthreads is started with -h or --help it shows the available option for the program 
 
 
@@ -228,6 +212,16 @@ If the script waterrowerthreads is started with -h or --help it shows the availa
 For example if the Waterrower should send data over Bluetooth and ANT 
 
     python3 waterrowerthreads.py -i s4 -b -a 
+
+## Manual update 
+
+The PiRowFlo autoupdate function is not yet implemented. Therefore, we recommend to perform the update as follows: 
+
+    git pull https://github.com/inonoob/pirowflo.git 
+
+And then start the installation script again
+
+    sudo ./install.sh 
 
 ## FAQ 
 
@@ -312,3 +306,13 @@ a high chance that the connection between S4 Monitor and the Rasbperry pi is not
   try to unplug and replug it in. 
 - Check the usb cable first. Try a different one. Cheap one tend to break as you need to plug and unplug it. 
 
+## Parts of the code based on following Repos:
+
+- [Link to repo](https://github.com/bfritscher/waterrower) base code used to get the Waterrower Data over USB Interface 
+- [Link to repo](https://github.com/PunchThrough/espresso-ble) base code for the BLE GATT server and Advertiser example which
+is self based on the Bluez Gatt server example
+- [Link to repo](https://github.com/WouterJD/FortiusANT) base code for the Ant+ part used for this project
+- [Link to repo](https://github.com/techdiem/RasPi-OLED-Menu) base code for the Screen part used for this project
+
+Those Repos with some of their code are used as  base code 
+which then have been rewritten to meet the requirements of this project. 
