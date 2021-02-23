@@ -38,16 +38,21 @@ import signal
 loggerconfigpath = str(pathlib.Path(__file__).parent.absolute()) +'/' +'logging.conf'
 
 logger = logging.getLogger(__name__)
+Mainlock = threading.Lock()
 
 
 class Graceful:
-    run = True
+
     def __init__(self):
+        self.run = True
         signal.signal(signal.SIGINT, self.exit_gracefully)
         signal.signal(signal.SIGTERM, self.exit_gracefully)
 
     def exit_gracefully(self,signum, frame):
+        Mainlock.acquire()
         self.run = False
+        logger.info("Quit gracefully program has been interrupt externally - exiting")
+        Mainlock.release()
 
 def main(args=None):
     logging.config.fileConfig(loggerconfigpath, disable_existing_loggers=False)
@@ -114,12 +119,13 @@ def main(args=None):
     else:
         logger.info("Ant service not used")
 
-    while True:
+    while grace.run:
         for thread in threads:
-            thread.join(timeout=60)
-            if not thread.is_alive():
-                logger.info("Thread died - exiting")
-                return
+            if grace.run == True:
+                thread.join(timeout=10)
+                if not thread.is_alive():
+                    logger.info("Thread died - exiting")
+                    return
 
 if __name__ == '__main__':
     try:
