@@ -113,6 +113,8 @@ sudo mv services/supervisord.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/supervisord.service
 sudo chmod 655 /etc/systemd/system/supervisord.service
 sudo systemctl enable supervisord
+sudo rm /tmp/pirowflo*
+sudo rm /tmp/supervisord.log
 
 echo " "
 echo "------------------------------------------------------------"
