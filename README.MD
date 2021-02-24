@@ -84,7 +84,7 @@ Bill of Material(BOM)
 | Micro USB to Typ A || 
 | 5V USB power supply 2A ||
 | **for Ant+ addition** || 
-| Ant+ dongle (avoid Cyclone) ||
+| Ant+ dongle (avoid CYCPLUS) ||
 | **for Smartrow** || 
 | Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
 | Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)
@@ -96,7 +96,7 @@ Bill of Material(BOM)
 | Mini USB to USB typ A ||
 | 5V USB power supply 2A ||
 | **for Ant+ addition** || 
-| Ant+ dongle (avoid Cyclone) ||
+| Ant+ dongle (avoid CYCPLUS) ||
 | **for Smartrow** || 
 | Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
 | ~~Bluetooth USB dongle (not 5.0) (Mandatory to be different brand)~~
@@ -112,7 +112,7 @@ Bill of Material(BOM)
 | Mini USB to Micro USB || 
 | 5V USB power supply 2A ||
 | **for Ant+ addition**  || 
-| Ant+ dongle (avoid Cyclone) ||
+| Ant+ dongle (avoid CYCPLUSe) ||
 | Micro USB to USB Hub || 
 | **for Smartrow** || 
 | Bluetooth USB dongle (not 5.0) (LogiLink BT0015) || 
