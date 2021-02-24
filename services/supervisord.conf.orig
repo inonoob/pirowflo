@@ -62,7 +62,8 @@ user=root
 command=poweroff
 autostart=false
 
-[program:Update_PiRowFlo]
-user=root
+[program:update_PiRowFlo]
+user=pi
 command=#PYTHON3# #REPO_DIR#/src/adapters/updater/updater.py
 autostart=false
+
