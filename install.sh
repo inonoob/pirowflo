@@ -89,6 +89,9 @@ echo " "
 echo "PRETTY_HOSTNAME=PiRowFlo" | sudo tee -a /etc/machine-info > /dev/null
 #echo "PRETTY_HOSTNAME=S4 Comms PI" | sudo tee -a /etc/machine-info > /dev/null
 
+
+
+
 echo " "
 echo "------------------------------------------------------"
 echo " configuring web interface on http://${HOSTNAME}:9001 "
@@ -101,6 +104,16 @@ export repo_dir=$(cd $(dirname $0) > /dev/null 2>&1; pwd -P)
 export python3_path=$(which python3)
 export supervisord_path=$(which supervisord)
 export supervisorctl_path=$(which supervisorctl)
+
+echo " "
+echo "------------------------------------------------------"
+echo " set complete folder to be owned and group pi         "
+echo "------------------------------------------------------"
+echo " "
+
+sudo chown -R pi:pi $repo_dir
+
+
 cp services/supervisord.conf.orig services/supervisord.conf
 sudo chown root:root services/supervisord.conf.orig
 sudo chmod 655 services/supervisord.conf.orig
@@ -148,7 +161,7 @@ sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/screen.service
 sudo mv services/screen.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/screen.service
 sudo chmod 655 /etc/systemd/system/screen.service
-#sudo systemctl enable screen
+sudo systemctl enable screen
 
 
 echo "-----------------------------------------------"
