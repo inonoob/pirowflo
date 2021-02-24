@@ -8,8 +8,8 @@ see github issues
 
 ## Possible Features
 
-- [ ] Screensaver OLED in order to protect OLED display from burn-in effect. Screensaver for OLED display #27 
-- [ ] Quit script gracefully in waterrowerthreads script 
+- [ ] Identify user by HRM device ID in order to pick correct user and password for Garmin Connect auto uploader
+- [ ] Screensaver OLED in order to protect OLED display from burn-in effect. Screensaver for OLED display #27
 - [ ] AutoUpdate/manual function of PiRowFlo 
 - [ ] Second BLE GATT server to passthrough SmartRow data to SmartRow App. Second BLE Server as Bluetooth Passthrough for SmartRow App #26
 - [ ] Create Image of the project
@@ -17,16 +17,15 @@ see github issues
 - [ ] Auto disconnect from SmartRow if no activity is register after 5 min or more minutes to save batterie
 - [ ] add support for heart rate monitors via Ant+ (pi is a client) use other channel of the 8 available from 
 the ant node.
-
-- [ ] Add Ant HRM data from the waterrower. So don't set it to zero take it directly from the memory map of the waterrower
 - [ ] add HRM data from S4 waterrower to the Ble heart rate prfile as it is already available in the fitness equipment
 profile
-  
 - [ ] the Pi sees HRM signal on the S4 and sends it through on ANT+. 
   Or the Pi sees NO HRM signal on the S4 and tells the watch to get its own.
   
   
 ## DONE
+- [x] 24.02.2021 Shutdown of Raspberry pi via Supervisor
+- [x] 23.02.2021 Quit script gracefully in waterrowerthreads script 
 - [x] 21.02.2021 Add screen to project
 - [x] 12.02.2021 add webserver to control the start/stop/restart of the script (supervisor)
 - [x] 01.02.2021 add Smartrow as an interface for the Rowing data 

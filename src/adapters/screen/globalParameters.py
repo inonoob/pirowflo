@@ -1,5 +1,6 @@
 import configparser
 import pathlib
+import time
 
 
 
@@ -11,6 +12,8 @@ class globalParameterBuilder():
         self.oldcounter = -1
         self.activemenu = 0 #defaults is currently main menu needed to scroll through the menus
         self.oldactivemenu = -1 #needes for update thread needed to scroll through the menus
+        self.blackscreen = False
+        self.lastbuttonpressed = time.time()
         self.blackscreen = False
         ########
 

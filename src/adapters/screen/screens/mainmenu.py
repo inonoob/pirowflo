@@ -10,7 +10,7 @@ def draw(device):
     font = ImageFont.truetype(globalParameters.font_text, size=10)
     fontawesome = ImageFont.truetype(globalParameters.font_icons, size=15)
     counter = globalParameters.counter
-    if counter != globalParameters.oldcounter and counter <= 5 and counter >= 0:
+    if counter != globalParameters.oldcounter and counter <= 2 and counter >= 0:
         globalParameters.oldcounter = counter
         with canvas(device) as draw:
             if counter == 0:

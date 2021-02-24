@@ -14,6 +14,7 @@ import threading
 from luma.oled.device import sh1106
 from luma.core.interface.serial import spi
 import subprocess
+import time
 
 def getipaddress():
     ipaddr = subprocess.run('ifconfig wlan0 | grep "inet 192" | cut -c 14-25',shell=True,capture_output=True)
@@ -59,6 +60,7 @@ Lockbutton = threading.Lock()  # create lock for rotary switch
 
 def button_start_callback(channel):
     Lockbutton.acquire()
+    globalParameters.lastbuttonpressed = time.time()
     globalParameters.createPiRowFlocmd()
     globalParameters.currentstarted = globalParameters.pirowflocmd
     globalParameters.activemenu = 0
@@ -74,6 +76,7 @@ def button_start_callback(channel):
 
 def button_stop_callback(channel):
     Lockbutton.acquire()
+    globalParameters.lastbuttonpressed = time.time()
     if globalParameters.currentstarted is not None:
         globalParameters.activemenu = 0
         globalParameters.setScreen(0)
@@ -91,6 +94,7 @@ def button_stop_callback(channel):
 
 def button_resetpi_callback(channel):
     Lockbutton.acquire()
+    globalParameters.lastbuttonpressed = time.time()
     subprocess.run(["sudo","reboot"])
     Lockbutton.release()
 
@@ -102,11 +106,13 @@ def shutdown():
 # Interrupt handler for push button in rotary encoder
 def JoyButtonmenuaction(channel):
     Lockbutton.acquire()
+    globalParameters.lastbuttonpressed = time.time()
     globalParameters.trigger = True
     Lockbutton.release()
 
 def menuback(channel):
     Lockbutton.acquire()
+    globalParameters.lastbuttonpressed = time.time()
     if globalParameters.activemenu < 1:
          globalParameters.activemenu = 2# back the main menu
     else:
@@ -116,6 +122,7 @@ def menuback(channel):
 
 def menuforward(channel):
     Lockbutton.acquire()
+    globalParameters.lastbuttonpressed = time.time()
     if globalParameters.activemenu > 1:
         globalParameters.activemenu = 0
     else:
@@ -125,11 +132,13 @@ def menuforward(channel):
 
 def menuup(channel):
     Lockbutton.acquire()
+    globalParameters.lastbuttonpressed = time.time()
     globalParameters.counter -= 1
     Lockbutton.release()
 
 def menudown(channel):
     Lockbutton.acquire()
+    globalParameters.lastbuttonpressed = time.time()
     globalParameters.counter += 1 # the menu's always start
     Lockbutton.release()
 
