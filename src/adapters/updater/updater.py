@@ -3,6 +3,7 @@ import tarfile
 import shutil
 import glob
 import os
+import subprocess
 
 def updatePiRowFlo():
 
@@ -11,7 +12,7 @@ def updatePiRowFlo():
     print(" ")
     print("========== PiRowFlo Updater ========================================")
     print(" ")
-    BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     updatetmpfolder = "/tmp/pirowfloupdate"
     updatefinaldest = BASE_DIR
 
@@ -52,8 +53,12 @@ def updatePiRowFlo():
     shutil.rmtree(updatetmpfolder)
 
     print(" ")
-    print("=============================== DONE! ==============================")
+    print("=========== Starting ./install script to update! ===================")
     print(" ")
+
+    # installcmd = BASE_DIR + "/install.sh"
+    #
+    # subprocess.run(installcmd)
 
 if __name__ == "__main__":
     updatePiRowFlo()

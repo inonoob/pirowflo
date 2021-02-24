@@ -4,8 +4,6 @@ Documentation=http://supervisord.org
 After=network.target
 
 [Service]
-User=pi
-Group=pi
 ExecStart=#SUPERVISORD_PATH# -n -c #REPO_DIR#/services/supervisord.conf
 ExecStop=#SUPERVISORCTL_PATH# $OPTIONS shutdown
 ExecReload=#SUPERVISORCTL_PATH# $OPTIONS reload

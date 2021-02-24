@@ -56,3 +56,13 @@ autostart=false
 user=pi
 command=#PYTHON3# #REPO_DIR#/src/waterrowerthreads.py -i sr -a
 autostart=false
+
+[program:shutdown_Raspberry_pi]
+user=root
+command=poweroff
+autostart=false
+
+[program:Update_PiRowFlo]
+user=root
+command=#PYTHON3# #REPO_DIR#/src/adapters/updater/updater.py
+autostart=false
