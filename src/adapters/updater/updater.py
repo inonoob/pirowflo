@@ -15,6 +15,7 @@ def updatePiRowFlo():
     BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
     updatetmpfolder = "/tmp/pirowfloupdate"
     updatefinaldest = BASE_DIR
+    #updatefinaldest = "/home/pi/test"
 
     response = requests.get("https://api.github.com/repos/inonoob/pirowflo/releases/latest")
     Version = response.json()["name"]
@@ -49,16 +50,21 @@ def updatePiRowFlo():
     pirowfloupdatefolder = glob.glob(updatetmpfolder + "/inonoob-pirowflo-*")
     if os.path.exists(updatefinaldest):
         shutil.rmtree(updatefinaldest)
-    shutil.copytree(pirowfloupdatefolder[0], updatefinaldest, symlinks=True)
-    shutil.rmtree(updatetmpfolder)
 
+    cmdcopy = '/bin/su -c "/bin/cp -r '+pirowfloupdatefolder[0]+' '+updatefinaldest +'" '+ '- pi'
+    subprocess.run(cmdcopy,shell=True)
+    #shutil.copytree(pirowfloupdatefolder[0], updatefinaldest, symlinks=True)
+    #shutil.rmtree(updatetmpfolder)
+    cmdchangefolder = "cd " + BASE_DIR
+    subprocess.run(cmdchangefolder,shell=True)
     print(" ")
     print("=========== Starting ./install script to update! ===================")
     print(" ")
+    print(BASE_DIR)
+    installcmd = BASE_DIR + "/install.sh"
+    #installcmd = "/home/pi/test/install.sh"
 
-    # installcmd = BASE_DIR + "/install.sh"
-    #
-    # subprocess.run(installcmd)
+    subprocess.run(installcmd)
 
 if __name__ == "__main__":
     updatePiRowFlo()

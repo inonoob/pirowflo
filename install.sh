@@ -105,15 +105,6 @@ export python3_path=$(which python3)
 export supervisord_path=$(which supervisord)
 export supervisorctl_path=$(which supervisorctl)
 
-echo " "
-echo "------------------------------------------------------"
-echo " set complete folder to be owned and group pi         "
-echo "------------------------------------------------------"
-echo " "
-
-sudo chown -R pi:pi $repo_dir
-
-
 cp services/supervisord.conf.orig services/supervisord.conf
 sudo chown root:root services/supervisord.conf.orig
 sudo chmod 655 services/supervisord.conf.orig

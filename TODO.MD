@@ -9,7 +9,6 @@ see github issues
 ## Possible Features
 
 - [ ] Identify user by HRM device ID in order to pick correct user and password for Garmin Connect auto uploader
-- [ ] Screensaver OLED in order to protect OLED display from burn-in effect. Screensaver for OLED display #27
 - [ ] AutoUpdate/manual function of PiRowFlo 
 - [ ] Second BLE GATT server to passthrough SmartRow data to SmartRow App. Second BLE Server as Bluetooth Passthrough for SmartRow App #26
 - [ ] Create Image of the project
@@ -24,6 +23,7 @@ profile
   
   
 ## DONE
+- [x] 24.02.2021 Screensaver OLED in order to protect OLED display from burn-in effect. Screensaver for OLED display #27
 - [x] 24.02.2021 Shutdown of Raspberry pi via Supervisor
 - [x] 23.02.2021 Quit script gracefully in waterrowerthreads script 
 - [x] 21.02.2021 Add screen to project
