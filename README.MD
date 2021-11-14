@@ -1,5 +1,7 @@
 # PiRowFlo for Waterrower
 
+14.11.2021: fixed pip install issue with pyusb in requirements.txt
+
 <img src="docs/logo/PIROWFLO2.png" width=36% height=36%>
 
 ---- 
