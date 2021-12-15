@@ -13,6 +13,7 @@ import usb.core
 import time
 
 from . import structconstants as sc
+from time import sleep
 
 logger = logging.getLogger(__name__)
 
@@ -45,8 +46,11 @@ logger = logging.getLogger(__name__)
 class clsAntDongle():
     channel_FE = 0  # ANT+ channel for Fitness Equipment
     channel_FE_s = channel_FE  # slave=Cycle Training Program
+    channel_HRM = 1
+    channel_HRM_s = channel_HRM
 
     DeviceNumber_FE = 57591  # These are the device-numbers FortiusANT uses and
+    DeviceNumber_HRM = 57592    #       slaves (TrainerRoad, Zwift, ExplorANT) will find.
 
     ModelNumber_FE = 2875  # short antifier-value=0x8385, Tacx Neo=2875
     SerialNumber_FE = 19590705  # int   1959-7-5
@@ -88,6 +92,7 @@ class clsAntDongle():
 
     # profile.xlsx: antplus_device_type
     DeviceTypeID_fitness_equipment = 17
+    DeviceTypeID_heart_rate = 120
 
     # Manufacturer ID       see FitSDKRelease_21.20.00 profile.xlsx
     Manufacturer_garmin = 1
@@ -96,6 +101,7 @@ class clsAntDongle():
     Manufacturer_waterrower = 118
 
     DeviceTypeID_FE = DeviceTypeID_fitness_equipment
+    DeviceTypeID_HRM = DeviceTypeID_heart_rate
 
     TransmissionType_IC = 0x01  # 5.2.3.1   Transmission Type
     TransmissionType_IC_GDP = 0x05  # 0x01 = Independant Channel
@@ -132,32 +138,30 @@ class clsAntDongle():
     # returns   True/False
     # -----------------------------------------------------------------------
     def __GetDongle(self):
-        print("start search for dongle")
         self.Message = ''
         self.Cycplus = False
         self.DongleReconnected = False
 
         if self.DeviceID == None:
             dongles = {(4104, "Suunto"), (4105, "Garmin"), (4100, "Older")}
-            #print(dongles)
         else:
             dongles = {(self.DeviceID, "(provided)")}
 
-        # -------------------------------------------------------------------
+        #-------------------------------------------------------------------
         # https://github.com/pyusb/pyusb/blob/master/docs/tutorial.rst
-        # -------------------------------------------------------------------
+        #-------------------------------------------------------------------
         found_available_ant_stick = False
-        # -------------------------------------------------------------------
+        #-------------------------------------------------------------------
         # Check the known (and supported) dongle types
         # Removed: if platform.system() in [ 'Windows', 'Darwin', 'Linux' ]:
-        # -------------------------------------------------------------------
+        #-------------------------------------------------------------------
         for dongle in dongles:
             ant_pid = dongle[0]
             try:
-                # -----------------------------------------------------------
+                #-----------------------------------------------------------
                 # Find the ANT-dongles of this type
                 # Note: filter on idVendor=0x0fcf is removed
-                # -----------------------------------------------------------
+                #-----------------------------------------------------------
                 self.Message = "No (free) ANT-dongle found"
                 devAntDongles = usb.core.find(find_all=True, idProduct=ant_pid)
             except Exception as e:
@@ -168,38 +172,36 @@ class clsAntDongle():
                 else:
                     self.Message = "GetDongle: " + str(e)
             else:
-                # -----------------------------------------------------------
+                #-----------------------------------------------------------
                 # Try all dongles of this type (as returned by usb.core.find)
-                # -----------------------------------------------------------
+                #-----------------------------------------------------------
                 for self.devAntDongle in devAntDongles:
-
-                        # prints "DEVICE ID 0fcf:1009 on Bus 000 Address 001 ================="
-                        # But .Bus and .Address not found for logging
-                    # -------------------------------------------------------
+                    #-------------------------------------------------------
                     # Initialize the dongle
-                    # -------------------------------------------------------
-                    try:  # check if in use
-                        # -------------------------------------------------------
+                    #-------------------------------------------------------
+                    try:                                   # check if in use
+                        #-------------------------------------------------------
                         # As suggested by @ElDonad Elie Donadio
-                        # -------------------------------------------------------
+                        #-------------------------------------------------------
                         if os.name == 'posix':
                             for config in self.devAntDongle:
                                 for i in range(config.bNumInterfaces):
                                     if self.devAntDongle.is_kernel_driver_active(i):
                                         self.devAntDongle.detach_kernel_driver(i)
-                        # -------------------------------------------------------
+                        #-------------------------------------------------------
                         self.devAntDongle.set_configuration()
 
                         for _ in range(2):
-                            # ---------------------------------------------------
+                            #---------------------------------------------------
                             # If not succesfull immediatly, repeat this
                             # As suggested by @martin-vi
-                            # ---------------------------------------------------
+                            #---------------------------------------------------
                             reset_string = self.msg4A_ResetSystem()  # reset string probe
-                            # same as ResetDongle()
-                            # done here to have explicit error-handling.
+                                                                # same as ResetDongle()
+                                                                # done here to have explicit error-handling.
                             self.devAntDongle.write(0x01, reset_string)
-                            time.sleep(0.500)  # after reset, 500ms before next action
+                            time.sleep(0.500)                           # after reset, 500ms before next action
+
 
                             reply = self.Read(False)
 
@@ -208,93 +210,110 @@ class clsAntDongle():
                                 synch, length, id, _info, _checksum, _rest, _c, _d = self.DecomposeMessage(s)
                                 if synch == 0xa4 and length == 0x01 and id == 0x6f:
                                     found_available_ant_stick = True
-                                    print("Using %s dongle" % self.devAntDongle.manufacturer)  # dongle[1]
+                                    self.Message = "Using %s dongle" %  self.devAntDongle.manufacturer # dongle[1]
                                     self.Message = self.Message.replace('\0', '')  # .manufacturer is NULL-terminated
                                     if 'CYCPLUS' in self.Message:
                                         self.Cycplus = True
 
-                            # ---------------------------------------------------
+                            #---------------------------------------------------
                             # If found, then done - else retry to reset
-                            # ---------------------------------------------------
+                            #---------------------------------------------------
                             if found_available_ant_stick: break
 
-                    except usb.core.USBError as e:  # cannot write to ANT dongle
+                    except usb.core.USBError as e:                  # cannot write to ANT dongle
                         self.Message = "GetDongle - ANT dongle in use"
 
                     except Exception as e:
                         self.Message = "GetDongle: " + str(e)
 
-                    # -------------------------------------------------------
+                    #-------------------------------------------------------
                     # If found, don't try the next ANT-dongle of this type
-                    # -------------------------------------------------------
+                    #-------------------------------------------------------
                     if found_available_ant_stick: break
 
-            # ---------------------------------------------------------------
+            #---------------------------------------------------------------
             # If found, don't try the next type
-            # ---------------------------------------------------------------
+            #---------------------------------------------------------------
             if found_available_ant_stick: break
 
-        # -------------------------------------------------------------------
+        #-------------------------------------------------------------------
         # Done
         # If no success, invalidate devAntDongle
-        # -------------------------------------------------------------------
+        #-------------------------------------------------------------------
         if not found_available_ant_stick: self.devAntDongle = None
         return found_available_ant_stick
 
-    # -----------------------------------------------------------------------
+    #-----------------------------------------------------------------------
     # W r i t e
-    # -----------------------------------------------------------------------
+    #-----------------------------------------------------------------------
     # input     messages    an array of data-buffers
     #
     #           receive     after sending the data, receive all responses
     #           drop        the caller does not process the returned data
     #
+    #           flush       read all available messages
+    #                       This flag is provided True on the first call in
+    #                       a loop, so that write() does not run into a
+    #                       filled ANT-dongle (device driver) because many
+    #                       messages are waiting to be processed.
+    #                       Default = True, which is safe behaviour
+    #                       2021-04-15 initial flush only done when data is
+    #                                  to be received, messages were lost!
+    #
     # function  write all strings to antDongle
     #           read responses from antDongle
     #
     # returns   rtn         the string-array as received from antDongle
-    # -----------------------------------------------------------------------
-    def Write(self, messages, receive=True, drop=True):
+    #-----------------------------------------------------------------------
+    def Write(self, messages, receive=True, drop=True, flush=True):
         rtn = []
-        #print(self.OK)
-        if self.OK:  # If no dongle ==> no action at all
+        if self.OK:                      # If no dongle ==> no action at all
+            #---------------------------------------------------------------
+            # Read all available messages first, it seems required to be
+            # able to write (if too many messages pending: Write exception,
+            # message lost)
+            #---------------------------------------------------------------
+            if receive and flush:
+                rtn = self.Read(drop)   # Flush -> default timeout = proven!
 
             for message in messages:
-                #print("this is the message: {0}".format(message))
-                # -----------------------------------------------------------
-                # Logging
-                # -----------------------------------------------------------
-                # -----------------------------------------------------------
                 # Send the message
                 # No error recovery here, will be done on the subsequent Read()
                 #       that fails, which is done either here or by application.
-                # -----------------------------------------------------------
+                #-----------------------------------------------------------
                 try:
-                    self.devAntDongle.write(0x01, message)  # input:   endpoint address, buffer, timeout
-                    # returns:
+                    self.devAntDongle.write(0x01,message)   # input:   endpoint address, buffer, timeout
+                                                            # returns:
                 except Exception as e:
-                    print("error {0}".format(e))
+                    pass
 
-                # -----------------------------------------------------------
-                # Read all responses
-                # -----------------------------------------------------------
-                if receive:
-                    data = self.Read(drop)
-                    #print("response: {0}".format(data))
+                #-----------------------------------------------------------
+                # Read all responses (after each write only when flushing!)
+                #-----------------------------------------------------------
+                if receive and flush:
+                    data = self.Read(drop) # Flush -> default timeout = proven!
                     for d in data: rtn.append(d)
+
+            #---------------------------------------------------------------
+            # Read all responses after having sent all messages.
+            # Not required when flushing, to avoid double timeout.
+            #---------------------------------------------------------------
+            if receive and not flush:
+                data = self.Read(drop, 1)       # Shortest possible timeout
+                for d in data: rtn.append(d)
 
         return rtn
 
-    # ---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     # R e a d
-    # ---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     # input     drop           the caller does not process the returned data
     #                          this flag impacts the logfile only!
     #
     # function  read response from antDongle
     #
     # returns   return array of data-buffers
-    # ---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     # Dongle disconnect recovery
     # summary           This is introduced for the CYCPLUS dongles that appear
     #                   do disconnect during a session. Reason unknown.
@@ -312,16 +331,27 @@ class clsAntDongle():
     #
     # ApplicationRestart must be called to reset the flag, a good place to do
     #                   this is before the channel-initiating routines
-    # ---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     def ApplicationRestart(self):
         self.DongleReconnected = False
 
-    def __ReadAndRetry(self):
-        failed = False
+    def __ReadAndRetry(self, timeout):
+        failed  = False
+        # ----------------------------------------------------------------------
+        # 2021-02-22 timeout was 20 untill now; but that causes too much delay!
+        #
+        # Zero is not allowed, so take 1 milli-second
+        #       Measurements however show, the delay still is 16 ms.
+        # But with a too short delay, sometimes incomplete buffers are returned
+        #       causing the message "characters skipped"
+        #       
+        # Now we have a default of 20ms, which can be overridden by the caller
+        # tipically in the ANT-loop, a short timeout will be specified.
+        # ----------------------------------------------------------------------
         try:
-            trv = []  # initialize because is processed even after exception
-            trv = self.devAntDongle.read(0x81, 1000, 20)  # input:   endpoint address, length, timeout
-            # returns: an array of bytes
+            trv = []                                        # initialize because is processed even after exception
+            trv = self.devAntDongle.read(0x81,1000,timeout) # input:  endpoint address, length, timeout
+                                                            # returns: an array of bytes
         # ----------------------------------------------------------------------
         # https://docs.python.org/3/library/exceptions.html
         # ----------------------------------------------------------------------
@@ -349,50 +379,50 @@ class clsAntDongle():
         while failed:
             time.sleep(1)
             if self.__GetDongle():
-                failed = False  # Exception resolved
+                failed = False       # Exception resolved
                 self.DongleReconnected = True
+
         return trv
 
-    def Read(self, drop):
-        # -------------------------------------------------------------------
+    def Read(self, drop, timeout = 20):
+        #-------------------------------------------------------------------
         # Read from antDongle untill no more data (timeout), or error
         # Usually, dongle gives one buffer at the time, starting with 0xa4
         # Sometimes, multiple messages are received together on one .read
         #
         # https://www.thisisant.com/forum/view/viewthread/812
-        # -------------------------------------------------------------------
+        #-------------------------------------------------------------------
         data = []
-        while self.OK:  # If no dongle ==> no action at all
-            trv = self.__ReadAndRetry()
+        while self.OK:                   # If no dongle ==> no action at all
+            trv = self.__ReadAndRetry(timeout)
             if len(trv) == 0:
                 break
             # --------------------------------------------------------------------------
             # Handle content returned by .read()
             # --------------------------------------------------------------------------
 
-
             start = 0
             while start < len(trv):
                 error = False
-                # -------------------------------------------------------
+                #-------------------------------------------------------
                 # Each message starts with a4; skip characters if not
-                # -------------------------------------------------------
+                #-------------------------------------------------------
                 skip = start
                 while skip < len(trv) and trv[skip] != 0xa4:
                     skip += 1
                 if skip != start:
                     start = skip
-                # -------------------------------------------------------
+                #-------------------------------------------------------
                 # Second character in the buffer (element in trv) is length of
                 # the info; add four for synch, len, id and checksum
-                # -------------------------------------------------------
+                #-------------------------------------------------------
                 if start + 1 < len(trv):
                     length = trv[start + 1] + 4
                     if start + length <= len(trv):
-                        # -------------------------------------------------------
+                        #-------------------------------------------------------
                         # Check length and checksum
                         # Append to return array when correct
-                        # -------------------------------------------------------
+                        #-------------------------------------------------------
                         d = bytes(trv[start: start + length])
                         checksum = d[-1:]
                         expected = self.CalcChecksum(d)
@@ -400,20 +430,19 @@ class clsAntDongle():
                         if expected != checksum:
                             error = "error: checksum incorrect"
                         else:
-                            data.append(d)  # add data to array
+                            data.append(d)                         # add data to array
                     else:
                         error = "error: message exceeds buffer length"
                         break
                 else:
                     break
-
-                # -------------------------------------------------------
+                #-------------------------------------------------------
                 # Next buffer in trv
-                # -------------------------------------------------------
+                #-------------------------------------------------------
                 start += length
         return data
 
-    # -----------------------------------------------------------------------
+    #-----------------------------------------------------------------------
     # Standard dongle commands
     # Observation: all commands have two bytes 00 00 for which purpose is unclear
     # ------------------------------------------------------------------------------
@@ -421,18 +450,16 @@ class clsAntDongle():
     #   ANT:     D00000652_ANT_Message_Protocol_and_Usage_Rev_5.1.pdf
     #   trainer: D000001231_-_ANT+_Device_Profile_-_Fitness_Equipment_-_Rev_5.0_(6).pdf
     #   hrm:     D00000693_-_ANT+_Device_Profile_-_Heart_Rate_Rev_2.1.pdf
-    # ---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
     def Calibrate(self):
-
         self.ResetDongle()
-        print("calibration")
 
-        messages = [
-            self.msg4D_RequestMessage(0, self.msgID_Capabilities),  # request max channels
-            self.msg4D_RequestMessage(0, self.msgID_ANTversion),  # request ant version
+        messages=[
+            self.msg4D_RequestMessage(0, self.msgID_Capabilities),   # request max channels
+            self.msg4D_RequestMessage(0, self.msgID_ANTversion),     # request ant version
             self.msg46_SetNetworkKey(),
             #self.msg46_SetNetworkKey(NetworkNumber=0x01, NetworkKey=0x00),
-            # network for Tacx i-Vortex
+            # network for Tacx i-Vortex                                                                # network for Tacx i-Vortex
         ]
         self.Write(messages)
 
@@ -447,8 +474,7 @@ class clsAntDongle():
                 self.msg4A_ResetSystem(),
             ]
             self.Write(messages, False)
-        time.sleep(0.500)  # After Reset, 500ms before next action
-
+        time.sleep(0.500)                           # After Reset, 500ms before next action
 
     def Trainer_ChannelConfig(self):
         messages = [
@@ -459,9 +485,35 @@ class clsAntDongle():
             self.msg60_ChannelTransmitPower(self.channel_FE, self.TransmitPower_0dBm),
             self.msg4B_OpenChannel(self.channel_FE)
         ]
-        print("create Channel")
+        print("create ANT+ FE Channel")
         self.Write(messages)
 
+    def HRM_ChannelConfig(self):
+        messages=[
+            self.msg42_AssignChannel(self.channel_HRM, self.ChannelType_BidirectionalTransmit, NetworkNumber=0x00),
+            self.msg51_ChannelID(self.channel_HRM, self.DeviceNumber_HRM, self.DeviceTypeID_HRM, self.TransmissionType_IC),
+            self.msg45_ChannelRfFrequency(self.channel_HRM, self.RfFrequency_2457Mhz),
+            self.msg43_ChannelPeriod(self.channel_HRM, ChannelPeriod=8070),          # 4,06 Hz
+            self.msg60_ChannelTransmitPower(self.channel_HRM, self.TransmitPower_0dBm),
+            self.msg4B_OpenChannel(self.channel_HRM)
+        ]
+        print("create ANT+ HRM Channel")
+        self.Write(messages)     
+
+    def SlaveHRM_ChannelConfig(self, DeviceNumber):
+        messages=[
+            self.msg42_AssignChannel(self.channel_HRM_s, self.ChannelType_BidirectionalReceive, NetworkNumber=0x00),
+            self.msg51_ChannelID(self.channel_HRM_s, DeviceNumber, self.DeviceTypeID_HRM, 0),
+            self.msg45_ChannelRfFrequency(self.channel_HRM_s, self.RfFrequency_2457Mhz),
+            self.msg43_ChannelPeriod(self.channel_HRM_s, ChannelPeriod=8070),        # 4,06 Hz
+            self.msg60_ChannelTransmitPower(self.channel_HRM_s, self.TransmitPower_0dBm),
+            self.msg44_ChannelSearchTimeout(self.channel_HRM_s, 255),
+            self.msg4B_OpenChannel(self.channel_HRM_s),
+            self.msg4D_RequestMessage(self.channel_HRM_s, self.msgID_ChannelID)
+        ]
+        print("create ANT+ HRM Slave Channel device=%d" % DeviceNumber)
+        self.Write(messages)
+        
     # -------------------------------------------------------------------------------
     # E n u m e r a t e A l l
     # -------------------------------------------------------------------------------
@@ -510,8 +562,6 @@ class clsAntDongle():
         length += 3  # Add synch, len, id
         for i in range(0, length):  # Process bytes as defined in length
             xor_value = xor_value ^ message[i]
-
-        #   print('checksum', logfile.HexSpace(message), xor_value, bytes([xor_value]))
 
         return bytes([xor_value])
 
@@ -601,6 +651,14 @@ class clsAntDongle():
         msg = self.ComposeMessage(0x43, info)
         return msg
 
+    # ------------------------------------------------------------------------------
+    # A N T   M e s s a g e   44   C h a n n e l S e a r c h T i m e o u t
+    # ------------------------------------------------------------------------------
+    def msg44_ChannelSearchTimeout(self, ChannelNumber, SearchTimeout):
+        format  =    sc.no_alignment + sc.unsigned_char + sc.unsigned_short
+        info    = struct.pack(format,  ChannelNumber,     SearchTimeout)
+        msg     = self.ComposeMessage (0x44, info)
+        return msg
 
     # ------------------------------------------------------------------------------
     # A N T   M e s s a g e   45   C h a n n e l R f F r e q u e n c y
@@ -615,13 +673,11 @@ class clsAntDongle():
     # ------------------------------------------------------------------------------
     # A N T   M e s s a g e   46   S e t N e t w o r k K e y
     # ------------------------------------------------------------------------------
-    def msg46_SetNetworkKey(self, NetworkNumber=0x00, NetworkKey=0x45c372bdfb21a5b9):
+    def msg46_SetNetworkKey(self, NetworkNumber = 0x00, NetworkKey=0x45c372bdfb21a5b9):
         format = sc.no_alignment + sc.unsigned_char + sc.unsigned_long_long
         info = struct.pack(format, NetworkNumber, NetworkKey)
-        print("set Networkkey:{0}".format(info))
         msg = self.ComposeMessage(0x46, info)
         return msg
-
 
     # ------------------------------------------------------------------------------
     # A N T   M e s s a g e   4A   R e s e t   S y s t e m
@@ -948,3 +1004,18 @@ class clsAntDongle():
         tuple = struct.unpack(format, info)
 
         return tuple[0], tuple[1], tuple[2], tuple[3], tuple[4], tuple[5]
+
+    def msgUnpage_Hrm(self,info):
+        fChannel = sc.unsigned_char  #0 First byte of the ANT+ message content
+        fDataPageNumber = sc.unsigned_char  #1 First byte of the ANT+ datapage (payload)
+        fSpec1 = sc.unsigned_char  #2
+        fSpec2 = sc.unsigned_char  #3
+        fSpec3 = sc.unsigned_char  #4
+        fHeartBeatEventTime = sc.unsigned_short #5
+        fHeartBeatCount = sc.unsigned_char  #6
+        fHeartRate = sc.unsigned_char  #7
+
+        format = sc.no_alignment + fChannel + fDataPageNumber + fSpec1 + fSpec2 + fSpec3 + fHeartBeatEventTime +  fHeartBeatCount + fHeartRate
+        tuple = struct.unpack (format, info)
+
+        return tuple[0], tuple[1], tuple[2], tuple[3], tuple[4], tuple[5], tuple[6], tuple[7]
