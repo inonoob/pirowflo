@@ -1,7 +1,7 @@
 # PiRowFlo for Waterrower
 
 
-15.02.2022: SmartRow with version 3.00 has been seen in the wild. This smartrow version is NOT working with PiRowFlo! Under investigation.
+15.02.2022: SmartRow with version 3.00 has been seen in the wild. This smartrow version is NOT working with PiRowFlo! SmartRow has introduced a new checksum methode to lockout third parties. That means the Pi can't talk to the SmartRow! 
 14.11.2021: fixed pip install issue with pyusb in requirements.txt
 
 <img src="docs/logo/PIROWFLO2.png" width=36% height=36%>
