@@ -24,6 +24,8 @@ class DataLogger():
     SECOND_PART_FORCE_CURVE_MESSAGE = "y"
     THIRD_PARD_FORCE_CURVE_MESSAGE = "z"
 
+    SmartRowV3 = False
+
     def __init__(self, rower_interface):
         self._rower_interface = rower_interface
         self._rower_interface.register_callback(self.on_row_event)
@@ -77,74 +79,153 @@ class DataLogger():
         else:
             self.WRValues.update({'elapsedtime': 0})
 
+    # Response for SmartRow V3
+    def calculate_challenge_response(self, keylock):
+        try:
+            key=keylock[1:15]
+            checksum=keylock[15:17]
+            cksum=f'{(sum(ord(ch) for ch in key)):0>4X}'
+
+            if cksum[-2:] == checksum:
+                print("Checksum GOOD")
+                a=(int(keylock[11:15],16) * 17923) // 256
+                result=f'{a:0>6x}'[2:]
+                
+                response=[0x0d]
+                for c in result:
+                    response.append(ord(c))
+                response.append(0x0d)
+                
+                print(response)
+                return response
+            else:
+                print("Checksum BAD")
+
+        except Exception as e:
+            print(e)
+
+        # return 0x23 on failure
+        return [0x23]
+
+    def send_challenge_response(self, key):
+        print("--> Sending challenge response")
+
+        for b in key:
+            self._rower_interface.characteristic_write_value(struct.pack("<b",b))
+            sleep(0.1)
+
+    # SmartRow V3 obfuscates the first 6 characters
+    def parse_v3_decrypt(self, event):
+        try:
+            s = ''
+            for c in event[1:6]:
+                s += chr(int(ord(c) & 15 | 0x30))
+
+            r = event[0] + s + event[6:]
+            return r
+
+        except Exception as e:
+            print(e)
+            print(event)
+            return event
+
     def on_row_event(self, event):
-        if event[0] == self.ENERGIE_KCAL_MESSAGE:
-            event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:6]))})
-            self.WRValues.update({'total_kcal': int((event[6:10]))})
-            self.elapsedtime()
+        if 'V3.00' in event:
+            self.SmartRowV3 = True
+            self._rower_interface.characteristic_write_value(struct.pack("<b", 0x23))
 
-        if event[0] == self.WORK_STROKE_LENGTH_MESSAGE:
-            event = event.replace(" ", "0")
-            #print(event)
-            self.WRValues.update({'total_distance_m': int((event[1:6]))})
-            self.WRValues.update({'work': float(event[7:11])/10})
-            self.WRValues.update({'stroke_length': int((event[11:14]))})
-            self.elapsedtime()
+        elif 'KEYLOCK' in event:
+            try:
+                self.SmartRowV3 = True
+                key = self.calculate_challenge_response(event)
+                self.send_challenge_response(key)
+            except Exception as e:
+                print("Exception in KEYLOCK event!")
+                print(str(e))
 
-        if event[0] == self.POWER_MESSAGE:
-            event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:6]))})
-            if self.SmartRowHalt == True:
-                self.WRValues.update({'watts': 0})
-            else:
-                self.WRValues.update({'watts': int((event[6:9]))})
-            self.WRValues.update({'watts_avg': float((event[9:14]))/10})
-            self.elapsedtime()
+        # Un-obfuscate SmartRow V3 distance data
+        if self.SmartRowV3 is True:
+            event = self.parse_v3_decrypt(event)
 
-        if event[0] == self.STROKE_RATE_STROKE_COUNT_MESSAGE:
-            event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:6]))})
-            if self.SmartRowHalt == True:
-                self.WRValues.update({'stroke_rate': 0})
-            else:
-                self.WRValues.update({'stroke_rate': float((event[6:8]))*2})
-            self.WRValues.update({'total_strokes':int((event[9:13]))})
-            self.elapsedtime()
+        try:
+            if event[0] == self.ENERGIE_KCAL_MESSAGE:
+                event = event.replace(" ", "0")
+                self.WRValues.update({'total_distance_m': int((event[1:6]))})
+                self.WRValues.update({'total_kcal': int((event[6:10]))})
+                self.elapsedtime()
 
-        if event[0] == self.PACE_MESSAGE:
-            event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:6]))})
-            pace_inst = int(event[6])*60 + int(event[7:9])
-            if self.SmartRowHalt == True:
-                self.WRValues.update({'instantaneous pace': 0})
-                self.WRValues.update({'speed': 0})
-            else:
-                self.WRValues.update({'instantaneous pace': pace_inst})
-            if pace_inst != 0:
-                speed = int(500 * 100 / pace_inst) # speed in cm/s
-                self.WRValues.update({'speed': speed})
-            else:
-                self.WRValues.update({'speed': 0})
-            pace_avg = int(event[9])*60 + int(event[10:12])
-            self.WRValues.update({'pace_avg': pace_avg})
-            self.elapsedtime()
+            elif event[0] == self.WORK_STROKE_LENGTH_MESSAGE:
+                event = event.replace(" ", "0")
+                #print(event)
+                self.WRValues.update({'total_distance_m': int((event[1:6]))})
+                self.WRValues.update({'work': float(event[7:11])/10})
+                self.WRValues.update({'stroke_length': int((event[11:14]))})
+                self.elapsedtime()
 
-        if event[0] == self.FORCE_MESSAGE:
-            event = event.replace(" ", "0")
-            self.WRValues.update({'total_distance_m': int((event[1:6]))})
-            self.WRValues.update({'force': int((event[7:11]))})
-            if event[11] == "!":
-                self.SmartRowHalt = True
-                self.fullstop = True
-            elif self.starttime == None:
-                self.starttime = time.time()
-                self.SmartRowHalt = False
-                self.fullstop = False
+            elif event[0] == self.POWER_MESSAGE:
+                event = event.replace(" ", "0")
+                self.WRValues.update({'total_distance_m': int((event[1:6]))})
+                if self.SmartRowHalt == True:
+                    self.WRValues.update({'watts': 0})
+                else:
+                    self.WRValues.update({'watts': int((event[6:9]))})
+                self.WRValues.update({'watts_avg': float((event[9:14]))/10})
+                self.elapsedtime()
+
+            elif event[0] == self.STROKE_RATE_STROKE_COUNT_MESSAGE:
+                event = event.replace(" ", "0")
+                self.WRValues.update({'total_distance_m': int((event[1:6]))})
+                if self.SmartRowHalt == True:
+                    self.WRValues.update({'stroke_rate': 0})
+                else:
+                    self.WRValues.update({'stroke_rate': float((event[6:8]))*2})
+                self.WRValues.update({'total_strokes':int((event[9:13]))})
+                self.elapsedtime()
+
+            elif event[0] == self.PACE_MESSAGE:
+                event = event.replace(" ", "0")
+                self.WRValues.update({'total_distance_m': int((event[1:6]))})
+                pace_inst = int(event[6])*60 + int(event[7:9])
+                if self.SmartRowHalt == True:
+                    self.WRValues.update({'instantaneous pace': 0})
+                    self.WRValues.update({'speed': 0})
+                else:
+                    self.WRValues.update({'instantaneous pace': pace_inst})
+                if pace_inst != 0:
+                    speed = int(500 * 100 / pace_inst) # speed in cm/s
+                    self.WRValues.update({'speed': speed})
+                else:
+                    self.WRValues.update({'speed': 0})
+                pace_avg = int(event[9])*60 + int(event[10:12])
+                self.WRValues.update({'pace_avg': pace_avg})
+                self.elapsedtime()
+
+            elif event[0] == self.FORCE_MESSAGE:
+                event = event.replace(" ", "0")
+                self.WRValues.update({'total_distance_m': int((event[1:6]))})
+                
+                # It doesn't look like V3 has data in this field
+                if not self.SmartRowV3:
+                    self.WRValues.update({'force': int((event[7:11]))})
+
+                if event[11] == "!":
+                    self.SmartRowHalt = True
+                    self.fullstop = True
+                elif self.starttime == None:
+                    self.starttime = time.time()
+                    self.SmartRowHalt = False
+                    self.fullstop = False
+                else:
+                    self.SmartRowHalt = False
+                    self.fullstop = False
+                self.elapsedtime()
+
             else:
-                self.SmartRowHalt = False
-                self.fullstop = False
-            self.elapsedtime()
+                self._rower_interface.characteristic_write_value(struct.pack("<b", 0x23))
+
+        except Exception as e:
+            print(e)
+            print(event)
 
         print(self.WRValues)
 
