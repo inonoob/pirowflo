@@ -26,14 +26,14 @@ Read the LICENCE first, by using this software you agree to the licence.
 |        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher | Holofit| 
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:     
 |Android | test pending  | :heavy_check_mark: | devs need to update app                  | :heavy_check_mark:           |  :heavy_check_mark:           |
-|iOS     | test pending  | :heavy_check_mark: | :heavy_check_mark:         |  -                           | :heavy_check_mark:           |
+|iOS     | :heavy_check_mark:  | :heavy_check_mark: | :heavy_check_mark:         |  -                           | :heavy_check_mark:           |
 
 ## Supported Apps SmartRow (23.02.2021)
 
 |        | Kinomap (BLE) | Cityrowgo (BLE)      | waterrower connect (BLE)   | Coxswain (BLE) 7.9 or higher |Holofit | 
 |:------:|:------:       |:------------:      |:-----:                     |:-------:                     |:-------:  |
 |Android | test pending  | test pending | devs need to update app                   | :heavy_check_mark:           |  :heavy_check_mark:           |
-|iOS     | test pending  | :heavy_check_mark:   | :heavy_check_mark:         |  -                           | :heavy_check_mark:           |
+|iOS     | :heavy_check_mark: | :heavy_check_mark:   | :heavy_check_mark:         |  -                           | :heavy_check_mark:           |
 
 
 ## Supported Watches (14.01.2021)
