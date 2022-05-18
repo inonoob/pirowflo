@@ -1,7 +1,6 @@
 import itertools
 import time
 import binascii
-import numpy as np
 
 result = []
 
