@@ -7,7 +7,6 @@ import threading
 import time
 import datetime
 import logging
-import numpy
 from copy import deepcopy
 
 from . import waterrowerinterface
@@ -186,7 +185,7 @@ class DataLogger(object):
             while len(self._InstaPowerStroke) > POWER_AVG_STROKES:
                 self._InstaPowerStroke.pop(0)
             if len(self._InstaPowerStroke) == POWER_AVG_STROKES:
-                self.AvgInstaPower = int(numpy.average(self._InstaPowerStroke))
+                self.AvgInstaPower = int(sum(self._InstaPowerStroke) / len(self._InstaPowerStroke))
                 self.WRValues.update({'watts': self.AvgInstaPower})
 
 
