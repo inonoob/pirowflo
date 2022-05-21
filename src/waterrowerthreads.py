@@ -54,6 +54,7 @@ class Graceful:
         logger.info("Quit gracefully program has been interrupt externally - exiting")
         Mainlock.release()
 
+
 def main(args=None):
     logging.config.fileConfig(loggerconfigpath, disable_existing_loggers=False)
     grace = Graceful()
@@ -69,14 +70,15 @@ def main(args=None):
         Waterrowerserial = wrtobleant.main(in_q, ble_out_q, ant_out_q)
         Waterrowerserial()
 
+
     def Smartrow(in_q, ble_out_q, ant_out_q):
         logger.info("Smartrow Interface started")
         Smartrowconnection = smartrowtobleant.main(in_q, ble_out_q, ant_out_q)
         Smartrowconnection()
 
-    def ANTService(ant_in_q):
+    def ANTService(in_q, ant_in_q):
         logger.info("Start Ant and start broadcast data")
-        antService = waterrowerant.main(ant_in_q)
+        antService = waterrowerant.main(in_q, ant_in_q)
         antService()
 
 
@@ -111,8 +113,7 @@ def main(args=None):
     else:
         logger.info("Bluetooth service not used")
     if args.antfe == True:
-        t = threading.Thread(target=ANTService, args=(
-        [ant_q]))  # [] are needed to tell threading that the list "deque" is one args and not a list of arguement !
+        t = threading.Thread(target=ANTService, args=(q, ant_q))
         t.daemon = True
         t.start()
         threads.append(t)

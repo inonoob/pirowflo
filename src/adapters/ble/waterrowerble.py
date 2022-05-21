@@ -6,6 +6,7 @@
 # ---------------------------------------------------------------------------
 #
 import logging
+from queue import Empty
 import signal
 import dbus
 import dbus.exceptions
@@ -88,11 +89,8 @@ def request_reset_ble():
 
 def Convert_Waterrower_raw_to_byte():
 
-    WaterrowerValuesRaw = ble_in_q_value.pop()
     WRBytearray = []
     #print("Ble Values: {0}".format(WaterrowerValuesRaw))
-    for keys in WaterrowerValuesRaw:
-        WaterrowerValuesRaw[keys] = int(WaterrowerValuesRaw[keys])
     #todo refactor this part with the correct struct.pack e.g. 2 bytes use "H" instand of bitshifiting ?
     #print(WaterrowerValuesRaw)
     WRBytearray.append(struct.pack("B", (WaterrowerValuesRaw['stroke_rate'] & 0xff)))
@@ -148,12 +146,12 @@ class ManufacturerNameString(Characteristic):
         return self.value
 
 class ModelNumberString(Characteristic):
-    MANUFACTURER_NAME_STRING_UUID = '2a24'
+    MODEL_NUMBER_STRING_UUID = '2a24'
 
     def __init__(self, bus, index, service):
         Characteristic.__init__(
             self, bus, index,
-            self.MANUFACTURER_NAME_STRING_UUID,
+            self.MODEL_NUMBER_STRING_UUID,
             ['read'],
             service)
         self.notifying = False
@@ -284,6 +282,7 @@ class FitnessMachineFeature(Characteristic):
 
 class RowerData(Characteristic):
     ROWING_UUID = '2ad1'
+    last_values = {}
 
     def __init__(self, bus, index, service):
         Characteristic.__init__(
@@ -295,29 +294,23 @@ class RowerData(Characteristic):
         self.iter = 0
 
     def Waterrower_cb(self):
-
-        if ble_in_q_value:
-
-            Waterrower_byte_values = Convert_Waterrower_raw_to_byte()
-
+        Waterrower_byte_values = Convert_Waterrower_raw_to_byte()
+        if self.last_values != Waterrower_byte_values:
+            self.last_values = Waterrower_byte_values 
             value = [dbus.Byte(0x2C), dbus.Byte(0x0B),
-                     dbus.Byte(Waterrower_byte_values[0]), dbus.Byte(Waterrower_byte_values[1]), dbus.Byte(Waterrower_byte_values[2]),
-                     dbus.Byte(Waterrower_byte_values[3]), dbus.Byte(Waterrower_byte_values[4]), dbus.Byte(Waterrower_byte_values[5]),
-                     dbus.Byte(Waterrower_byte_values[6]), dbus.Byte(Waterrower_byte_values[7]),
-                     dbus.Byte(Waterrower_byte_values[8]), dbus.Byte(Waterrower_byte_values[9]),
-                     dbus.Byte(Waterrower_byte_values[10]), dbus.Byte(Waterrower_byte_values[11]),dbus.Byte(Waterrower_byte_values[12]),dbus.Byte(Waterrower_byte_values[13]),dbus.Byte(Waterrower_byte_values[14]),
-                     dbus.Byte(Waterrower_byte_values[15]),
-                     dbus.Byte(Waterrower_byte_values[16]), dbus.Byte(Waterrower_byte_values[17]),
-                     ]
-
+                dbus.Byte(Waterrower_byte_values[0]), dbus.Byte(Waterrower_byte_values[1]), dbus.Byte(Waterrower_byte_values[2]),
+                dbus.Byte(Waterrower_byte_values[3]), dbus.Byte(Waterrower_byte_values[4]), dbus.Byte(Waterrower_byte_values[5]),
+                dbus.Byte(Waterrower_byte_values[6]), dbus.Byte(Waterrower_byte_values[7]),
+                dbus.Byte(Waterrower_byte_values[8]), dbus.Byte(Waterrower_byte_values[9]),
+                dbus.Byte(Waterrower_byte_values[10]), dbus.Byte(Waterrower_byte_values[11]),dbus.Byte(Waterrower_byte_values[12]),dbus.Byte(Waterrower_byte_values[13]),dbus.Byte(Waterrower_byte_values[14]),
+                dbus.Byte(Waterrower_byte_values[15]),
+                dbus.Byte(Waterrower_byte_values[16]), dbus.Byte(Waterrower_byte_values[17]),
+                ]
             self.PropertiesChanged(GATT_CHRC_IFACE, { 'Value': value }, [])
-            return self.notifying
-        else:
-            logger.warning("no data from s4 interface")
-            pass
+        return self.notifying
 
     def _update_Waterrower_cb_value(self):
-        print('Update Waterrower Data')
+        print('Update Waterrower Rower Data')
 
         if not self.notifying:
             return
@@ -380,39 +373,58 @@ class FitnessMachineControlPoint(Characteristic):
             print('Reset')
             self.fmcp_cb(byte)
 
-# class HeartRate(Service):
-#     HEART_RATE = '180D'
-#
-#     def __init__(self, bus, index):
-#         Service.__init__(self, bus, index, self.HEART_RATE, True)
-#         self.add_characteristic(HeartRateMeasurement(bus, 0, self))
-#
-# class HeartRateMeasurement(Characteristic):
-#     HEART_RATE_MEASUREMENT = '2a37'
-#
-#     def __init__(self, bus, index, service):
-#         Characteristic.__init__(
-#             self, bus, index,
-#             self.HEART_RATE_MEASUREMENT,
-#             ['notify'],
-#             service)
-#         self.notifying = False
-#
-#
-#
-#     def StartNotify(self):
-#         if self.notifying:
-#             print('Already notifying, nothing to do')
-#             return
-#
-#         self.notifying = True
-#
-#     def StopNotify(self):
-#         if not self.notifying:
-#             print('Not notifying, nothing to do')
-#             return
-#
-#         self.notifying = False
+class HeartRate(Service):
+    HEART_RATE = '180D'
+
+    def __init__(self, bus, index):
+        Service.__init__(self, bus, index, self.HEART_RATE, True)
+        self.add_characteristic(HeartRateMeasurement(bus, 0, self))
+
+class HeartRateMeasurement(Characteristic):
+    HEART_RATE_MEASUREMENT = '2a37'
+    last_hr = 0
+
+    def __init__(self, bus, index, service):
+        Characteristic.__init__(
+            self, bus, index,
+            self.HEART_RATE_MEASUREMENT,
+            ['notify'],
+            service)
+        self.notifying = False
+
+    def Waterrower_cb(self):
+        hr = WaterrowerValuesRaw['heart_rate'];
+        if self.last_hr != hr:
+            self.last_hr = hr
+            print("new ble hr: %d" % self.last_hr)
+            value = [dbus.Byte(0),dbus.Byte(self.last_hr & 0xff)]
+
+            self.PropertiesChanged(GATT_CHRC_IFACE, { 'Value': value }, [])
+        return self.notifying
+
+    def _update_Waterrower_cb_value(self):
+        print('Update Waterrower HR Data')
+
+        if not self.notifying:
+            return
+
+        GLib.timeout_add(1000, self.Waterrower_cb)
+
+    def StartNotify(self):
+        if self.notifying:
+            print('Already notifying, nothing to do')
+            return
+
+        print('Start HR Notify')
+        self.notifying = True
+        self._update_Waterrower_cb_value()
+        
+    def StopNotify(self):
+        if not self.notifying:
+            print('Not notifying, nothing to do')
+            return
+
+        self.notifying = False
 
 
 class FTMPAdvertisement(Advertisement):
@@ -423,7 +435,7 @@ class FTMPAdvertisement(Advertisement):
         )
         self.add_service_uuid(DeviceInformation.DEVICE_INFORMATION_UUID)
         self.add_service_uuid(FTMservice.FITNESS_MACHINE_UUID)
-        #self.add_service_uuid(HeartRate.HEART_RATE)
+        self.add_service_uuid(HeartRate.HEART_RATE)
 
         #self.add_local_name("S4 Comms PI")
         self.add_local_name("PiRowFlo")
@@ -445,6 +457,23 @@ def sigint_handler(sig, frame):
         raise ValueError("Undefined handler for '{}' ".format(sig))
 
 AGENT_PATH = "/com/inonoob/agent"
+
+WaterrowerValuesRaw_polled = None
+
+def Waterrower_poll():
+    global WaterrowerValuesRaw
+    global WaterrowerValuesRaw_polled
+
+    if ble_in_q_value:
+        WaterrowerValuesRaw = ble_in_q_value.pop()
+        for keys in WaterrowerValuesRaw:
+            WaterrowerValuesRaw[keys] = int(WaterrowerValuesRaw[keys])
+
+        if WaterrowerValuesRaw_polled != WaterrowerValuesRaw:
+            WaterrowerValuesRaw_polled = WaterrowerValuesRaw
+            print("rower", WaterrowerValuesRaw_polled)
+
+    return True
 
 
 def main(out_q,ble_in_q): #out_q
@@ -484,7 +513,9 @@ def main(out_q,ble_in_q): #out_q
     app = Application(bus)
     app.add_service(DeviceInformation(bus, 1))
     app.add_service(FTMservice(bus, 2))
-    #app.add_service(HeartRate(bus,3))
+    app.add_service(HeartRate(bus,3))
+
+    GLib.timeout_add(100, Waterrower_poll)
 
     mainloop = MainLoop()
 
