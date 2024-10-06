@@ -164,10 +164,9 @@ class DataLogger(object):
     def TimeElapsedcreator(self):
         self.elapsetime = datetime.timedelta(seconds=self.secondsWR, minutes=self.minutesWR, hours=self.hoursWR)
         self.elapsetime = int(self.elapsetime.total_seconds())
-        if  self.elapsetime >= self.elapsetimeprevious:
         # print('sec:{0};min:{1};hr:{2}'.format(self.secondsWR,self.minutesWR,self.hoursWR))
-            self.WRValues.update({'elapsedtime': self.elapsetime})
-            self.elapsetimeprevious = self.elapsetime
+        self.WRValues.update({'elapsedtime': self.elapsetime})
+        self.elapsetimeprevious = self.elapsetime
 
     def WRValuesStandstill(self):
         self.WRValues_standstill = deepcopy(self.WRValues)
