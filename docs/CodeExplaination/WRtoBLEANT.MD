@@ -29,7 +29,6 @@ The script start with the import of the needed modules and also with the Waterro
     import time
     import datetime
     import logging
-    import numpy
     
     import WaterrowerInterface
 
