@@ -25,7 +25,8 @@ Depeding on thoses cases send to the bluetooth module only the value dict with t
 
 IGNORE_LIST = ['graph', 'tank_volume', 'display_sec_dec']
 POWER_AVG_STROKES = 4
-
+ext_hr = 0
+ext_hr_time = -1
 
 class DataLogger(object):
     def __init__(self, rower_interface):
@@ -129,7 +130,7 @@ class DataLogger(object):
         if event['type'] == 'total_kcal_min':  # must calclatre it first
             self.WRValues.update({'total_kcal': 0})
         if event['type'] == 'heart_rate':
-            self.WRValues.update({'heart_rate': (event['value'])})  # in cal
+            self.WRValues.update({'heart_rate': (event['value'])})
         if event['type'] == 'display_sec':
             self.secondsWR = event['value']
         if event['type'] == 'display_min':
@@ -171,6 +172,7 @@ class DataLogger(object):
         self.WRValues_standstill = deepcopy(self.WRValues)
         self.WRValues_standstill.update({'stroke_rate': 0})
         self.WRValues_standstill.update({'instantaneous pace': 0})
+        self.WRValues_standstill.update({'heart_rate': 0})
         self.WRValues_standstill.update({'speed': 0})
         self.WRValues_standstill.update({'watts': 0})
 
@@ -188,13 +190,17 @@ class DataLogger(object):
                 self.WRValues.update({'watts': self.AvgInstaPower})
 
 
-    def get_WRValues(self):
+    def get_WRValues(self):                
         if self.rowerreset:
-            return deepcopy(self.WRValues_rst)
+            values = deepcopy(self.WRValues_rst)
         elif self.PaddleTurning:
-            return deepcopy(self.WRValues)
+            values = deepcopy(self.WRValues)
         else:
-            return deepcopy(self.WRValues_standstill)
+            values = deepcopy(self.WRValues_standstill)
+        if values['heart_rate'] == 0:
+            if ext_hr != 0 and time.time() - ext_hr_time < 30: # don't report stale values
+                values['heart_rate'] = ext_hr
+        return values
 
     def SendToBLE(self):
         self.BLEvalues = self.get_WRValues()
@@ -204,6 +210,8 @@ class DataLogger(object):
         self.ANTvalues = self.get_WRValues()
 
 def main(in_q, ble_out_q,ant_out_q):
+    global ext_hr
+    global ext_hr_time
     S4 = waterrowerinterface.Rower()
     S4.open()
     S4.reset_request()
@@ -212,8 +220,17 @@ def main(in_q, ble_out_q,ant_out_q):
     while True:
         if not in_q.empty():
             ResetRequest_ble = in_q.get()
-            print(ResetRequest_ble)
-            S4.reset_request()
+            #print(ResetRequest_ble)
+            parts = ResetRequest_ble.split()
+            cmd = parts[0]
+            if cmd == "reset_ble":
+                S4.reset_request()
+            elif cmd == "hr":
+                new_hr = int(parts[1])
+                if new_hr != ext_hr:
+                    ext_hr = new_hr
+                    ext_hr_time = time.time()
+                    print("ext_hr", ext_hr) 
         else:
             pass
         WRtoBLEANT.SendToBLE()
