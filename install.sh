@@ -31,10 +31,19 @@ echo "----------------------------------------------"
 echo "installed needed packages for python          "
 echo "----------------------------------------------"
 
-sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev libglib2.0-dev libgirepository1.0-dev libcairo2-dev zlib1g-dev libfreetype6-dev liblcms2-dev libopenjp2-7 libtiff5
+sudo apt-get install -y python3 python3-gi python3-venv python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev libglib2.0-dev libgirepository1.0-dev libcairo2-dev zlib1g-dev libfreetype6-dev liblcms2-dev libopenjp2-7 libtiff6 build-essential libpython3-dev libdbus-1-dev
 
 echo " "
+echo "--------------------------------------------------"
+echo "create and activate virtual environment for python"
+echo "--------------------------------------------------"
+echo " "
 
+sudo python3 -m venv .venv
+sudo source ./venv/bin/activate
+
+# confirm virtual environment is activate
+sudo which python
 
 echo " "
 echo "----------------------------------------------"
