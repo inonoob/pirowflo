@@ -1,2 +1,5 @@
 .idea/
 venv/
+src/pirowflo.log
+*.pyc
+__pycache__/
