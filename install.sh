@@ -166,7 +166,7 @@ echo " setup screen setting to start up at boot                   "
 echo "------------------------------------------------------------"
 echo " "
 
-sudo sed -i 's/#dtparam=spi=on/dtparam=spi=on/g' /boot/config.txt
+sudo sed -i 's/#dtparam=spi=on/dtparam=spi=on/g' /boot/firmware/config.txt
 sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/adapters/screen/settings.ini
 
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/screen.service
