@@ -28,13 +28,34 @@ sudo apt-get update
 
 echo " "
 echo "----------------------------------------------"
-echo "installed needed packages for python          "
+echo "install needed packages for python          "
 echo "----------------------------------------------"
-
-sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev libglib2.0-dev libgirepository1.0-dev libcairo2-dev zlib1g-dev libfreetype6-dev liblcms2-dev libopenjp2-7 libtiff5
-
 echo " "
 
+sudo apt-get install -y \
+    python3 \
+    python3-gi \
+    python3-gi-cairo \
+    gir1.2-gtk-3.0 \
+    python3-pip \
+    libatlas-base-dev \
+    libglib2.0-dev \
+    libgirepository1.0-dev \
+    libcairo2-dev \
+    zlib1g-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libopenjp2-7 \
+    libtiff6
+
+echo " "
+echo "----------------------------------------------"
+echo "set up virtual environment        "
+echo "----------------------------------------------"
+echo " "
+
+python3 -m venv venv
+source venv/bin/activate
 
 echo " "
 echo "----------------------------------------------"
@@ -42,7 +63,8 @@ echo "install needed python3 modules for the project        "
 echo "----------------------------------------------"
 echo " "
 
-sudo pip3 install -r requirements.txt
+pip install --upgrade pip
+pip install -r requirements.txt
 
 echo " "
 echo "-------------------------------------------------------"
