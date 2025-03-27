@@ -1,7 +1,13 @@
-pyserial == 3.5
-PyGObject == 3.38.0
-dbus-python == 1.2.18
-pyusb == 1.2.0
-gatt == 0.2.7
-supervisor == 4.2.1
-luma.oled == 3.8.1
+pyserial==3.5
+PyGObject==3.50.0
+dbus-python==1.4.0
+pyusb==1.3.1
+gatt==0.2.7
+supervisor==4.2.5
+luma.oled==3.14.0
+# Warning during luma.oled installation:
+# DEPRECATION: RPI.GPIO is being installed using the legacy 'setup.py install' method, 
+# because it does not have a 'pyproject.toml' and the 'wheel' package is not installed. 
+# pip 23.1 will enforce this behaviour change. A possible replacement is to enable the 
+# '--use-pep517' option. Discussion can be found at https://github.com/pypa/pip/issues/8559.
+# Revisit when pip 23.1 is released.
