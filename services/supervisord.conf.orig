@@ -28,32 +28,32 @@ supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 serverurl=http://127.0.0.1:9001
 
 [program:pirowflo_S4_Monitor_Bluetooth_AntPlus]
-user=pi
+user=#USER#
 command=#PYTHON3# #REPO_DIR#/src/waterrowerthreads.py -i s4 -b -a
 autostart=false
 
 [program:pirowflo_S4_Monitor_Bluetooth_only]
-user=pi
+user=#USER#
 command=#PYTHON3# #REPO_DIR#/src/waterrowerthreads.py -i s4 -b
 autostart=false
 
 [program:pirowflo_S4_Monitor_AntPlus_only]
-user=pi
+user=#USER#
 command=#PYTHON3# #REPO_DIR#/src/waterrowerthreads.py -i s4 -a
 autostart=false
 
 [program:pirowflo_SR_SmartRow_Bluetooth_AntPlus]
-user=pi
+user=#USER#
 command=#PYTHON3# #REPO_DIR#/src/waterrowerthreads.py -i sr -b -a
 autostart=false
 
 [program:pirowflo_SR_Smartrow_Bluetooth_only]
-user=pi
+user=#USER#
 command=#PYTHON3# #REPO_DIR#/src/waterrowerthreads.py -i sr -b
 autostart=false
 
 [program:pirowflo_SR_Smartrow_AntPlus_only]
-user=pi
+user=#USER#
 command=#PYTHON3# #REPO_DIR#/src/waterrowerthreads.py -i sr -a
 autostart=false
 
@@ -63,7 +63,7 @@ command=poweroff
 autostart=false
 
 [program:update_PiRowFlo]
-user=pi
+user=#USER#
 command=#PYTHON3# #REPO_DIR#/src/adapters/updater/updater.py
 autostart=false
 

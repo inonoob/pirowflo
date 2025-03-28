@@ -19,6 +19,8 @@ echo " This script will install all the needed packages and modules "
 echo " to make the Waterrower Ant and BLE Raspbery Pi Module working"
 echo " "
 
+set -e  # Exit the script if any command fails
+
 echo " "
 echo "-------------------------------------------------------------"
 echo "updates the list of latest updates available for the packages"
@@ -95,12 +97,13 @@ done
 unset IFS
 
 echo "----------------------------------------------"
-echo " add user to the group bluetoot and dialout   "
+echo " Add current user to bluetooth and dialout groups   "
+echo " (pirowflo should be run by this user) 
 echo "----------------------------------------------"
 
-
-sudo usermod -a -G bluetooth pi
-sudo usermod -a -G dialout pi
+CURRENT_USER=$(whoami)
+sudo usermod -a -G bluetooth "$CURRENT_USER"
+sudo usermod -a -G dialout "$CURRENT_USER"
 
 echo " "
 echo "-----------------------------------------------"
@@ -132,12 +135,13 @@ sudo chown root:root services/supervisord.conf.orig
 sudo chmod 655 services/supervisord.conf.orig
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/supervisord.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.conf
-#sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
+sed -i 's@#USER#@'"$CURRENT_USER"'@g' services/supervisord.conf
 
+# configure a systemd service to start supervisord automatically at boot
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.service
 sed -i 's@#SUPERVISORD_PATH#@'"$supervisord_path"'@g' services/supervisord.service
 sed -i 's@#SUPERVISORCTL_PATH#@'"$supervisorctl_path"'@g' services/supervisord.service
-sudo mv services/supervisord.service /etc/systemd/system/
+sudo cp services/supervisord.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/supervisord.service
 sudo chmod 655 /etc/systemd/system/supervisord.service
 sudo systemctl enable supervisord
@@ -154,7 +158,7 @@ echo " "
 #sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local # Update to respect iOS bluetooth specifications
 
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/update-bt-cfg.service
-sudo mv services/update-bt-cfg.service /etc/systemd/system/
+sudo cp services/update-bt-cfg.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/update-bt-cfg.service
 sudo chmod 655 /etc/systemd/system/update-bt-cfg.service
 sudo systemctl enable update-bt-cfg
@@ -171,7 +175,7 @@ sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/adapters/screen/settings.ini
 
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/screen.service
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/screen.service
-sudo mv services/screen.service /etc/systemd/system/
+sudo cp services/screen.service /etc/systemd/system/
 sudo chown root:root /etc/systemd/system/screen.service
 sudo chmod 655 /etc/systemd/system/screen.service
 sudo systemctl enable screen
