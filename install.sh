@@ -97,8 +97,8 @@ done
 unset IFS
 
 echo "----------------------------------------------"
-echo " Add current user to bluetooth and dialout groups   "
-echo " (pirowflo should be run by this user) 
+echo " Add current user to bluetooth and dialout groups"
+echo " (pirowflo should be run by this user) "
 echo "----------------------------------------------"
 
 CURRENT_USER=$(whoami)
@@ -182,18 +182,21 @@ sudo chown root:root /etc/systemd/system/screen.service
 sudo chmod 655 /etc/systemd/system/screen.service
 sudo systemctl enable screen
 
-
+echo " "
 echo "-----------------------------------------------"
 echo " update bluart file as it prevents the start of"
 echo " internal bluetooth if usb bluetooth dongle is "
 echo " present                                       "
 echo "-----------------------------------------------"
+echo " "
 
 sudo sed -i 's/hci0/hci2/g' /usr/bin/btuart
 
+echo " "
 echo "----------------------------------------------"
 echo " Add absolut path to the logging.conf file    "
 echo "----------------------------------------------"
+echo " "
 
 cp src/logging.conf.orig src/logging.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/logging.conf
