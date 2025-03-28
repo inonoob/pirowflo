@@ -1,7 +1,9 @@
 .idea/
 venv/
-src/pirowflo.log
 *.pyc
 __pycache__/
-services/supervisord.conf
 *.tmp
+src/pirowflo.log
+src/adapters/screen/settings.ini
+src/logging.conf
+services/supervisord.conf
