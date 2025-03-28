@@ -131,22 +131,22 @@ export supervisord_path=$(which supervisord)
 export supervisorctl_path=$(which supervisorctl)
 
 cp services/supervisord.conf.orig services/supervisord.conf
-sudo chown root:root services/supervisord.conf.orig
-sudo chmod 655 services/supervisord.conf.orig
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/supervisord.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.conf
 sed -i 's@#USER#@'"$CURRENT_USER"'@g' services/supervisord.conf
 
 # configure a systemd service to start supervisord automatically at boot
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.service
-sed -i 's@#SUPERVISORD_PATH#@'"$supervisord_path"'@g' services/supervisord.service
-sed -i 's@#SUPERVISORCTL_PATH#@'"$supervisorctl_path"'@g' services/supervisord.service
-sudo cp services/supervisord.service /etc/systemd/system/
+#
+cp services/supervisord.service services/supervisord.service.tmp
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.service.tmp
+sed -i 's@#SUPERVISORD_PATH#@'"$supervisord_path"'@g' services/supervisord.service.tmp
+sed -i 's@#SUPERVISORCTL_PATH#@'"$supervisorctl_path"'@g' services/supervisord.service.tmp
+sudo mv services/supervisord.service.tmp /etc/systemd/system/supervisord.service
 sudo chown root:root /etc/systemd/system/supervisord.service
 sudo chmod 655 /etc/systemd/system/supervisord.service
 sudo systemctl enable supervisord
-sudo rm /tmp/pirowflo*
-sudo rm /tmp/supervisord.log
+sudo rm -f /tmp/pirowflo*
+sudo rm -f /tmp/supervisord.log
 
 echo " "
 echo "------------------------------------------------------------"
@@ -155,10 +155,9 @@ echo "------------------------------------------------------------"
 echo " "
 # update bluetooth configuration and start supervisord from rc.local
 #
-#sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local # Update to respect iOS bluetooth specifications
-
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/update-bt-cfg.service
-sudo cp services/update-bt-cfg.service /etc/systemd/system/
+cp services/update-bt-cfg.service services/update-bt-cfg.service.tmp
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/update-bt-cfg.service.tmp
+sudo mv services/update-bt-cfg.service.tmp /etc/systemd/system/update-bt-cfg.service
 sudo chown root:root /etc/systemd/system/update-bt-cfg.service
 sudo chmod 655 /etc/systemd/system/update-bt-cfg.service
 sudo systemctl enable update-bt-cfg
@@ -173,9 +172,10 @@ echo " "
 sudo sed -i 's/#dtparam=spi=on/dtparam=spi=on/g' /boot/firmware/config.txt
 sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/adapters/screen/settings.ini
 
-sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/screen.service
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/screen.service
-sudo cp services/screen.service /etc/systemd/system/
+cp services/screen.service services/screen.service.tmp
+sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/screen.service.tmp
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/screen.service.tmp
+sudo mv services/screen.service.tmp /etc/systemd/system/screen.service
 sudo chown root:root /etc/systemd/system/screen.service
 sudo chmod 655 /etc/systemd/system/screen.service
 sudo systemctl enable screen

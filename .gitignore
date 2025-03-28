@@ -3,3 +3,5 @@ venv/
 src/pirowflo.log
 *.pyc
 __pycache__/
+services/supervisord.conf
+*.tmp
