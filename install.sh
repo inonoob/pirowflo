@@ -170,6 +170,7 @@ echo "------------------------------------------------------------"
 echo " "
 
 sudo sed -i 's/#dtparam=spi=on/dtparam=spi=on/g' /boot/firmware/config.txt
+cp src/adapters/screen/settings.ini.orig src/adapters/screen/settings.ini
 sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/adapters/screen/settings.ini
 
 cp services/screen.service services/screen.service.tmp
@@ -193,6 +194,7 @@ echo "----------------------------------------------"
 echo " Add absolut path to the logging.conf file    "
 echo "----------------------------------------------"
 
+cp src/logging.conf.orig src/logging.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/logging.conf
 
 echo " "
