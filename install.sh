@@ -176,6 +176,7 @@ sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/adapters/screen/settings.ini
 cp services/screen.service services/screen.service.tmp
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/screen.service.tmp
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/screen.service.tmp
+sed -i 's@#USER#@'"$CURRENT_USER"'@g' services/screen.service.tmp
 sudo mv services/screen.service.tmp /etc/systemd/system/screen.service
 sudo chown root:root /etc/systemd/system/screen.service
 sudo chmod 655 /etc/systemd/system/screen.service
