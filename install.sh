@@ -19,6 +19,8 @@ echo " This script will install all the needed packages and modules "
 echo " to make the Waterrower Ant and BLE Raspbery Pi Module working"
 echo " "
 
+set -e  # Exit the script if any command fails
+
 echo " "
 echo "-------------------------------------------------------------"
 echo "updates the list of latest updates available for the packages"
@@ -28,13 +30,34 @@ sudo apt-get update
 
 echo " "
 echo "----------------------------------------------"
-echo "installed needed packages for python          "
+echo "install needed packages for python          "
 echo "----------------------------------------------"
-
-sudo apt-get install -y python3 python3-gi python3-gi-cairo gir1.2-gtk-3.0 python3-pip libatlas-base-dev libglib2.0-dev libgirepository1.0-dev libcairo2-dev zlib1g-dev libfreetype6-dev liblcms2-dev libopenjp2-7 libtiff5
-
 echo " "
 
+sudo apt-get install -y \
+    python3 \
+    python3-gi \
+    python3-gi-cairo \
+    gir1.2-gtk-3.0 \
+    python3-pip \
+    libatlas-base-dev \
+    libglib2.0-dev \
+    libgirepository1.0-dev \
+    libcairo2-dev \
+    zlib1g-dev \
+    libfreetype6-dev \
+    liblcms2-dev \
+    libopenjp2-7 \
+    libtiff6
+
+echo " "
+echo "----------------------------------------------"
+echo "set up virtual environment        "
+echo "----------------------------------------------"
+echo " "
+
+python3 -m venv venv
+source venv/bin/activate
 
 echo " "
 echo "----------------------------------------------"
@@ -42,7 +65,8 @@ echo "install needed python3 modules for the project        "
 echo "----------------------------------------------"
 echo " "
 
-sudo pip3 install -r requirements.txt
+pip install --upgrade pip
+pip install -r requirements.txt
 
 echo " "
 echo "-------------------------------------------------------"
@@ -73,12 +97,13 @@ done
 unset IFS
 
 echo "----------------------------------------------"
-echo " add user to the group bluetoot and dialout   "
+echo " Add current user to bluetooth and dialout groups"
+echo " (pirowflo should be run by this user) "
 echo "----------------------------------------------"
 
-
-sudo usermod -a -G bluetooth pi
-sudo usermod -a -G dialout pi
+CURRENT_USER=$(whoami)
+sudo usermod -a -G bluetooth "$CURRENT_USER"
+sudo usermod -a -G dialout "$CURRENT_USER"
 
 echo " "
 echo "-----------------------------------------------"
@@ -106,21 +131,22 @@ export supervisord_path=$(which supervisord)
 export supervisorctl_path=$(which supervisorctl)
 
 cp services/supervisord.conf.orig services/supervisord.conf
-sudo chown root:root services/supervisord.conf.orig
-sudo chmod 655 services/supervisord.conf.orig
 sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/supervisord.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.conf
-#sudo sed -i -e '$i \su '"${USER}"' -c '\''nohup '"${supervisord_path}"' -c '"${repo_dir}"'/supervisord.conf'\''\n' /etc/rc.local
+sed -i 's@#USER#@'"$CURRENT_USER"'@g' services/supervisord.conf
 
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.service
-sed -i 's@#SUPERVISORD_PATH#@'"$supervisord_path"'@g' services/supervisord.service
-sed -i 's@#SUPERVISORCTL_PATH#@'"$supervisorctl_path"'@g' services/supervisord.service
-sudo mv services/supervisord.service /etc/systemd/system/
+# configure a systemd service to start supervisord automatically at boot
+#
+cp services/supervisord.service services/supervisord.service.tmp
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/supervisord.service.tmp
+sed -i 's@#SUPERVISORD_PATH#@'"$supervisord_path"'@g' services/supervisord.service.tmp
+sed -i 's@#SUPERVISORCTL_PATH#@'"$supervisorctl_path"'@g' services/supervisord.service.tmp
+sudo mv services/supervisord.service.tmp /etc/systemd/system/supervisord.service
 sudo chown root:root /etc/systemd/system/supervisord.service
 sudo chmod 655 /etc/systemd/system/supervisord.service
 sudo systemctl enable supervisord
-sudo rm /tmp/pirowflo*
-sudo rm /tmp/supervisord.log
+sudo rm -f /tmp/pirowflo*
+sudo rm -f /tmp/supervisord.log
 
 echo " "
 echo "------------------------------------------------------------"
@@ -129,10 +155,9 @@ echo "------------------------------------------------------------"
 echo " "
 # update bluetooth configuration and start supervisord from rc.local
 #
-#sudo sed -i -e '$i \'"${repo_dir}"'/update-bt-cfg.sh''\n' /etc/rc.local # Update to respect iOS bluetooth specifications
-
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/update-bt-cfg.service
-sudo mv services/update-bt-cfg.service /etc/systemd/system/
+cp services/update-bt-cfg.service services/update-bt-cfg.service.tmp
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/update-bt-cfg.service.tmp
+sudo mv services/update-bt-cfg.service.tmp /etc/systemd/system/update-bt-cfg.service
 sudo chown root:root /etc/systemd/system/update-bt-cfg.service
 sudo chmod 655 /etc/systemd/system/update-bt-cfg.service
 sudo systemctl enable update-bt-cfg
@@ -144,29 +169,36 @@ echo " setup screen setting to start up at boot                   "
 echo "------------------------------------------------------------"
 echo " "
 
-sudo sed -i 's/#dtparam=spi=on/dtparam=spi=on/g' /boot/config.txt
+sudo sed -i 's/#dtparam=spi=on/dtparam=spi=on/g' /boot/firmware/config.txt
+cp src/adapters/screen/settings.ini.orig src/adapters/screen/settings.ini
 sudo sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/adapters/screen/settings.ini
 
-sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/screen.service
-sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/screen.service
-sudo mv services/screen.service /etc/systemd/system/
+cp services/screen.service services/screen.service.tmp
+sed -i 's@#PYTHON3#@'"$python3_path"'@g' services/screen.service.tmp
+sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' services/screen.service.tmp
+sed -i 's@#USER#@'"$CURRENT_USER"'@g' services/screen.service.tmp
+sudo mv services/screen.service.tmp /etc/systemd/system/screen.service
 sudo chown root:root /etc/systemd/system/screen.service
 sudo chmod 655 /etc/systemd/system/screen.service
 sudo systemctl enable screen
 
-
+echo " "
 echo "-----------------------------------------------"
 echo " update bluart file as it prevents the start of"
 echo " internal bluetooth if usb bluetooth dongle is "
 echo " present                                       "
 echo "-----------------------------------------------"
+echo " "
 
 sudo sed -i 's/hci0/hci2/g' /usr/bin/btuart
 
+echo " "
 echo "----------------------------------------------"
 echo " Add absolut path to the logging.conf file    "
 echo "----------------------------------------------"
+echo " "
 
+cp src/logging.conf.orig src/logging.conf
 sed -i 's@#REPO_DIR#@'"$repo_dir"'@g' src/logging.conf
 
 echo " "

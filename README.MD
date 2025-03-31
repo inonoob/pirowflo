@@ -153,9 +153,10 @@ you hadn't have your Ant+ dongle. Just re-run the script and it will install the
 
     sudo ./install.sh 
 
-Once installation and reboot complete, go into the pirowflo/src folder
+Once installation and reboot complete, go into the pirowflo folder: 
 
-    cd /home/pi/pirowflo/src
+    cd ~/pirowflo
+
 
 ### Getting Started
 
@@ -175,12 +176,16 @@ or
 
 start PiRowFlo from console 
 
+NB: For compatibility with recent Raspberry Pi OS releases, the program must be run within the virtual environment by including
+the path to the virtual environment when you start the program. The simple way to do this is to change into your project directory
+and then use the commands as they appear below.
+
 If the script waterrowerthreads is started with -h or --help it shows the available option for the program 
 
 
-    python3 waterrowerthreads.py -h
+    venv/bin/python3 src/waterrowerthreads.py -h
     
-    usage: waterrowerthreads.py [-h] [-i {s4,sr}] [-b] [-a]
+    usage:  venv/bin/python3 src/waterrowerthreads.py [-h] [-i {s4,sr}] [-b] [-a]
 
     Python script to broadcast waterrower data over BLE and ANT
 
@@ -201,7 +206,7 @@ If the script waterrowerthreads is started with -h or --help it shows the availa
     
     e.g. use the S4 connected via USB and broadcast data over bluetooth and Ant+
     
-    python3 waterrowerthreads.py -i s4 -b -a
+    venv/bin/python3 src/waterrowerthreads.py -i s4 -b -a
     
     optional arguments:
       -h, --help            show this help message and exit
@@ -215,7 +220,7 @@ If the script waterrowerthreads is started with -h or --help it shows the availa
 
 For example if the Waterrower should send data over Bluetooth and ANT 
 
-    python3 waterrowerthreads.py -i s4 -b -a 
+    venv/bin/python3 src/waterrowerthreads.py -i s4 -b -a 
 
 ## Manual update 
 
@@ -289,11 +294,15 @@ if you see this kind of error in the console:
 
 
 that means that the current user is not in the group "bluetooth". The used to be a bug in the install.sh. But you can
-also add it manually with the following command: 
+also add it manually with the following command (substitute your username for $USER): 
 
-    sudo usermod -a -G bluetooth pi 
+    sudo usermod -a -G bluetooth $USER 
 
-This command run as sudo will add the user "pi" to the group "bluetooth". Then reboot in order to take effect.  This should fix the issue. 
+If you don't know your username, type:
+
+    whoami
+
+The usermod command run as sudo will add the user to the group "bluetooth". Then reboot in order to take effect.  This should fix the issue. 
 
 In order to check if it had worked, use the following command: 
 
