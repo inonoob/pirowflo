@@ -41,6 +41,7 @@ sudo apt-get install -y \
     gir1.2-gtk-3.0 \
     python3-pip \
     libatlas-base-dev \
+    libdbus-1-dev \
     libglib2.0-dev \
     libgirepository1.0-dev \
     libcairo2-dev \
