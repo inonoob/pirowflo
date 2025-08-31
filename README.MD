@@ -1,7 +1,6 @@
 # PiRowFlo for Waterrower
 
 31.03.2025: Merged with elp3dr0 to fix to modern pi
-03.03.2022: SmartRow version 3.0 is now working. Thanks to Dan !!
 14.11.2021: fixed pip install issue with pyusb in requirements.txt
 
 <img src="docs/logo/PIROWFLO2.png" width=36% height=36%>
