@@ -32,6 +32,7 @@ from adapters.ble import waterrowerble
 from adapters.s4 import wrtobleant
 from adapters.ant import waterrowerant
 from adapters.smartrow import smartrowtobleant
+from adapters.ftmsrower import ftmsrowtobleant
 import pathlib
 import signal
 
@@ -76,6 +77,11 @@ def main(args=None):
         Smartrowconnection = smartrowtobleant.main(in_q, ble_out_q, ant_out_q)
         Smartrowconnection()
 
+    def FTMSrower(in_q, ble_out_q, ant_out_q):
+        logger.info("FTMS Rower Interface started")
+        ftms_row_conn = ftmsrowtobleant.main(in_q, ble_out_q, ant_out_q)
+        ftms_row_conn()
+
     def ANTService(in_q, ant_in_q):
         logger.info("Start Ant and start broadcast data")
         antService = waterrowerant.main(in_q, ant_in_q)
@@ -105,6 +111,15 @@ def main(args=None):
     else:
         logger.info("sr not selected")
 
+    if args.interface == "ftms":
+        logger.info("interface ftms will be used for data input")
+        t = threading.Thread(target=FTMSrower, args=(q, ble_q, ant_q))
+        t.daemon = True
+        t.start()
+        threads.append(t)
+    else:
+        logger.info("ftms (cityrow) not selected")
+
     if args.blue == True:
         t = threading.Thread(target=BleService, args=(q, ble_q))
         t.daemon = True
@@ -131,7 +146,7 @@ def main(args=None):
 if __name__ == '__main__':
     try:
         parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawTextHelpFormatter, )
-        parser.add_argument("-i", "--interface", choices=["s4","sr"], default="s4", help="choose  Waterrower interface S4 monitor: s4 or Smartrow: sr")
+        parser.add_argument("-i", "--interface", choices=["ftms","s4","sr"], default="s4", help="choose  Waterrower interface S4 monitor: s4 or Smartrow: sr or FTMS Rower: ftms")
         parser.add_argument("-b", "--blue", action='store_true', default=False,help="Broadcast Waterrower data over bluetooth low energy")
         parser.add_argument("-a", "--antfe", action='store_true', default=False,help="Broadcast Waterrower data over Ant+")
         args = parser.parse_args()
